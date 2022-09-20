@@ -1,4 +1,9 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<IdentityDbContext>(options => options.UseSqlServer());
 
 builder.Services.AddControllersWithViews();
 
