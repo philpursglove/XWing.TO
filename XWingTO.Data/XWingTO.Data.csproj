@@ -15,4 +15,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\XWingTO.Core\XWingTO.Core.csproj" />
+  </ItemGroup>
+
 </Project>
