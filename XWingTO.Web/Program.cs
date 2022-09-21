@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<IdentityDbContext>(options => options.UseSqlServer());
+builder.Services.AddDbContext<XWingTO.Data.DbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("XWingTO")));
 
 builder.Services.AddControllersWithViews();
 
