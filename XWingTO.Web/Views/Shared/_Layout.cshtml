@@ -5,10 +5,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>@ViewBag.Title</title>
 	
-	<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="css/site.css" />
-	<script src="lib/jquery/jquery.min.js"></script>
-	<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="~/css/site.css" />
+	<script src="~/lib/jquery/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -25,11 +25,11 @@
 							Tournaments
 						</a>
 						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">Search</a></li>
+							<li><a class="dropdown-item" asp-controller="Tournament" asp-action="Search">Search</a></li>
 								<li><hr class="dropdown-divider"></li>
-								<li><a class="dropdown-item" href="#">My Tournaments</a></li>
+								<li><a class="dropdown-item" asp-controller="Tournament" asp-action="MyEvents">My Tournaments</a></li>
 							<li><hr class="dropdown-divider"></li>
-							<li><a class="dropdown-item" href="#">Create Tournament</a></li>
+								<li><a class="dropdown-item" asp-controller="Tournament" asp-action="Create">Create Tournament</a></li>
 						</ul>
 					</li>
 				</ul>
