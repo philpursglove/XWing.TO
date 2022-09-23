@@ -26,6 +26,7 @@ app.UseDeveloperExceptionPage();
 app.UseStatusCodePages();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
