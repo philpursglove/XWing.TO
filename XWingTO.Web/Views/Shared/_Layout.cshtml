@@ -4,47 +4,52 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>@ViewBag.Title</title>
-	
-	<link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css"/>
+
+	<link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" />
 	<script src="~/lib/jquery/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<div class="container">
-	<nav class="navbar navbar-expand-lg bg-light">
-		<div class="container-fluid">
-			<a class="navbar-brand" asp-controller="Home" asp-action="Index">XWing.TO</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							Tournaments
-						</a>
-						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" asp-controller="Tournament" asp-action="Search">Search</a></li>
-							<li><hr class="dropdown-divider"></li>
-							<li><a class="dropdown-item" asp-controller="Tournament" asp-action="MyEvents">My Tournaments</a></li>
-							<li><hr class="dropdown-divider"></li>
-							<li><a class="dropdown-item" asp-controller="Tournament" asp-action="Create">Create Tournament</a></li>
-						</ul>
-					</li>
-				</ul>
+	<div class="container">
+		<nav class="navbar navbar-expand-lg bg-light">
+			<div class="container-fluid">
+				<a class="navbar-brand" asp-controller="Home" asp-action="Index">XWing.TO</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								Tournaments
+							</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" asp-controller="Tournament" asp-action="Search">Search</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" asp-controller="Tournament" asp-action="MyEvents">My Tournaments</a></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" asp-controller="Tournament" asp-action="Create">Create Tournament</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
 			</div>
+		</nav>
+		<div class="text-center">
+			<!-- Randomised text to go here - View Component? -->
+			<h6>Squadron up!</h6>
 		</div>
-	</nav>
-	<div>
-		@RenderBody()
-	</div>
+		<div>
+			@RenderBody()
+		</div>
 
-</div>
-<footer class="fixed-bottom">
-	<div class="pull-right">
-		@System.Reflection.Assembly.GetExecutingAssembly().GetName().Version
 	</div>
-</footer>
+	<footer class="fixed-bottom">
+		<div class="pull-right">
+			<!-- Put this in a View Component? -->
+		 	@Html.Raw("v")@System.Reflection.Assembly.GetExecutingAssembly().GetName().Version
+		</div>
+	</footer>
 </body>
 </html>
