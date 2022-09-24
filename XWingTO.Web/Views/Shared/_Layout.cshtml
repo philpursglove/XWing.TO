@@ -26,10 +26,10 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" asp-controller="Tournament" asp-action="Search">Search</a></li>
-								<li><hr class="dropdown-divider"></li>
-								<li><a class="dropdown-item" asp-controller="Tournament" asp-action="MyEvents">My Tournaments</a></li>
 							<li><hr class="dropdown-divider"></li>
-								<li><a class="dropdown-item" asp-controller="Tournament" asp-action="Create">Create Tournament</a></li>
+							<li><a class="dropdown-item" asp-controller="Tournament" asp-action="MyEvents">My Tournaments</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li><a class="dropdown-item" asp-controller="Tournament" asp-action="Create">Create Tournament</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -41,5 +41,10 @@
 	</div>
 
 </div>
+<footer class="fixed-bottom">
+	<div class="pull-right">
+		@System.Reflection.Assembly.GetExecutingAssembly().GetName().Version
+	</div>
+</footer>
 </body>
 </html>
