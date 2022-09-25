@@ -9,9 +9,11 @@ namespace XWingTO.Web.Controllers
 	public class TournamentController : Controller
 	{
 		private readonly IRepository<Tournament, Guid> _tournamentRepository;
-		public TournamentController(IRepository<Tournament, Guid> tournamentRepository)
+		private readonly IRepository<TournamentPlayer, Guid> _tournamentPlayerRepository;
+		public TournamentController(IRepository<Tournament, Guid> tournamentRepository, IRepository<TournamentPlayer, Guid> tournamentPlayeRepository)
 		{
-			this._tournamentRepository = tournamentRepository;
+			_tournamentRepository = tournamentRepository;
+			_tournamentPlayerRepository = tournamentPlayeRepository;
 		}
 
 		public IActionResult Index()
@@ -73,6 +75,25 @@ namespace XWingTO.Web.Controllers
 		public IActionResult Edit(Guid Id)
 		{
 			return View();
+		}
+
+		public async Task<IActionResult> Register(Guid id)
+		{
+			Tournament tournament = await _tournamentRepository.Get(id);
+			RegisterViewModel model = new RegisterViewModel();
+			return View(model);
+		}
+
+		[HttpPost]
+		public IActionResult Register(RegisterViewModel model)
+		{
+			TournamentPlayer tournamentPlayer = new TournamentPlayer()
+			{
+				TournamentId = model.TournamentId,
+				PlayerId = model.PlayerId
+			};
+
+			_tournamentPlayerRepository.Add(tournamentPlayer);
 		}
 	}
 }
