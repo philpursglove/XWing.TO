@@ -2,6 +2,7 @@
 using XWingTO.Core;
 using XWingTO.Data;
 using XWingTO.Web.ViewModels.Tournament;
+using System.Linq;
 
 namespace XWingTO.Web.Controllers
 {
@@ -13,13 +14,30 @@ namespace XWingTO.Web.Controllers
 			this._tournamentRepository = tournamentRepository;
 		}
 
+		public IActionResult Index()
+		{
+			return RedirectToAction("MyEvents");
+		}
+
+		public IActionResult Index(Guid id)
+		{
+			return RedirectToAction("Display", new {id});
+		}
+
+		public async Task<IActionResult> Display(Guid id)
+		{
+			Tournament tournament = await _tournamentRepository.Get(id);
+			return View();
+		}
+
 		public IActionResult Search()
 		{
 			return View();
 		}
 
-		public IActionResult MyEvents()
+		public async Task<IActionResult> MyEvents()
 		{
+			var myEvents = await _tournamentRepository.Query();
 			return View();
 		}
 
