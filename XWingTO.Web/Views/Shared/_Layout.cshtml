@@ -36,7 +36,7 @@
 				</div>
 			</div>
 		</nav>
-		<div class="text-center">
+		<div class="text-center d-none d-md-block">
 			<!-- Randomised text to go here - View Component? -->
 			<h6>Squadron up!</h6>
 		</div>
@@ -45,11 +45,16 @@
 		</div>
 
 	</div>
-	<footer class="fixed-bottom">
+<footer class="fixed-bottom">
+	<div class="row d-none d-md-block">
+		<!-- Ads go here -->
+	</div>
+	<div class="row">
 		<div class="pull-right">
 			<!-- Put this in a View Component? -->
-		 	@Html.Raw("v")@System.Reflection.Assembly.GetExecutingAssembly().GetName().Version
+			@Html.Raw("v")@System.Reflection.Assembly.GetExecutingAssembly().GetName().Version
 		</div>
-	</footer>
+	</div>
+</footer>
 </body>
 </html>
