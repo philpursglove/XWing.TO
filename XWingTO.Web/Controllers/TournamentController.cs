@@ -3,7 +3,7 @@ using XWingTO.Web.ViewModels.Tournament;
 
 namespace XWingTO.Web.Controllers
 {
-    public class Tournament : Controller
+    public class TournamentController : Controller
     {
         public IActionResult Search()
         {
