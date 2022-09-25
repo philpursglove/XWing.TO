@@ -25,9 +25,9 @@ public class Repository<T, TKey> : IRepository<T, TKey> where T : class
         return await _dbContext.Set<T>().FindAsync(id);
     }
 
-    public async Task<IQueryable<T>> Query()
+    public Query<T> Query()
     {
-        return _dbContext.Set<T>().AsQueryable();
+        return new Query<T>(_dbContext.Set<T>().AsQueryable());
     }
 
     public async Task Update(T entity)

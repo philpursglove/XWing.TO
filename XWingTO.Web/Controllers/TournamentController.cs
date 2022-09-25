@@ -2,7 +2,6 @@
 using XWingTO.Core;
 using XWingTO.Data;
 using XWingTO.Web.ViewModels.Tournament;
-using System.Linq;
 
 namespace XWingTO.Web.Controllers
 {
@@ -10,10 +9,10 @@ namespace XWingTO.Web.Controllers
 	{
 		private readonly IRepository<Tournament, Guid> _tournamentRepository;
 		private readonly IRepository<TournamentPlayer, Guid> _tournamentPlayerRepository;
-		public TournamentController(IRepository<Tournament, Guid> tournamentRepository, IRepository<TournamentPlayer, Guid> tournamentPlayeRepository)
+		public TournamentController(IRepository<Tournament, Guid> tournamentRepository, IRepository<TournamentPlayer, Guid> tournamentPlayerRepository)
 		{
 			_tournamentRepository = tournamentRepository;
-			_tournamentPlayerRepository = tournamentPlayeRepository;
+			_tournamentPlayerRepository = tournamentPlayerRepository;
 		}
 
 		public IActionResult Index()
@@ -39,7 +38,7 @@ namespace XWingTO.Web.Controllers
 
 		public async Task<IActionResult> MyEvents()
 		{
-			var myEvents = await _tournamentRepository.Query();
+			var myEvents = _tournamentRepository.Query();
 			return View();
 		}
 
@@ -94,6 +93,8 @@ namespace XWingTO.Web.Controllers
 			};
 
 			_tournamentPlayerRepository.Add(tournamentPlayer);
+
+			return RedirectToAction("MyEvents");
 		}
 	}
 }
