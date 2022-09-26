@@ -27,7 +27,8 @@ namespace XWingTO.Web.Controllers
 
 		public async Task<IActionResult> Display(Guid id)
 		{
-			Tournament tournament = await _tournamentRepository.Get(id);
+			Tournament tournament = await _tournamentRepository.Query().FirstOrDefault(t => t.Id == id);
+			var players = _tournamentPlayerRepository.Query().Where(tp => tp.TournamentId == id);
 			return View();
 		}
 
