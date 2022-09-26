@@ -10,4 +10,6 @@ public class TournamentPlayer
     public int MissionPoints { get; set; }
     public bool Bye { get; set; }
     public bool Dropped { get; set; }
+
+    public ApplicationUser Player { get; set; }
 }
