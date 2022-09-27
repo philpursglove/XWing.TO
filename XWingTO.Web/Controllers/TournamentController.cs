@@ -27,8 +27,8 @@ namespace XWingTO.Web.Controllers
 
 		public async Task<IActionResult> Display(Guid id)
 		{
-			Tournament tournament = await _tournamentRepository.Query().FirstOrDefault(t => t.Id == id);
-			var players = _tournamentPlayerRepository.Query().Where(tp => tp.TournamentId == id);
+			Tournament tournament = await _tournamentRepository.Query().Include(t => t.Players).FirstOrDefault(t => t.Id == id);
+
 			return View();
 		}
 
@@ -96,6 +96,14 @@ namespace XWingTO.Web.Controllers
 			_tournamentPlayerRepository.Add(tournamentPlayer);
 
 			return RedirectToAction("MyEvents");
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> GenerateRound(Guid id)
+		{
+			Tournament tournament = await _tournamentRepository.Query().Include(t => t.Players).Include(t => t.Rounds).FirstOrDefault(t => t.Id == id);
+
+			return View();
 		}
 	}
 }

@@ -11,5 +11,7 @@
         public string City { get; set; }
         public string Venue { get; set; }
         public virtual IEnumerable<TournamentPlayer> Players { get; set; }
+
+        public virtual IEnumerable<TournamentRound> Rounds { get; set; }
     }
 }
