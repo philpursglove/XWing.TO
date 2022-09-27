@@ -23,53 +23,53 @@ public class Query<T> : IQuery<T>, IEnumerable where T : class
 		return _query.GetEnumerator();
 	}
 
-	public IQuery<T> Where(Expression<Func<T, bool>> filter)
+	public Query<T> Where(Expression<Func<T, bool>> filter)
 	{
 		_query = _query.Where(filter);
 		return this;
 	}
 
-	public IQuery<T> Order(Func<IQueryable<T>, IQueryable<T>> orderBy)
+	public Query<T> Order(Func<IQueryable<T>, IQueryable<T>> orderBy)
 	{
 		_query = orderBy(_query);
 		return this;
 	}
 
-	public IQuery<T> Include<TProperty>(Expression<Func<T, TProperty>> include)
+	public Query<T> Include<TProperty>(Expression<Func<T, TProperty>> include)
 	{
 		_query = _query.Include(include);
 		return this;
 	}
 
-	public IQuery<T> Take(int skip, int take)
+	public Query<T> Take(int skip, int take)
 	{
 		_query = _query.Skip(skip).Take(take);
 		return this;
 	}
 
-	public IQuery<T> Take(int take)
+	public Query<T> Take(int take)
 	{
 		_query = _query.Take(take);
 		return this;
 	}
 
-	public IQuery<T> Skip(int skip)
+	public Query<T> Skip(int skip)
 	{
 		_query = _query.Skip(skip);
 		return this;
 	}
 
-	public IQuery<TResult> Select<TResult>(Expression<Func<T, TResult>> selector) where TResult : class
+	public Query<TResult> Select<TResult>(Expression<Func<T, TResult>> selector) where TResult : class
 	{
 		return new Query<TResult>(_query.Select(selector));
 	}
 
-	public IQuery<IGrouping<TKey, T>> GroupBy<TKey>(Expression<Func<T, TKey>> groupBy)
+	public Query<IGrouping<TKey, T>> GroupBy<TKey>(Expression<Func<T, TKey>> groupBy)
 	{
 		return new Query<IGrouping<TKey, T>>(_query.GroupBy(groupBy));
 	}
 
-	public IQuery<IGrouping<TKey, TValue>> GroupBy<TKey, TValue>(Expression<Func<T, TKey>> keySelector, Expression<Func<T, TValue>> valueSelector)
+	public Query<IGrouping<TKey, TValue>> GroupBy<TKey, TValue>(Expression<Func<T, TKey>> keySelector, Expression<Func<T, TValue>> valueSelector)
 	{
 		return new Query<IGrouping<TKey, TValue>>(_query.GroupBy(keySelector, valueSelector));
 	}
@@ -84,7 +84,7 @@ public class Query<T> : IQuery<T>, IEnumerable where T : class
 		return await _query.AnyAsync(filter, cancellationToken);
 	}
 
-	public IQuery<TResult> GroupJoin<TInner, TKey, TResult>(IQuery<TInner> inner, Expression<Func<T, TKey>> outerKeySelector,
+	public Query<TResult> GroupJoin<TInner, TKey, TResult>(IQuery<TInner> inner, Expression<Func<T, TKey>> outerKeySelector,
 		Expression<Func<TInner, TKey>> innerKeySelector, Expression<Func<T, IEnumerable<TInner>, TResult>> resultSelector) where TInner : class where TResult : class
 	{
 		var innerQuery = (inner as Query<TInner>)?._query;
@@ -93,7 +93,7 @@ public class Query<T> : IQuery<T>, IEnumerable where T : class
 		return new Query<TResult>(_query.GroupJoin(innerQuery, outerKeySelector, innerKeySelector, resultSelector));
 	}
 
-	public IQuery<TResult> Join<TInner, TKey, TResult>(IEnumerable<TInner> inner, Expression<Func<T, TKey>> outerKeySelector,
+	public Query<TResult> Join<TInner, TKey, TResult>(IEnumerable<TInner> inner, Expression<Func<T, TKey>> outerKeySelector,
 		Expression<Func<TInner, TKey>> innerKeySelector, Expression<Func<T, TInner, TResult>> resultSelector) where TInner : class where TResult : class
 	{
 		var innerQuery = (inner as Query<TInner>)?._query;
@@ -103,28 +103,26 @@ public class Query<T> : IQuery<T>, IEnumerable where T : class
 		return new Query<TResult>(_query.Join(innerQuery, outerKeySelector, innerKeySelector, resultSelector));
 	}
 
-	public IQuery<TResult> SelectMany<TCollection, TResult>(Expression<Func<T, IEnumerable<TCollection>>> collectionSelector, Expression<Func<T, TCollection, TResult>> resultSelector) where TResult : class
+	public Query<TResult> SelectMany<TCollection, TResult>(Expression<Func<T, IEnumerable<TCollection>>> collectionSelector, Expression<Func<T, TCollection, TResult>> resultSelector) where TResult : class
 	{
 		return new Query<TResult>(_query.SelectMany(collectionSelector, resultSelector));
 	}
-
 	public async Task<T> FirstOrDefault(Expression<Func<T, bool>> filter)
 	{
 		return await _query.FirstOrDefaultAsync(filter);
 	}
-
 	public async Task<int> SumAsync(Expression<Func<T, int>> selector)
 	{
 		return await _query.SumAsync(selector);
 	}
 
-	public IQuery<T> Distinct()
+	public Query<T> Distinct()
 	{
 		_query = _query.Distinct();
 		return this;
 	}
 
-	public IQuery<T> Union(IQuery<T> inner)
+	public Query<T> Union(IQuery<T> inner)
 	{
 		var innerQuery = (inner as Query<T>)?._query;
 		if (innerQuery == null) throw new ArgumentException("Problem in GroupJoin: inner as EntityFrameworkQuery<TInner>");
