@@ -10,6 +10,7 @@
         public string State { get; set; }
         public string City { get; set; }
         public string Venue { get; set; }
+        public DateTime CreationDate {get; set;}
         public virtual IEnumerable<TournamentPlayer> Players { get; set; }
 
         public virtual IEnumerable<TournamentRound> Rounds { get; set; }

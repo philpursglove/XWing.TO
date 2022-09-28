@@ -61,7 +61,8 @@ namespace XWingTO.Web.Controllers
 					Country = model.Country,
 					State = model.State,
 					City = model.City,
-					Venue = model.Venue
+					Venue = model.Venue,
+					CreationDate = DateTime.Now
 				};
 
 				_tournamentRepository.Add(tournament);
