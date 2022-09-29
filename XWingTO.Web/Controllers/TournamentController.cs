@@ -12,7 +12,7 @@ namespace XWingTO.Web.Controllers
 		private readonly IRepository<TournamentPlayer, Guid> _tournamentPlayerRepository;
 		private readonly UserManager<ApplicationUser> _userManager;
 		public TournamentController(IRepository<Tournament, Guid> tournamentRepository, 
-			IRepository<TournamentPlayer, Guid> tournamentPlayerRepository, 
+			IRepository<TournamentPlayer, Guid> tournamentPlayerRepository,
 			UserManager<ApplicationUser> userManager)
 		{
 			_tournamentRepository = tournamentRepository;
