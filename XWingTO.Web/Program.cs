@@ -8,10 +8,14 @@ using DbContext = XWingTO.Data.DbContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<XWingTO.Data.DbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("XWingTO")));
+builder.Services.AddDbContext<DbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("XWingTO")));
+
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<DbContext>();
 builder.Services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 builder.Services.AddIdentityCore<ApplicationUser>()
 	.AddEntityFrameworkStores<DbContext>();
