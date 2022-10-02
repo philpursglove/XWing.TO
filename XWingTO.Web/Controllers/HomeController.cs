@@ -6,7 +6,14 @@ namespace XWingTO.Web.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                return View("MyHome");
+            }
+            else
+            {
+                return View();
+            }
         }
     }
 }
