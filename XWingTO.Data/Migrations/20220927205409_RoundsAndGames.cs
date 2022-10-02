@@ -49,13 +49,13 @@ namespace XWingTO.Data.Migrations
                         column: x => x.Player1Id,
                         principalTable: "TournamentPlayers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Game_TournamentPlayers_Player2Id",
                         column: x => x.Player2Id,
                         principalTable: "TournamentPlayers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Game_TournamentRound_TournamentRoundId",
                         column: x => x.TournamentRoundId,
