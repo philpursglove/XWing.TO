@@ -20,7 +20,7 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="Identity" asp-page="/Account/Register" class="m-2">Register</a></li>
-            <li><a asp-area="Identity" asp-page="/Account/Login" class="m-2">Login</a></li>
+        <li><a asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Url.Action("Index", "Home", new {Area = ""})" class="m-2">Register</a></li>
+        <li><a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Index", "Home", new {Area = ""})" class="m-2">Login</a></li>
     </ul>
 }
