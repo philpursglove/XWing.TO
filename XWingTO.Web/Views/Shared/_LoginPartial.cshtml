@@ -6,21 +6,28 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-            </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
-            </li>
-        </ul>
-    </form>
+	<form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right navbar-nav">
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				@UserManager.GetUserName(User)
+			</a>
+			<ul class="dropdown-menu">
+				<li>
+					<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
+				</li>
+				<li><a class="dropdown-item" asp-controller="Tournament" asp-action="MyEvents">My Tournaments</a></li>
+				<li><hr class="dropdown-divider"></li>
+				<li>
+					<button type="submit" class="btn btn-link navbar-btn navbar-link dropdown-item">Logout</button>
+				</li>
+			</ul>
+		</li>
+	</form>
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Url.Action("Index", "Home", new {Area = ""})" class="m-2">Register</a></li>
-        <li><a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Index", "Home", new {Area = ""})" class="m-2">Login</a></li>
-    </ul>
+	<ul class="nav navbar-nav navbar-right">
+		<li><a asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Url.Action("Index", "Home", new {Area = ""})" class="m-2">Register</a></li>
+		<li><a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Index", "Home", new {Area = ""})" class="m-2">Login</a></li>
+	</ul>
 }
