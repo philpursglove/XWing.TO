@@ -11,6 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XWingTO.Data", "XWingTO.Dat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XWingTO.Tests", "XWingTO.Tests\XWingTO.Tests.csproj", "{9BBF85DE-DBF4-4A92-9BB5-C76AE2332956}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XWingTO.Infrastructure", "XWingTO.Infrastructure", "{74076879-B673-4BA8-8F5F-4DA4B7A11CF3}"
+	ProjectSection(SolutionItems) = preProject
+		XWingTO.bicep = XWingTO.bicep
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
