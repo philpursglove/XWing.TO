@@ -53,9 +53,18 @@ namespace XWingTO.Web.Controllers
 		}
 
 
-		public IActionResult Create()
+		public async Task<IActionResult> Create()
 		{
-			return View();
+			ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+
+			CreateTournamentViewModel model = new CreateTournamentViewModel()
+			{
+				Country = currentUser.Country,
+				State = currentUser.State,
+				City = currentUser.City,
+				Venue = currentUser.Venue
+			};
+			return View(model);
 		}
 
 		[HttpPost]
