@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using XWingTO.Core;
 using XWingTO.Data;
@@ -70,6 +71,12 @@ namespace XWingTO.Web.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Create(CreateTournamentViewModel model)
 		{
+			if (model.Date == new DateOnly(1, 1, 1))
+			{
+				model.Date = DateOnly.Parse(Request.Form["Date"]);
+			}
+
+			model.Validate(new ValidationContext(model));
 			if (ModelState.IsValid)
 			{
 				ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
