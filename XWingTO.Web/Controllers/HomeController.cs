@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using XWingTO.Core;
 using XWingTO.Data;
+using XWingTO.Web.ViewModels.Home;
 
 namespace XWingTO.Web.Controllers
 {
@@ -24,10 +25,19 @@ namespace XWingTO.Web.Controllers
 
                 var myEvents = _tournamentRepository.Query().Where(t => t.TOId == userId || t.Players.Select(p => p.PlayerId).Contains(userId));
 
-				return View("MyHome");
+                MyHomeViewModel model = new MyHomeViewModel
+                {
+	                UpcomingEvents = await myEvents.Where(t => t.Date >= DateOnly.FromDateTime(DateTime.Today)).ExecuteAsync(),
+	                PreviousEvents = await myEvents.Where(t => t.Date < DateOnly.FromDateTime(DateTime.Today)).ExecuteAsync(),
+                };
+
+				return View("MyHome", model);
             }
             else
             {
+	            List<Tournament> recentEvents = await _tournamentRepository.Query()
+		            .Order(t => t.OrderByDescending<Tournament, DateTime>(t => t.CreationDate)).Take(10).ExecuteAsync();
+
                 return View();
             }
         }
