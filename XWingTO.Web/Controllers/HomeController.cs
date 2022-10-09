@@ -10,10 +10,14 @@ namespace XWingTO.Web.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IRepository<Tournament, Guid> _tournamentRepository;
+        private readonly IRepository<TournamentPlayer, Guid> _tournamentPlayerRepository;
 
-	    public HomeController(UserManager<ApplicationUser> userManager, IRepository<Tournament, Guid> tournamentRepository)
+	    public HomeController(UserManager<ApplicationUser> userManager, IRepository<Tournament, Guid> tournamentRepository, 
+		    IRepository<TournamentPlayer, Guid> tournamentPlayerRepository)
 	    {
             _userManager = userManager;
+            _tournamentRepository = tournamentRepository;
+            _tournamentPlayerRepository = tournamentPlayerRepository;
 	    }
 
         public async Task<IActionResult> Index()
@@ -23,12 +27,19 @@ namespace XWingTO.Web.Controllers
 	            ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
                 Guid userId = user.Id;
 
-                var myEvents = _tournamentRepository.Query().Where(t => t.TOId == userId || t.Players.Select(p => p.PlayerId).Contains(userId));
+                var myTOEvents = await _tournamentRepository.Query().Where(t => t.TOId == userId).ExecuteAsync();
+                //var myTournamentPlayers = _tournamentPlayerRepository.Query().Where(tp => tp.PlayerId == userId);
+                
+                
+                
+
+                var myEvents = myTOEvents;
+                
 
                 MyHomeViewModel model = new MyHomeViewModel
                 {
-	                UpcomingEvents = await myEvents.Where(t => t.Date >= DateOnly.FromDateTime(DateTime.Today)).ExecuteAsync(),
-	                PreviousEvents = await myEvents.Where(t => t.Date < DateOnly.FromDateTime(DateTime.Today)).ExecuteAsync(),
+	                UpcomingEvents = myEvents.Where(t => t.Date >= DateOnly.FromDateTime(DateTime.Today)).ToList(),
+	                PreviousEvents = myEvents.Where(t => t.Date < DateOnly.FromDateTime(DateTime.Today)).ToList(),
                 };
 
 				return View("MyHome", model);

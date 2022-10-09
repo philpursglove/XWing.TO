@@ -48,7 +48,7 @@ namespace XWingTO.Web.Controllers
 			ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
 			Guid userId = currentUser.Id;
 
-			var myEvents = _tournamentRepository.Query().Where(t => t.TOId == userId || t.Players.Select(p => p.PlayerId).Contains(userId));
+			var myTOEvents = await _tournamentRepository.Query().Where(t => t.TOId == userId).ExecuteAsync();
 
 			return View();
 		}
