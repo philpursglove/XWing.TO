@@ -1,10 +1,13 @@
-﻿@model XWingTO.Web.ViewModels.Home.MyHomeViewModel
+﻿@using XWingTO.Core
+@model XWingTO.Web.ViewModels.Home.MyHomeViewModel
 
 Upcoming Events
 
 @if (Model.UpcomingEvents.Any())
 {
-	<div></div>
+	<div>
+
+	</div>
 }
 else
 {
@@ -17,7 +20,17 @@ Previous Events
 
 @if (Model.PreviousEvents.Any())
 {
-	<div></div>
+			@foreach (Tournament tournament in Model.PreviousEvents.OrderByDescending(t => t.Date))
+			{
+				<div class="row">
+					<a asp-controller="Tournament" asp-action="Display" asp-route-id="@tournament.Id">@tournament.Name</a>
+				</div>
+				<div class="row">
+					<i class="fa-solid fa-calendar-days"></i>@tournament.Date.ToString("yyyy-MM-dd")
+					<i class="fa-solid fa-person"></i>
+					<i class="fa-solid fa-globe"></i>
+                </div>
+			}
 }
 else
 {
