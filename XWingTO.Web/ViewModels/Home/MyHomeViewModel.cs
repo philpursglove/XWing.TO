@@ -2,7 +2,7 @@
 {
 	public class MyHomeViewModel
 	{
-		public List<Core.Tournament> PreviousEvents { get; set; }
-		public List<Core.Tournament> UpcomingEvents { get; set; }
+		public List<TournamentListDisplayModel> PreviousEvents { get; set; }
+		public List<TournamentListDisplayModel> UpcomingEvents { get; set; }
 	}
 }
