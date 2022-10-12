@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject IWebHostEnvironment hostingEnv
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -12,43 +14,48 @@
 	<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-	<div class="container">
-		<nav class="navbar navbar-expand-lg bg-light">
-			<div class="container-fluid">
-				<a class="navbar-brand" asp-controller="Home" asp-action="Index">
-					<img src="/images/XWing.TO Logo.svg" class="img-fluid" alt="XWing.TO logo"/>
-				</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								Tournaments
-							</a>
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" asp-controller="Tournament" asp-action="Search">Search</a></li>
-								<li><hr class="dropdown-divider"></li>
-								<li><a class="dropdown-item" asp-controller="Tournament" asp-action="MyEvents">My Tournaments</a></li>
-								<li><hr class="dropdown-divider"></li>
-								<li><a class="dropdown-item" asp-controller="Tournament" asp-action="Create">Create Tournament</a></li>
-							</ul>
-						</li>
-					</ul>
-					<partial name="_LoginPartial"/>
-				</div>
-			</div>
-		</nav>
-		<div class="text-center d-none d-md-block">
-			<!-- Randomised text to go here - View Component? -->
-			<h6 class="small fst-italic">Squadron up!</h6>
-		</div>
-		<div>
-			@RenderBody()
-		</div>
-
+<environment include="Development, Staging">
+	<div class="alert alert-primary">
+		Environment is @hostingEnv.EnvironmentName
 	</div>
+</environment>
+<div class="container">
+	<nav class="navbar navbar-expand-lg bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand" asp-controller="Home" asp-action="Index">
+				<img src="/images/XWing.TO Logo.svg" class="img-fluid" alt="XWing.TO logo"/>
+			</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							Tournaments
+						</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" asp-controller="Tournament" asp-action="Search">Search</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li><a class="dropdown-item" asp-controller="Tournament" asp-action="MyEvents">My Tournaments</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li><a class="dropdown-item" asp-controller="Tournament" asp-action="Create">Create Tournament</a></li>
+						</ul>
+					</li>
+				</ul>
+				<partial name="_LoginPartial"/>
+			</div>
+		</div>
+	</nav>
+	<div class="text-center d-none d-md-block">
+		<!-- Randomised text to go here - View Component? -->
+		<h6 class="small fst-italic">Squadron up!</h6>
+	</div>
+	<div>
+		@RenderBody()
+	</div>
+
+</div>
 <footer class="fixed-bottom">
 	<div class="row d-none d-md-block">
 		<!-- Ads go here -->
