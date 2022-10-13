@@ -6,9 +6,18 @@ Upcoming Events
 
 @if (Model.UpcomingEvents.Any())
 {
-	<div>
-
-	</div>
+	@foreach (TournamentListDisplayModel tournament in Model.UpcomingEvents.OrderByDescending(t => t.Date))
+	{
+		<div class="row">
+			<a asp-controller="Tournament" asp-action="Display" asp-route-id="@tournament.Id">@tournament.Name</a>
+		</div>
+		<div class="row">
+			<i class="fa-solid fa-calendar-days"></i>@tournament.Date
+			<i class="fa-solid fa-people-group"></i>@tournament.PlayerCount
+			<i class="fa-solid fa-globe"></i>@tournament.Location
+			<i class="fa-solid fa-person"></i>@tournament.TOName
+		</div>
+	}
 }
 else
 {
@@ -21,18 +30,18 @@ Previous Events
 
 @if (Model.PreviousEvents.Any())
 {
-			@foreach (TournamentListDisplayModel tournament in Model.PreviousEvents.OrderByDescending(t => t.Date))
-			{
-				<div class="row">
-					<a asp-controller="Tournament" asp-action="Display" asp-route-id="@tournament.Id">@tournament.Name</a>
-				</div>
-				<div class="row">
-					<i class="fa-solid fa-calendar-days"></i>@tournament.Date
+	@foreach (TournamentListDisplayModel tournament in Model.PreviousEvents.OrderByDescending(t => t.Date))
+	{
+		<div class="row">
+			<a asp-controller="Tournament" asp-action="Display" asp-route-id="@tournament.Id">@tournament.Name</a>
+		</div>
+		<div class="row">
+			<i class="fa-solid fa-calendar-days"></i>@tournament.Date
 			<i class="fa-solid fa-people-group"></i>@tournament.PlayerCount
-					<i class="fa-solid fa-globe"></i>@tournament.Location
+			<i class="fa-solid fa-globe"></i>@tournament.Location
 			<i class="fa-solid fa-person"></i>@tournament.TOName
-                </div>
-			}
+		</div>
+	}
 }
 else
 {
