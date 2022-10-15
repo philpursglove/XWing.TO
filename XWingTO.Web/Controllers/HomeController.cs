@@ -37,13 +37,13 @@ namespace XWingTO.Web.Controllers
 
                 var myEvents = myTOEvents;
 
-                foreach (Tournament tournament in myEvents.Where(t => t.Date >= DateOnly.FromDateTime(DateTime.Today)))
+                foreach (Tournament tournament in myEvents.Where(t => t.Date >= DateOnly.FromDateTime(DateTime.Today)).Take(10))
                 {
 	                upcomingEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
 		                tournament.Players));
                 }
 
-                foreach (Tournament tournament in myEvents.Where(t => t.Date < DateOnly.FromDateTime(DateTime.Today)))
+                foreach (Tournament tournament in myEvents.Where(t => t.Date < DateOnly.FromDateTime(DateTime.Today)).Take(10))
                 {
 	                previousEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
 		                tournament.Players));
@@ -61,8 +61,13 @@ namespace XWingTO.Web.Controllers
             {
 	            List<Tournament> recentEvents = await _tournamentRepository.Query()
 		            .Order(t => t.OrderByDescending<Tournament, DateTime>(t => t.CreationDate)).Take(10).ExecuteAsync();
+	            List<TournamentListDisplayModel> tournaments = new List<TournamentListDisplayModel>(10);
 
-                return View();
+	            foreach (Tournament recentEvent in recentEvents)
+	            {
+		            tournaments.Add(new TournamentListDisplayModel(recentEvent.Id, recentEvent.Name, recentEvent.Date, recentEvent.Players));
+	            }
+                return View(tournaments);
             }
         }
     }
