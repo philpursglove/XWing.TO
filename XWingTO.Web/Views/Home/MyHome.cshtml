@@ -1,7 +1,7 @@
 ﻿@using XWingTO.Web.ViewModels
 @model XWingTO.Web.ViewModels.Home.MyHomeViewModel
 
-Upcoming Events
+<h4>Upcoming Events</h4>
 
 @if (Model.UpcomingEvents.Any())
 {
@@ -11,10 +11,12 @@ Upcoming Events
 			<a asp-controller="Tournament" asp-action="Display" asp-route-id="@tournament.Id">@tournament.Name</a>
 		</div>
 		<div class="row">
-			<i class="fa-solid fa-calendar-days"></i>@tournament.Date
-			<i class="fa-solid fa-people-group"></i>@tournament.PlayerCount
-			<i class="fa-solid fa-globe"></i>@tournament.Location
-			<i class="fa-solid fa-person"></i>@tournament.TOName
+			<div>
+				<i class="fa-solid fa-calendar-days"></i>&nbsp;@tournament.Date
+				<i class="fa-solid fa-people-group"></i>&nbsp;@tournament.PlayerCount
+				<i class="fa-solid fa-globe"></i>&nbsp;@tournament.Location
+				<i class="fa-solid fa-crown"></i>&nbsp;@tournament.TOName
+			</div>
 		</div>
 	}
 }
@@ -25,7 +27,7 @@ else
 	</div>
 }
 
-Previous Events
+<h4>Previous Events</h4>
 
 @if (Model.PreviousEvents.Any())
 {
@@ -35,10 +37,12 @@ Previous Events
 			<a asp-controller="Tournament" asp-action="Display" asp-route-id="@tournament.Id">@tournament.Name</a>
 		</div>
 		<div class="row">
-			<i class="fa-solid fa-calendar-days"></i>@tournament.Date
-			<i class="fa-solid fa-people-group"></i>@tournament.PlayerCount
-			<i class="fa-solid fa-globe"></i>@tournament.Location
-			<i class="fa-solid fa-person"></i>@tournament.TOName
+			<div>
+				<i class="fa-solid fa-calendar-days"></i>&nbsp;@tournament.Date
+				<i class="fa-solid fa-people-group"></i>&nbsp;@tournament.PlayerCount
+				<i class="fa-solid fa-globe"></i>&nbsp;@tournament.Location
+				<i class="fa-solid fa-crown"></i>&nbsp;@tournament.TOName
+			</div>
 		</div>
 	}
 }
