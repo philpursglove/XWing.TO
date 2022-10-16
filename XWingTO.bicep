@@ -1,19 +1,29 @@
-﻿@allowed([
+﻿targetScope = 'subscription'
+
+@allowed([
   'Development'
   'Test'
   'Production'
 ])
 param environment string
 
-param location string
+var environmentSettings = {
+    Development: {
+        environmentAbbreviation: '-dev'
+    }
+    Test: {
+        environmentAbbreviation: '-test'
+    }
+    Production: {
+        environmentAbbreviation: ''
+    }
+}
 
-var environmentAbbreviation = environment == 'Production' ? '' : environment == 'Test' ? '-test' : '-dev'
-
-targetScope = 'subscription'
+var abbreviation = environmentSettings[environment].environmentAbbreviation
 
 resource rgXWing 'Microsoft.Resources/resourceGroups@2021-01-01' = {
-  name: 'rg-XWingTO${environmentAbbreviation}'
-  location: location
+  name: 'rg-XWingTO${abbreviation}'
+  location: 'uksouth'
 }
 
 module appservice 'AppService.bicep' = {
@@ -22,6 +32,6 @@ module appservice 'AppService.bicep' = {
     params: {
         location: rgXWing.location
         environment: environment
-        abbreviation: environmentAbbreviation
+        abbreviation: abbreviation
     }
 }
