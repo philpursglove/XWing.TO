@@ -12,7 +12,7 @@ namespace XWingTO.Web.Controllers
 		private readonly IRepository<Tournament, Guid> _tournamentRepository;
 		private readonly IRepository<TournamentPlayer, Guid> _tournamentPlayerRepository;
 		private readonly UserManager<ApplicationUser> _userManager;
-		public TournamentController(IRepository<Tournament, Guid> tournamentRepository, 
+		public TournamentController(IRepository<Tournament, Guid> tournamentRepository,
 			IRepository<TournamentPlayer, Guid> tournamentPlayerRepository,
 			UserManager<ApplicationUser> userManager)
 		{
@@ -28,14 +28,52 @@ namespace XWingTO.Web.Controllers
 
 		public IActionResult Index(Guid id)
 		{
-			return RedirectToAction("Display", new {id});
+			return RedirectToAction("Display", new { id });
 		}
 
 		public async Task<IActionResult> Display(Guid id)
 		{
-			Tournament tournament = await _tournamentRepository.Query().Include(t => t.Players).FirstOrDefault(t => t.Id == id);
+			Tournament tournament = await _tournamentRepository.Query().FirstOrDefault(t => t.Id == id);
 
-			return View();
+			TournamentDisplayModel model = new TournamentDisplayModel
+			{
+				Tournament = tournament
+			};
+
+			var organiser = await _userManager.FindByIdAsync(tournament.TOId.ToString());
+			model.TOName = organiser.UserName;
+
+			var tournamentPlayers = await _tournamentPlayerRepository.Query().Where(tp => tp.TournamentId == tournament.Id).Include(p => p.Player).ExecuteAsync();
+			if (tournamentPlayers.Any())
+			{
+				foreach (TournamentPlayer tournamentPlayer in tournamentPlayers)
+				{
+					model.Players.Add(new TournamentPlayerDisplayModel
+					{ Points = tournamentPlayer.Points, Name = tournamentPlayer.Player.UserName });
+				}
+
+				if (HttpContext.User.Identity.IsAuthenticated)
+				{
+					var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+					if (tournamentPlayers.Any(tp => tp.PlayerId == currentUser.Id))
+					{
+						model.UserIsRegistered = true;
+					}
+					else
+					{
+						model.UserIsRegistered = false;
+					}
+				}
+
+				model.PlayerCount = tournamentPlayers.Count().ToString();
+			}
+			else
+			{
+				model.PlayerCount = "0";
+				model.UserIsRegistered = false;
+			}
+
+			return View(model);
 		}
 
 		public IActionResult Search()
@@ -96,7 +134,7 @@ namespace XWingTO.Web.Controllers
 
 				await _tournamentRepository.Add(tournament);
 
-				return RedirectToAction("Edit", "Tournament", new { tournament.Id});
+				return RedirectToAction("Edit", "Tournament", new { tournament.Id });
 			}
 
 			return View(model);
@@ -133,7 +171,7 @@ namespace XWingTO.Web.Controllers
 
 				await _tournamentRepository.Update(tournament);
 
-				return RedirectToAction("Edit", new {model.Id});
+				return RedirectToAction("Edit", new { model.Id });
 			}
 
 			return View(model);

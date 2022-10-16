@@ -1,5 +1,46 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using XWingTO.Web.ViewModels.Tournament
+@model XWingTO.Web.ViewModels.Tournament.TournamentDisplayModel
+
 @{
+	Layout = "_Layout";
 }
+
+<div class="row">
+	<h2>@Model.Tournament.Name</h2>
+</div>
+<div class="row">
+	<div>
+		<i class="fa-solid fa-calendar-days"></i>&nbsp;@Model.Tournament.Date
+		<i class="fa-solid fa-crown"></i>&nbsp;@Model.TOName
+		<i class="fa-solid fa-people-group"></i>&nbsp;@Model.PlayerCount
+		<i class="fa-solid fa-globe"></i>&nbsp;
+	</div>
+</div>
+<div class="row">
+	<table class="table">
+		<thead>
+		<tr>
+			<th>
+				Player
+			</th>
+			<th>
+				Points
+			</th>
+		</tr>
+		</thead>
+		<tbody>
+		@foreach (TournamentPlayerDisplayModel player in Model.Players.OrderByDescending(p => p.Points))
+		{
+			<tr>
+				<td>
+					@player.Name
+				</td>
+				<td>
+					@player.Points
+				</td>
+
+			</tr>
+		}
+		</tbody>
+	</table>
+</div>
