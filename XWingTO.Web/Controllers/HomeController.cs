@@ -29,13 +29,13 @@ namespace XWingTO.Web.Controllers
                 Guid userId = user.Id;
 
                 var myTOEvents = await _tournamentRepository.Query().Where(t => t.TOId == userId).ExecuteAsync();
-                //var myTournamentPlayers = _tournamentPlayerRepository.Query().Where(tp => tp.PlayerId == userId);
-                
+                var myTournamentPlayers = _tournamentPlayerRepository.Query().Where(t => t.PlayerId == userId);
+                var myPlayEvents = await myTournamentPlayers.Select(t => t.Tournament).ExecuteAsync();
                 
                 List<TournamentListDisplayModel> upcomingEvents = new List<TournamentListDisplayModel>();
                 List<TournamentListDisplayModel> previousEvents = new List<TournamentListDisplayModel>();
 
-                var myEvents = myTOEvents;
+                var myEvents = myTOEvents.Union(myPlayEvents);
 
                 foreach (Tournament tournament in myEvents.Where(t => t.Date >= DateOnly.FromDateTime(DateTime.Today)).Take(10))
                 {
