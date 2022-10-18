@@ -67,7 +67,7 @@ namespace XWingTO.Web.Controllers
 	            {
 		            tournaments.Add(new TournamentListDisplayModel(recentEvent.Id, recentEvent.Name, recentEvent.Date, recentEvent.Players));
 	            }
-                return View(tournaments);
+                return View("Index", tournaments);
             }
         }
     }
