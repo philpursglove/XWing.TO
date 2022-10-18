@@ -4,7 +4,7 @@
     {
         Task<T> Get(TKey id);
 
-        Query<T> Query();
+        IQuery<T> Query();
 
         Task Add(T entity);
 
