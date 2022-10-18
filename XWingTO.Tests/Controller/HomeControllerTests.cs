@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Options;
 using NSubstitute;
@@ -27,8 +29,21 @@ namespace XWingTO.Tests.Controller
 			identity.IsAuthenticated.Returns(false);
 			principal.Identity.Returns(identity);
 			context.User.Returns(principal);
+			var serviceProvider = Substitute.For<IServiceProvider>();
+			serviceProvider
+				.GetService(Arg.Is(typeof(ITempDataDictionaryFactory)))
+				.Returns(Substitute.For<ITempDataDictionaryFactory>());
+			serviceProvider
+				.GetService(Arg.Is(typeof(IUrlHelperFactory)))
+				.Returns(Substitute.For<IUrlHelperFactory>());
+			context.RequestServices.Returns(serviceProvider);
+
+			IRepository<Tournament, Guid> tournamentRepository = Substitute.For<IRepository<Tournament, Guid>>();
+			
+			tournamentRepository.Query().Returns(new FakeQuery<Tournament>(new List<Tournament>{new Tournament{Name = "test tournament"}}.AsQueryable()));
+
 			HomeController controller = new HomeController(new UserManager<ApplicationUser>(Substitute.For<IUserStore<ApplicationUser>>(), null, null, null, null, null,null,null, null), 
-				Substitute.For<IRepository<Tournament, Guid>>(), Substitute.For<IRepository<TournamentPlayer, Guid>>());
+				tournamentRepository, Substitute.For<IRepository<TournamentPlayer, Guid>>());
 
 			controller.ControllerContext = new ControllerContext(new ActionContext(context, new RouteData(), new ControllerActionDescriptor(), new ModelStateDictionary()));
 
