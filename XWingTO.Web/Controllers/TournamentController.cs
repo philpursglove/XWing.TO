@@ -178,25 +178,28 @@ namespace XWingTO.Web.Controllers
 
 		}
 
-		public async Task<IActionResult> Register(Guid id)
+		public async Task<IActionResult> Register(Guid tournamentId)
 		{
-			Tournament tournament = await _tournamentRepository.Get(id);
-			RegisterViewModel model = new RegisterViewModel();
-			return View(model);
+			ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+			TournamentPlayer tournamentPlayer = new TournamentPlayer
+			{
+				TournamentId = tournamentId,
+				PlayerId = currentUser.Id,
+			};
+			await _tournamentPlayerRepository.Add(tournamentPlayer);
+
+			return RedirectToAction("Display", new {id = tournamentId});
 		}
 
-		[HttpPost]
-		public IActionResult Register(RegisterViewModel model)
+		public async Task<IActionResult> Unregister(Guid tournamentId)
 		{
-			TournamentPlayer tournamentPlayer = new TournamentPlayer()
-			{
-				TournamentId = model.TournamentId,
-				PlayerId = model.PlayerId
-			};
+			ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+			TournamentPlayer tournamentPlayer = await _tournamentPlayerRepository.Query()
+				.FirstOrDefault(tp => tp.PlayerId == currentUser.Id && tp.TournamentId == tournamentId);
 
-			_tournamentPlayerRepository.Add(tournamentPlayer);
+			await _tournamentPlayerRepository.Delete(tournamentPlayer);
 
-			return RedirectToAction("MyEvents");
+			return RedirectToAction("Display", new { id = tournamentId });
 		}
 
 		[HttpPost]

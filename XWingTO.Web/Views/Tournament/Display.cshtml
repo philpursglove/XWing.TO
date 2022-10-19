@@ -17,13 +17,19 @@
 	</div>
 </div>
 <div class="row">
-	@if (Model.UserIsRegistered)
+	@if (Model.Tournament.Date >= DateOnly.FromDateTime(DateTime.Today))
 	{
-		// Unregister
-	}
-	else
-	{
-		// Rgister
+		if (Model.UserIsRegistered)
+		{
+			// Unregister
+			<a class="btn btn-danger" asp-controller="Tournament" asp-action="Unregister" asp-route-tournamentid="@Model.Tournament.Id">Unregister</a>
+		}
+		else
+		{
+			// Rgister
+			<a class="btn btn-success" asp-controller="Tournament" asp-action="Register" asp-route-tournamentid="@Model.Tournament.Id">Register</a>
+		}
+
 	}
 </div>
 <div class="row">
