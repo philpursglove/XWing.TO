@@ -6,6 +6,8 @@ namespace XWingTO.Data
 	{
 		IQuery<T> Where(Expression<Func<T, bool>> filter);
 
+		bool Any(Expression<Func<T, bool>> filter);
+
 		Task<List<T>> ExecuteAsync(CancellationToken cancellationToken = new CancellationToken());
 
 		IQuery<TResult> Select<TResult>(Expression<Func<T, TResult>> selector) where TResult : class;

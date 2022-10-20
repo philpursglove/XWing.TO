@@ -30,6 +30,11 @@ namespace XWingTO.Tests
 			return this;
 		}
 
+		public bool Any(Expression<Func<T, bool>> filter)
+		{
+			return _query.Any(filter);
+		}
+
 		public IQuery<T> Order(Func<IQueryable<T>, IQueryable<T>> orderBy)
 		{
 			_query = orderBy(_query);

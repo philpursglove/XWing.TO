@@ -8,6 +8,8 @@ public class Query<T> : IQuery<T>, IEnumerable where T : class
 {
 	private IQueryable<T> _query;
 
+	
+
 	public Query(IQueryable<T> query)
 	{
 		_query = query;
@@ -27,6 +29,11 @@ public class Query<T> : IQuery<T>, IEnumerable where T : class
 	{
 		_query = _query.Where(filter);
 		return this;
+	}
+
+	public bool Any(Expression<Func<T, bool>> filter)
+	{
+		return _query.Any(filter);
 	}
 
 	public IQuery<T> Order(Func<IQueryable<T>, IQueryable<T>> orderBy)
