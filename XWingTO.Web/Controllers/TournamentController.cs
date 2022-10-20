@@ -181,12 +181,17 @@ namespace XWingTO.Web.Controllers
 		public async Task<IActionResult> Register(Guid tournamentId)
 		{
 			ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
-			TournamentPlayer tournamentPlayer = new TournamentPlayer
+			bool existingPlayer = _tournamentPlayerRepository.Query().Any(tp => tp.PlayerId == currentUser.Id);
+
+			if (!existingPlayer)
 			{
-				TournamentId = tournamentId,
-				PlayerId = currentUser.Id,
-			};
-			await _tournamentPlayerRepository.Add(tournamentPlayer);
+				TournamentPlayer tournamentPlayer = new TournamentPlayer
+				{
+					TournamentId = tournamentId,
+					PlayerId = currentUser.Id,
+				};
+				await _tournamentPlayerRepository.Add(tournamentPlayer);
+			}
 
 			return RedirectToAction("Display", new {id = tournamentId});
 		}
