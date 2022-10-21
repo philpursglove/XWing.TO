@@ -1,5 +1,54 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@using XWingTO.Web.ViewModels
+@model XWingTO.Web.ViewModels.Home.MyHomeViewModel
+
+<h4>Upcoming Events</h4>
+
+@if (Model.UpcomingEvents.Any())
+{
+	@foreach (TournamentListDisplayModel tournament in Model.UpcomingEvents.OrderBy(t => t.Date))
+	{
+		<div class="row">
+			<a asp-controller="Tournament" asp-action="Display" asp-route-id="@tournament.Id">@tournament.Name</a>
+		</div>
+		<div class="row">
+			<div>
+				<i class="fa-solid fa-calendar-days"></i>&nbsp;@tournament.Date
+				<i class="fa-solid fa-people-group"></i>&nbsp;@tournament.PlayerCount
+				<i class="fa-solid fa-globe"></i>&nbsp;@tournament.Location
+				<i class="fa-solid fa-crown"></i>&nbsp;@tournament.TOName
+			</div>
+		</div>
+	}
+}
+else
+{
+	<div>
+		You have no upcoming tournaments.
+	</div>
+}
+
+<h4>Previous Events</h4>
+
+@if (Model.PreviousEvents.Any())
+{
+	@foreach (TournamentListDisplayModel tournament in Model.PreviousEvents.OrderByDescending(t => t.Date))
+	{
+		<div class="row">
+			<a asp-controller="Tournament" asp-action="Display" asp-route-id="@tournament.Id">@tournament.Name</a>
+		</div>
+		<div class="row">
+			<div>
+				<i class="fa-solid fa-calendar-days"></i>&nbsp;@tournament.Date
+				<i class="fa-solid fa-people-group"></i>&nbsp;@tournament.PlayerCount
+				<i class="fa-solid fa-globe"></i>&nbsp;@tournament.Location
+				<i class="fa-solid fa-crown"></i>&nbsp;@tournament.TOName
+			</div>
+		</div>
+	}
+}
+else
+{
+	<div>
+		You have no previous tournaments.
+	</div>
 }
