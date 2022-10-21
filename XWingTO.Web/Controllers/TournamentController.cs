@@ -1,8 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using XWingTO.Core;
 using XWingTO.Data;
+using XWingTO.Web.ViewModels.Home;
+using XWingTO.Web.ViewModels;
 using XWingTO.Web.ViewModels.Tournament;
 
 namespace XWingTO.Web.Controllers
@@ -21,6 +24,7 @@ namespace XWingTO.Web.Controllers
 			_userManager = userManager;
 		}
 
+		[Authorize]
 		public IActionResult Index()
 		{
 			return RedirectToAction("MyEvents");
@@ -81,17 +85,44 @@ namespace XWingTO.Web.Controllers
 			return View();
 		}
 
+		[Authorize]
 		public async Task<IActionResult> MyEvents()
 		{
-			ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
-			Guid userId = currentUser.Id;
+			ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
+			Guid userId = user.Id;
 
 			var myTOEvents = await _tournamentRepository.Query().Where(t => t.TOId == userId).ExecuteAsync();
+			var myTournamentPlayers = _tournamentPlayerRepository.Query().Where(t => t.PlayerId == userId);
+			var myPlayEvents = await myTournamentPlayers.Select(t => t.Tournament).ExecuteAsync();
 
-			return View();
+			List<TournamentListDisplayModel> upcomingEvents = new List<TournamentListDisplayModel>();
+			List<TournamentListDisplayModel> previousEvents = new List<TournamentListDisplayModel>();
+
+			var myEvents = myTOEvents.Union(myPlayEvents);
+
+			foreach (Tournament tournament in myEvents.Where(t => t.Date >= DateOnly.FromDateTime(DateTime.Today)).Take(10))
+			{
+				upcomingEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
+					tournament.Players));
+			}
+
+			foreach (Tournament tournament in myEvents.Where(t => t.Date < DateOnly.FromDateTime(DateTime.Today)).Take(10))
+			{
+				previousEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
+					tournament.Players));
+			}
+
+			MyHomeViewModel model = new MyHomeViewModel
+			{
+				UpcomingEvents = upcomingEvents,
+				PreviousEvents = previousEvents,
+			};
+
+			return View("MyEvents", model);
+
 		}
 
-
+		[Authorize]
 		public async Task<IActionResult> Create()
 		{
 			ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
@@ -107,6 +138,7 @@ namespace XWingTO.Web.Controllers
 		}
 
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> Create(CreateTournamentViewModel model)
 		{
 			if (model.Date == new DateOnly(1, 1, 1))
@@ -140,44 +172,67 @@ namespace XWingTO.Web.Controllers
 			return View(model);
 		}
 
+		[Authorize]
 		public async Task<IActionResult> Edit(Guid id)
 		{
+			ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+
 			Tournament tournament = await _tournamentRepository.Get(id);
-			EditTournamentViewModel model = new EditTournamentViewModel()
+
+			if (tournament.TOId == currentUser.Id)
 			{
-				Id = id,
-				Name = tournament.Name,
-				Date = tournament.Date,
-				Country = tournament.Country,
-				State = tournament.State,
-				City = tournament.City,
-				Venue = tournament.Venue
-			};
-			return View(model);
+				EditTournamentViewModel model = new EditTournamentViewModel()
+				{
+					Id = id,
+					Name = tournament.Name,
+					Date = tournament.Date,
+					Country = tournament.Country,
+					State = tournament.State,
+					City = tournament.City,
+					Venue = tournament.Venue
+				};
+				return View(model);
+			}
+			else
+			{
+				return Forbid();
+			}
 		}
 
+		[Authorize]
 		[HttpPost]
 		public async Task<IActionResult> Edit(EditTournamentViewModel model)
 		{
 			if (ModelState.IsValid)
 			{
+				ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+
 				Tournament tournament = await _tournamentRepository.Get(model.Id);
-				tournament.Name = model.Name;
-				tournament.Date = model.Date;
-				tournament.Country = model.Country;
-				tournament.State = model.State;
-				tournament.City = model.City;
-				tournament.Venue = model.Venue;
 
-				await _tournamentRepository.Update(tournament);
+				if (tournament.TOId == currentUser.Id)
+				{
+					tournament.Name = model.Name;
+					tournament.Date = model.Date;
+					tournament.Country = model.Country;
+					tournament.State = model.State;
+					tournament.City = model.City;
+					tournament.Venue = model.Venue;
 
-				return RedirectToAction("Edit", new { model.Id });
+					await _tournamentRepository.Update(tournament);
+
+					return RedirectToAction("Edit", new {model.Id});
+				}
+				else
+				{
+					return Forbid();
+				}
 			}
 
 			return View(model);
 
 		}
 
+		[Authorize]
 		public async Task<IActionResult> Register(Guid tournamentId)
 		{
 			ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
@@ -196,6 +251,7 @@ namespace XWingTO.Web.Controllers
 			return RedirectToAction("Display", new {id = tournamentId});
 		}
 
+		[Authorize]
 		public async Task<IActionResult> Unregister(Guid tournamentId)
 		{
 			ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
@@ -207,6 +263,7 @@ namespace XWingTO.Web.Controllers
 			return RedirectToAction("Display", new { id = tournamentId });
 		}
 
+		[Authorize]
 		[HttpPost]
 		public async Task<IActionResult> GenerateRound(Guid id)
 		{
