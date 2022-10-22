@@ -49,6 +49,28 @@ namespace XWingTO.Tests
         }
 
         [Test]
+        public void Table_Numbers_Are_Assigned()
+        {
+	        List<TournamentPlayer> players = new List<TournamentPlayer>();
+
+	        for (int i = 1; i <= 4; i++)
+	        {
+		        TournamentPlayer player = new TournamentPlayer { Player = new ApplicationUser { UserName = $"Player{i}" } };
+		        players.Add(player);
+	        }
+
+	        var result = pairer.Pair(players);
+
+			Assert.Multiple(() =>
+			{
+				Game game = result.First();
+				Assert.That(game.TableNumber, Is.EqualTo(1));
+				game = result.Last();
+				Assert.That(game.TableNumber, Is.EqualTo(2));
+			});
+		}
+
+		[Test]
         public void A_Dropped_Player_Is_Not_Paired()
         {
             TournamentPlayer alice = new TournamentPlayerBuilder().WithName("Alice");

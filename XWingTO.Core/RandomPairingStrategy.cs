@@ -9,6 +9,9 @@ public class RandomPairingStrategy : IPairingStrategy
         while (players.Any())
         {
             Game newGame = new Game();
+
+            newGame.TableNumber = games.Count + 1;
+
             newGame.Player1 = players.Random();
             players.Remove(newGame.Player1);
 

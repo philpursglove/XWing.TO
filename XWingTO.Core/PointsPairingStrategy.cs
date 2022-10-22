@@ -32,6 +32,9 @@ public class PointsPairingStrategy : IPairingStrategy
             while (bracketPlayers.Any())
             {
                 Game newGame = new Game();
+
+				newGame.TableNumber = games.Count + 1;
+
                 if (bracketPlayers.Any(p => p.Bye))
                 {
                     newGame.Player1 = bracketPlayers.Where(p => p.Bye).Random();
