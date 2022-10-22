@@ -282,7 +282,7 @@ namespace XWingTO.Web.Controllers
 			}
 			else
 			{
-				strategy = new PointsPairingStrategy();
+				strategy = new RandomPairingStrategy();
 			}
 
 			Pairer pairer = new Pairer(strategy);
