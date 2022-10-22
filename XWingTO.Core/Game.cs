@@ -19,4 +19,6 @@ public class Game
 	public int Turns { get; set; }
 
 	public bool OutOfTime { get; set; }
+
+	public int TableNumber { get; set; }
 }
