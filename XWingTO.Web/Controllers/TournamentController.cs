@@ -264,12 +264,30 @@ namespace XWingTO.Web.Controllers
 		}
 
 		[Authorize]
-		[HttpPost]
 		public async Task<IActionResult> GenerateRound(Guid id)
 		{
-			Tournament tournament = await _tournamentRepository.Query().Include(t => t.Players).Include(t => t.Rounds).FirstOrDefault(t => t.Id == id);
+			Tournament tournament = await _tournamentRepository.Query().Include(t => t.Players).Include(t => t.Rounds)
+				.FirstOrDefault(t => t.Id == id);
 
-			return View();
+			TournamentRound round = new TournamentRound
+			{
+				TournamentId = id,
+				RoundNumber = tournament.Rounds.Count() + 1
+			};
+
+			IPairingStrategy strategy;
+			if (tournament.Rounds.Any())
+			{
+				strategy = new PointsPairingStrategy();
+			}
+			else
+			{
+				strategy = new PointsPairingStrategy();
+			}
+
+			round.Games = strategy.Pair(tournament.Players.ToList());
+
+			return View(round);
 		}
 	}
 }
