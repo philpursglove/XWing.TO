@@ -285,9 +285,18 @@ namespace XWingTO.Web.Controllers
 				strategy = new PointsPairingStrategy();
 			}
 
-			round.Games = strategy.Pair(tournament.Players.ToList());
+			Pairer pairer = new Pairer(strategy);
 
-			return View(round);
+			round.Games = pairer.Pair(tournament.Players.ToList());
+
+			return View(new RoundViewModel{Round = round});
+		}
+
+		[Authorize]
+		[HttpPost]
+		public async Task<IActionResult> GenerateRound(RoundViewModel round)
+		{
+			return Ok();
 		}
 	}
 }
