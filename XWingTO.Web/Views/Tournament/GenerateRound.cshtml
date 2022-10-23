@@ -5,7 +5,7 @@
 	Layout = "_Layout";
 }
 
-@foreach (Game game in Model.Round.Games)
+@foreach (Game game in Model.Round.Games.OrderBy(g => g.TableNumber))
 {
 	<div>
 		<div class="row">
