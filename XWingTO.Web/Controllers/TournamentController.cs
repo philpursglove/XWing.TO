@@ -15,13 +15,16 @@ namespace XWingTO.Web.Controllers
 		private readonly IRepository<Tournament, Guid> _tournamentRepository;
 		private readonly IRepository<TournamentPlayer, Guid> _tournamentPlayerRepository;
 		private readonly UserManager<ApplicationUser> _userManager;
+		private readonly IRepository<Game, Guid> _gameRepository;
 		public TournamentController(IRepository<Tournament, Guid> tournamentRepository,
 			IRepository<TournamentPlayer, Guid> tournamentPlayerRepository,
-			UserManager<ApplicationUser> userManager)
+			UserManager<ApplicationUser> userManager,
+			IRepository<Game, Guid> gameRepository)
 		{
 			_tournamentRepository = tournamentRepository;
 			_tournamentPlayerRepository = tournamentPlayerRepository;
 			_userManager = userManager;
+			_gameRepository = gameRepository;
 		}
 
 		[Authorize]
@@ -298,5 +301,42 @@ namespace XWingTO.Web.Controllers
 		{
 			return Ok();
 		}
+
+		[Authorize]
+		public async Task<IActionResult> ResultSubmission(Guid gameId)
+		{
+			Game game = await _gameRepository.Get(gameId);
+
+			if (game == null)
+			{
+				return NotFound();
+			}
+
+			ResultSubmissionViewModel model = new ResultSubmissionViewModel();
+
+			TournamentPlayer player1 = await _tournamentPlayerRepository.Get(game.TournamentPlayer1Id);
+			TournamentPlayer player2 = await _tournamentPlayerRepository.Get(game.TournamentPlayer2Id);
+			ApplicationUser user1 = await _userManager.FindByIdAsync(player1.PlayerId.ToString());
+			ApplicationUser user2 = await _userManager.FindByIdAsync(player2.PlayerId.ToString());
+
+			model.Player1Name = user1.UserName;
+			model.Player2Name = user2.UserName;
+			model.GameId = game.Id;
+
+			return View(model);
+		}
+
+		[Authorize]
+		[HttpPost]
+		public async Task<IActionResult> ResultSubmission(ResultSubmissionViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				return RedirectToAction();
+			}
+
+			return View(model);
+		}
+
 	}
 }

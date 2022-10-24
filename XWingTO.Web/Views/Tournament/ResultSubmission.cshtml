@@ -1,0 +1,43 @@
+﻿@model XWingTO.Web.ViewModels.Tournament.ResultSubmissionViewModel
+
+@{
+	Layout = "_Layout";
+}
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+	@Html.HiddenFor(m => m.GameId)
+	<div class="row">
+		<div>
+			@Model.Player1Name
+		</div>
+		<div>
+			@Html.TextBoxFor(m => m.Player1MissionPoints)
+		</div>
+	</div>
+	<div class="row">
+		<div>
+			@Model.Player2Name
+		</div>
+		<div>
+			@Html.TextBoxFor(m => m.Player2MissionPoints)
+		</div>
+	</div>
+	<div class="row">
+		<div>
+			Turns
+		</div>
+		<div>
+			@Html.TextBoxFor(m => m.Turns)
+		</div>
+		<div>
+			Out of Time
+		</div>
+		<div>
+			@Html.CheckBoxFor(m => m.OutOfTime)
+		</div>
+	</div>
+	<div class="row">
+		<input type="submit" class="btn btn-success" value="Submit"/>
+	</div>
+}
