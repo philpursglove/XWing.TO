@@ -8,6 +8,10 @@ public class Game
 
 	public TournamentRound Round { get; set; }
 
+	public Guid TournamentPlayer1Id { get; set; }
+
+	public Guid TournamentPlayer2Id { get; set; }
+
 	public TournamentPlayer Player1 { get; set; }
 
 	public TournamentPlayer Player2 { get; set; }
