@@ -9,5 +9,11 @@
 		public int Turns { get; set; }
 		public bool OutOfTime { get; set; }
 		public Guid GameId { get; set; }
+		public Guid TournamentId { get; set; }
+		public bool Player1Concede { get; set; }
+		public bool Player2Concede { get; set; }
+
+		public bool Player1Drop { get; set; }
+		public bool Player2Drop { get; set; }
 	}
 }

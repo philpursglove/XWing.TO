@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using XWingTO.Core;
+using XWingTO.Core.Messages;
 using XWingTO.Data;
 using XWingTO.Web.ViewModels.Home;
 using XWingTO.Web.ViewModels;
@@ -305,7 +306,8 @@ namespace XWingTO.Web.Controllers
 		[Authorize]
 		public async Task<IActionResult> ResultSubmission(Guid gameId)
 		{
-			Game game = await _gameRepository.Get(gameId);
+			Game game = await _gameRepository.Query().Include(g => g.Round).FirstOrDefault(g => g.Id == gameId);
+			Guid tournamentId = game.Round.TournamentId;
 
 			if (game == null)
 			{
@@ -322,6 +324,7 @@ namespace XWingTO.Web.Controllers
 			model.Player1Name = user1.UserName;
 			model.Player2Name = user2.UserName;
 			model.GameId = game.Id;
+			model.TournamentId = tournamentId;
 
 			return View(model);
 		}
@@ -332,7 +335,20 @@ namespace XWingTO.Web.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				return RedirectToAction();
+				GameScoreMessage scoreMessage = new GameScoreMessage
+				{
+					GameId = model.GameId,
+					Player1Points = model.Player1MissionPoints,
+					Player2Points = model.Player2MissionPoints,
+					Turns = model.Turns,
+					OutOfTime = model.OutOfTime,
+					Player1Concede = model.Player1Concede,
+					Player2Concede = model.Player2Concede,
+					Player1Drop = model.Player1Drop,
+					Player2Drop = model.Player2Drop
+				};
+
+				return RedirectToAction("Display", new {id = model.TournamentId});
 			}
 
 			return View(model);

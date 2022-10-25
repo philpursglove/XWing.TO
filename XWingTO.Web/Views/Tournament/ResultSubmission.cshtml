@@ -7,6 +7,7 @@
 @using (Html.BeginForm(FormMethod.Post))
 {
 	@Html.HiddenFor(m => m.GameId)
+	@Html.HiddenFor(m => m.TournamentId)
 	<div class="row">
 		<div>
 			@Model.Player1Name
@@ -22,6 +23,16 @@
 		<div>
 			@Html.TextBoxFor(m => m.Player2MissionPoints)
 		</div>
+	</div>
+	<div class="row">
+		<div>Conceded?</div>
+		<div>@Html.CheckBoxFor(m => m.Player1Concede)</div>
+		<div>@Html.CheckBoxFor(m => m.Player2Concede)</div>
+	</div>
+	<div class="row">
+		<div>Wish to drop?</div>
+		<div>@Html.CheckBoxFor(m => m.Player1Drop)</div>
+		<div>@Html.CheckBoxFor(m => m.Player2Drop)</div>
 	</div>
 	<div class="row">
 		<div>
