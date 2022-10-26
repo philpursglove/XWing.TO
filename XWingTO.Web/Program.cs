@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using XWingTO.Core;
 using XWingTO.Data;
 using DbContext = XWingTO.Data.DbContext;
+using Microsoft.Extensions.Azure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,11 @@ builder.Services.Configure<IdentityOptions>(options =>
 	options.Password.RequiredUniqueChars = 1;
 
 	options.User.RequireUniqueEmail = true;
+});
+builder.Services.AddAzureClients(clientBuilder =>
+{
+	clientBuilder.AddBlobServiceClient(builder.Configuration["StorageConnectionString:blob"], preferMsi: true);
+	clientBuilder.AddQueueServiceClient(builder.Configuration["StorageConnectionString:queue"], preferMsi: true);
 });
 
 var app = builder.Build();
