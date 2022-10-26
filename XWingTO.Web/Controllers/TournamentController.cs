@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Azure.Storage.Queues;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,7 @@ using XWingTO.Data;
 using XWingTO.Web.ViewModels.Home;
 using XWingTO.Web.ViewModels;
 using XWingTO.Web.ViewModels.Tournament;
+using static Newtonsoft.Json.JsonConvert;
 
 namespace XWingTO.Web.Controllers
 {
@@ -17,15 +19,18 @@ namespace XWingTO.Web.Controllers
 		private readonly IRepository<TournamentPlayer, Guid> _tournamentPlayerRepository;
 		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly IRepository<Game, Guid> _gameRepository;
+		private readonly IConfiguration _configuration;
 		public TournamentController(IRepository<Tournament, Guid> tournamentRepository,
 			IRepository<TournamentPlayer, Guid> tournamentPlayerRepository,
 			UserManager<ApplicationUser> userManager,
-			IRepository<Game, Guid> gameRepository)
+			IRepository<Game, Guid> gameRepository,
+			IConfiguration configuration)
 		{
 			_tournamentRepository = tournamentRepository;
 			_tournamentPlayerRepository = tournamentPlayerRepository;
 			_userManager = userManager;
 			_gameRepository = gameRepository;
+			_configuration = configuration;
 		}
 
 		[Authorize]
@@ -347,6 +352,16 @@ namespace XWingTO.Web.Controllers
 					Player1Drop = model.Player1Drop,
 					Player2Drop = model.Player2Drop
 				};
+
+				string queueConnectionString = _configuration.GetConnectionString("XWingTO.Queue");
+				QueueClient queueClient = new QueueClient(queueConnectionString, "");
+
+				await queueClient.CreateIfNotExistsAsync();
+
+				if (await queueClient.ExistsAsync())
+				{
+					await queueClient.SendMessageAsync(SerializeObject(scoreMessage));
+				}
 
 				return RedirectToAction("Display", new {id = model.TournamentId});
 			}
