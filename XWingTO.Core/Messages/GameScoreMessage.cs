@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace XWingTO.Core.Messages
+﻿namespace XWingTO.Core.Messages
 {
 	public class GameScoreMessage
 	{
