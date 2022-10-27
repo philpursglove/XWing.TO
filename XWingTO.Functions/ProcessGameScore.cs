@@ -59,7 +59,7 @@ namespace XWingTO.Functions
 	            }
 	            else
 	            {
-		            if (game.Player1MissionPoints > game.Player2MissionPoints)
+		            if (gameScoreMessage.Player1Points > gameScoreMessage.Player2Points)
 		            {
 			            // Player 1 win
 			            player1.Points += 3;
@@ -83,8 +83,8 @@ namespace XWingTO.Functions
 	            player2.Dropped = true;
             }
 
-            _tournamentPlayerRepository.Update(player1);
-            _tournamentPlayerRepository.Update(player2);
+            await _tournamentPlayerRepository.Update(player1);
+            await _tournamentPlayerRepository.Update(player2);
         }
 	}
 }
