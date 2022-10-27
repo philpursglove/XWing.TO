@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XWingTO.Infrastructure", "X
 		XWingTO.bicep = XWingTO.bicep
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XWingTO.Functions", "XWingTO.Functions\XWingTO.Functions.csproj", "{5993A0A4-FC0D-4B74-8B76-748D15CD7CD6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9BBF85DE-DBF4-4A92-9BB5-C76AE2332956}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BBF85DE-DBF4-4A92-9BB5-C76AE2332956}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BBF85DE-DBF4-4A92-9BB5-C76AE2332956}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5993A0A4-FC0D-4B74-8B76-748D15CD7CD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5993A0A4-FC0D-4B74-8B76-748D15CD7CD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5993A0A4-FC0D-4B74-8B76-748D15CD7CD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5993A0A4-FC0D-4B74-8B76-748D15CD7CD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
