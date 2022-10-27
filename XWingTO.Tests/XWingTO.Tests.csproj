@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\XWingTO.Core\XWingTO.Core.csproj" />
+    <ProjectReference Include="..\XWingTO.Functions\XWingTO.Functions.csproj" />
     <ProjectReference Include="..\XWingTO.Web\XWingTO.Web.csproj" />
   </ItemGroup>
 
