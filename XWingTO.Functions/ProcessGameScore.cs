@@ -83,6 +83,8 @@ namespace XWingTO.Functions
 	            player2.Dropped = true;
             }
 
-		}
+            _tournamentPlayerRepository.Update(player1);
+            _tournamentPlayerRepository.Update(player2);
+        }
 	}
 }
