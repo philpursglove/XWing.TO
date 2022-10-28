@@ -98,5 +98,46 @@ namespace XWingTO.Tests.Functions
 			TournamentPlayer player1 = await _tournamentPlayerRepository.Get(_player1Id);
 			Assert.That(player1.Points, Is.EqualTo(3));
 		}
+
+		[Test]
+		public async Task When_Player_1_Drops_TournamentPlayer_Is_Updated()
+		{
+			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player1Drop = true};
+
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			await function.Run(JsonConvert.SerializeObject(message), _logger);
+
+			TournamentPlayer player1 = await _tournamentPlayerRepository.Get(_player1Id);
+			Assert.That(player1.Dropped, Is.True);
+		}
+
+		[Test]
+		public async Task When_Player_2_Drops_TournamentPlayer_Is_Updated()
+		{
+			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player2Drop = true };
+
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			await function.Run(JsonConvert.SerializeObject(message), _logger);
+
+			TournamentPlayer player2 = await _tournamentPlayerRepository.Get(_player2Id);
+			Assert.That(player2.Dropped, Is.True);
+		}
+
+		[Test]
+		public async Task When_Both_Players_Drop_Both_TournamentPlayers_Are_Updated()
+		{
+			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player1Drop = true, Player2Drop = true};
+
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			await function.Run(JsonConvert.SerializeObject(message), _logger);
+
+			TournamentPlayer player1 = await _tournamentPlayerRepository.Get(_player1Id);
+			TournamentPlayer player2 = await _tournamentPlayerRepository.Get(_player2Id);
+			Assert.Multiple(() =>
+			{
+				Assert.That(player1.Dropped, Is.True);
+				Assert.That(player2.Dropped, Is.True);
+			});
+		}
 	}
 }
