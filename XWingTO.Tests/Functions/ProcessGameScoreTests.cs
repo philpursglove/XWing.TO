@@ -139,5 +139,57 @@ namespace XWingTO.Tests.Functions
 				Assert.That(player2.Dropped, Is.True);
 			});
 		}
+
+		[Test]
+		public async Task Both_Players_Receive_The_Mission_Points_They_Scored()
+		{
+			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10 };
+
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			await function.Run(JsonConvert.SerializeObject(message), _logger);
+
+			TournamentPlayer player1 = await _tournamentPlayerRepository.Get(_player1Id);
+			TournamentPlayer player2 = await _tournamentPlayerRepository.Get(_player2Id);
+			Assert.Multiple(() =>
+			{
+				Assert.That(player1.MissionPoints, Is.EqualTo(10));
+				Assert.That(player2.MissionPoints, Is.EqualTo(10));
+			});
+		}
+
+		[Test]
+		public async Task When_Player_1_Concedes_Player_2_Receives_Twenty_Mission_Points_And_Player_1_Receives_None()
+		{
+			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player1Concede = true };
+
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			await function.Run(JsonConvert.SerializeObject(message), _logger);
+
+			TournamentPlayer player1 = await _tournamentPlayerRepository.Get(_player1Id);
+			TournamentPlayer player2 = await _tournamentPlayerRepository.Get(_player2Id);
+			Assert.Multiple(() =>
+			{
+				Assert.That(player1.MissionPoints, Is.EqualTo(0));
+				Assert.That(player2.MissionPoints, Is.EqualTo(20));
+			});
+		}
+
+		[Test]
+		public async Task When_Player_2_Concedes_Player_1_Receives_Twenty_Mission_Points_And_Player_2_Receives_None()
+		{
+			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player2Concede = true };
+
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			await function.Run(JsonConvert.SerializeObject(message), _logger);
+
+			TournamentPlayer player1 = await _tournamentPlayerRepository.Get(_player1Id);
+			TournamentPlayer player2 = await _tournamentPlayerRepository.Get(_player2Id);
+			Assert.Multiple(() =>
+			{
+				Assert.That(player1.MissionPoints, Is.EqualTo(20));
+				Assert.That(player2.MissionPoints, Is.EqualTo(0));
+			});
+		}
+
 	}
 }
