@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XWingTO.Infrastructure", "XWingTO.Infrastructure", "{74076879-B673-4BA8-8F5F-4DA4B7A11CF3}"
 	ProjectSection(SolutionItems) = preProject
 		AppService.bicep = AppService.bicep
+		Database.bicep = Database.bicep
 		XWingTO.bicep = XWingTO.bicep
 	EndProjectSection
 EndProject
