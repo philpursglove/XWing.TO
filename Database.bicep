@@ -3,7 +3,7 @@ param environment string
 param abbreviation string
 
 resource sqlServer 'Microsoft.Sql/servers@2014-04-01' ={
-  name: 'sql-XWingTO${abbreviation}'
+  name: 'sql-xwingto${abbreviation}'
   location: location
 }
 
