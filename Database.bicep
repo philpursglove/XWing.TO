@@ -11,6 +11,7 @@ resource sqlServer 'Microsoft.Sql/servers@2021-11-01' = {
       administratorLogin: 'darthvader'
       administratorLoginPassword: sqlAdminPassword
       publicNetworkAccess: 'Disabled'
+      minimalTlsVersion: '1.2'
   }
 }
 
