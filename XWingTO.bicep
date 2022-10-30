@@ -24,7 +24,7 @@ var environmentSettings = {
 var abbreviation = environmentSettings[environment].environmentAbbreviation
 
 resource rgXWing 'Microsoft.Resources/resourceGroups@2021-01-01' = {
-    name: 'rg-XWingTO${abbreviation}'
+    name: 'rg-xwingto${abbreviation}'
     location: 'uksouth'
 }
 

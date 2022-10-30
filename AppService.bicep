@@ -3,7 +3,7 @@ param environment string
 param abbreviation string
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2020-12-01' = {
-  name: 'plan-XWingTO${abbreviation}'
+  name: 'plan-xwingto${abbreviation}'
   location: location
   sku: {
     name: 'F1'
@@ -13,7 +13,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2020-12-01' = {
 
 
 resource appService 'Microsoft.Web/sites@2021-01-15' = {
-  name: 'app-XWingTO${abbreviation}'
+  name: 'app-xwingto${abbreviation}'
   location: location
   tags: {
     'hidden-related:${resourceGroup().id}/providers/Microsoft.Web/serverfarms/appServicePlan': 'Resource'
