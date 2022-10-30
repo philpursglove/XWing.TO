@@ -6,6 +6,8 @@
     'Production'
 ])
 param environment string
+@secure()
+param sqlAdminPassword string
 
 var environmentSettings = {
     Development: {
@@ -33,6 +35,7 @@ module database 'Database.bicep' = {
         location: rgXWing.location
         environment: environment
         abbreviation: abbreviation
+        sqlAdminPassword: sqlAdminPassword
     }
 }
 
