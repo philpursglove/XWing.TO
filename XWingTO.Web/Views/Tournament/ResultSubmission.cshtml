@@ -13,7 +13,7 @@
 			@Model.Player1Name
 		</div>
 		<div>
-			@Html.TextBoxFor(m => m.Player1MissionPoints)
+			@Html.TextBoxFor(m => m.Player1MissionPoints, new { type = "number", min = "0"})
 		</div>
 	</div>
 	<div class="row">
@@ -21,7 +21,7 @@
 			@Model.Player2Name
 		</div>
 		<div>
-			@Html.TextBoxFor(m => m.Player2MissionPoints)
+			@Html.TextBoxFor(m => m.Player2MissionPoints, new { type = "number", min = "0"})
 		</div>
 	</div>
 	<div class="row">
@@ -39,7 +39,7 @@
 			Turns
 		</div>
 		<div>
-			@Html.TextBoxFor(m => m.Turns)
+			@Html.TextBoxFor(m => m.Turns, new { type = "number", min="1" , max="12"})
 		</div>
 		<div>
 			Out of Time
