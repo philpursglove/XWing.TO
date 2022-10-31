@@ -305,7 +305,7 @@ namespace XWingTO.Web.Controllers
 		[HttpPost]
 		public async Task<IActionResult> GenerateRound(RoundViewModel round)
 		{
-			return Ok();
+			return Ok(Task.CompletedTask);
 		}
 
 		[Authorize]
@@ -313,6 +313,7 @@ namespace XWingTO.Web.Controllers
 		{
 			Game game = await _gameRepository.Query().Include(g => g.Round).FirstOrDefault(g => g.Id == gameId);
 			Guid tournamentId = game.Round.TournamentId;
+			Guid toId = _tournamentRepository.Query().FirstOrDefault(t => t.Id == tournamentId).Result.TOId;
 
 			if (game == null)
 			{
@@ -326,12 +327,19 @@ namespace XWingTO.Web.Controllers
 			ApplicationUser user1 = await _userManager.FindByIdAsync(player1.PlayerId.ToString());
 			ApplicationUser user2 = await _userManager.FindByIdAsync(player2.PlayerId.ToString());
 
-			model.Player1Name = user1.UserName;
-			model.Player2Name = user2.UserName;
-			model.GameId = game.Id;
-			model.TournamentId = tournamentId;
+			Guid currentUserId = _userManager.GetUserAsync(HttpContext.User).Result.Id;
+			if (currentUserId == toId || currentUserId == game.TournamentPlayer1Id ||
+			    currentUserId == game.TournamentPlayer2Id)
+			{
+				model.Player1Name = user1.UserName;
+				model.Player2Name = user2.UserName;
+				model.GameId = game.Id;
+				model.TournamentId = tournamentId;
 
-			return View(model);
+				return View(model);
+			}
+
+			return Forbid();
 		}
 
 		[Authorize]
