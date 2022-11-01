@@ -20,17 +20,20 @@ namespace XWingTO.Web.Controllers
 		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly IRepository<Game, Guid> _gameRepository;
 		private readonly IConfiguration _configuration;
+		private readonly IRepository<TournamentRound, Guid> _tournamentRoundRepository;
 		public TournamentController(IRepository<Tournament, Guid> tournamentRepository,
 			IRepository<TournamentPlayer, Guid> tournamentPlayerRepository,
 			UserManager<ApplicationUser> userManager,
 			IRepository<Game, Guid> gameRepository,
-			IConfiguration configuration)
+			IConfiguration configuration,
+			IRepository<TournamentRound, Guid> tournamentRoundRepository)
 		{
 			_tournamentRepository = tournamentRepository;
 			_tournamentPlayerRepository = tournamentPlayerRepository;
 			_userManager = userManager;
 			_gameRepository = gameRepository;
 			_configuration = configuration;
+			_tournamentRoundRepository = tournamentRoundRepository;
 		}
 
 		[Authorize]
@@ -298,7 +301,9 @@ namespace XWingTO.Web.Controllers
 
 			round.Games = pairer.Pair(tournament.Players.ToList());
 
-			return View(new RoundViewModel{Round = round});
+			await _tournamentRoundRepository.Add(round);
+
+			return RedirectToAction("Display", new {id = tournament.Id});
 		}
 
 		[Authorize]
