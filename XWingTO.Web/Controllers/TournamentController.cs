@@ -50,6 +50,8 @@ namespace XWingTO.Web.Controllers
 		public async Task<IActionResult> Display(Guid id)
 		{
 			Tournament tournament = await _tournamentRepository.Query().FirstOrDefault(t => t.Id == id);
+			List<TournamentRound> rounds = await _tournamentRoundRepository.Query()
+				.Where(tr => tr.TournamentId == tournament.Id).Include(tr => tr.Games).ExecuteAsync();
 
 			TournamentDisplayModel model = new TournamentDisplayModel
 			{
