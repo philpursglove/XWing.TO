@@ -15,10 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XWingTO.Infrastructure", "X
 	ProjectSection(SolutionItems) = preProject
 		AppService.bicep = AppService.bicep
 		Database.bicep = Database.bicep
+		FunctionApp.bicep = FunctionApp.bicep
 		XWingTO.bicep = XWingTO.bicep
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XWingTO.Functions", "XWingTO.Functions\XWingTO.Functions.csproj", "{5993A0A4-FC0D-4B74-8B76-748D15CD7CD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XWingTO.Functions", "XWingTO.Functions\XWingTO.Functions.csproj", "{5993A0A4-FC0D-4B74-8B76-748D15CD7CD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
