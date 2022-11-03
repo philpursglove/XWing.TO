@@ -35,31 +35,63 @@
 <div class="row">
 	<table class="table">
 		<thead>
-		<tr>
-			<th>
-				Player
-			</th>
-			<th>
-				Points
-			</th>
-		</tr>
+			<tr>
+				<th>
+					Player
+				</th>
+				<th>
+					Points
+				</th>
+			</tr>
 		</thead>
 		<tbody>
-		@foreach (TournamentPlayerDisplayModel player in Model.Players.OrderByDescending(p => p.Points))
-		{
-			<tr>
-				<td>
-					@player.Name
-				</td>
-				<td>
-					@player.Points
-				</td>
+			@foreach (TournamentPlayerDisplayModel player in Model.Players.OrderByDescending(p => p.Points))
+			{
+				<tr>
+					<td>
+						@player.Name
+					</td>
+					<td>
+						@player.Points
+					</td>
 
-			</tr>
-		}
+				</tr>
+			}
 		</tbody>
 	</table>
 </div>
 <div class="row">
-	<!-- Rounds go here -->
+	<div class="accordion" id="roundsAccordion">
+		@foreach (TournamentRoundDisplayModel round in Model.Rounds.OrderBy(r => r.Round))
+		{
+			string heading = $"heading{@round.Round}";
+			string collapse = $"collapse{@round.Round}";
+			string buttonStyle;
+
+			@if (round.Round == Model.Rounds.Count)
+			{
+				buttonStyle = "accordion-collapse";
+			}
+			else
+			{
+				buttonStyle = "accordion-collapse collapsed";
+			}
+			<div class="accordion-item">
+					<h2 class="accordion-header" id="@heading">
+						<button class="@buttonStyle" type="button" data-bs-toggle="collapse" data-bs-target="#@collapse" aria-expanded="true" aria-controls="@collapse">
+							Round @round.Round
+						</button>
+					</h2>
+					<div id="@collapse" class="accordion-collapse collapse show" aria-labelledby="@heading" data-bs-parent="#roundsAccordion">
+						<div class="accordion-body">
+							Round games
+						</div>
+					</div>
+				</div>
+
+			}
+
+
+		}
+	</div>
 </div>

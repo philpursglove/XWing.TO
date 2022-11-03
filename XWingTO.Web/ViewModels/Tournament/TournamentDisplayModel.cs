@@ -6,9 +6,12 @@
 
 		public List<TournamentPlayerDisplayModel> Players { get; set; }
 
+		public List<TournamentRoundDisplayModel> Rounds { get; set; }
+
 		public TournamentDisplayModel()
 		{
 			Players = new List<TournamentPlayerDisplayModel>();
+			Rounds = new List<TournamentRoundDisplayModel>();
 		}
 
 		public string TOName { get; set; }
@@ -21,5 +24,10 @@
 		public string Name { get; set; }
 		public int Points { get; set; }
 
+	}
+
+	public class TournamentRoundDisplayModel
+	{
+		public int Round { get; set; }
 	}
 }
