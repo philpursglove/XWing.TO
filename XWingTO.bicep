@@ -1,5 +1,6 @@
 ﻿targetScope = 'subscription'
 
+param location string = deployment().location
 @allowed([
     'Development'
     'Test'
@@ -25,7 +26,7 @@ var abbreviation = environmentSettings[environment].environmentAbbreviation
 
 resource rgXWing 'Microsoft.Resources/resourceGroups@2021-01-01' = {
     name: 'rg-xwingto${abbreviation}'
-    location: 'uksouth'
+    location: location
 }
 
 module database 'Database.bicep' = {
