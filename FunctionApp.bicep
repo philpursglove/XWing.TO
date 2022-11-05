@@ -1,25 +1,31 @@
 ﻿param location string
 param abbreviation string
+param storageAccountName string
+param appInsightsId string
+
+resource appServicePlan 'Microsoft.Web/serverfarms@2020-12-01' existing = {
+  name: 'plan-xwingto${abbreviation}'
+}
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-02-01' existing = {
+  name: storageAccountName
+}
 
 resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
   name: 'func-xwingto${abbreviation}'
   location: location
   kind: 'functionapp'
   properties: {
-    serverFarmId: 'plan-xwingto${abbreviation}'
+    serverFarmId: appServicePlan.id
     siteConfig: {
       appSettings: [
         {
           name: 'AzureWebJobsStorage'
-          value: 'DefaultEndpointsProtocol=https;AccountName=${7:storageAccountName2};AccountKey=${listKeys(${8:'storageAccountID2'}, '2019-06-01').key1}'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${listKeys(storageAccount.id, '2019-06-01').key1}'
         }
         {
           name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
-          value: 'DefaultEndpointsProtocol=https;AccountName=${9:storageAccountName3};AccountKey=${listKeys(${10:'storageAccountID3'}, '2019-06-01').key1}'
-        }
-        {
-          name: 'WEBSITE_CONTENTSHARE'
-          value: toLower(${11:'name'})
+          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${listKeys(storageAccount.id, '2019-06-01').key1}'
         }
         {
           name: 'FUNCTIONS_EXTENSION_VERSION'
@@ -27,7 +33,7 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
-          value: reference(${12:'insightsComponents.id'}, '2015-05-01').InstrumentationKey
+          value: reference(appInsightsId, '2015-05-01').InstrumentationKey
         }
         {
           name: 'FUNCTIONS_WORKER_RUNTIME'
