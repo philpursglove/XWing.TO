@@ -49,3 +49,32 @@ module appservice 'AppService.bicep' = {
         abbreviation: abbreviation
     }
 }
+
+module appInsights 'AppInsights.bicep' = {
+    name: 'appInsights'
+    scope: rgXWing
+    params: {
+        location: rgXWing.location
+        abbreviation: abbreviation
+    }
+}
+
+module storage 'StorageAccount.bicep' = {
+    name: 'storage'
+    scope: rgXWing
+    params: {
+        location: location
+        environment: environment
+    }
+}
+
+module functionApp 'FunctionApp.bicep' = {
+    name: 'functionApp'
+    scope: rgXWing
+    params: {
+        location: location
+        abbreviation: abbreviation
+        storageAccountName: storage.outputs.storageAccountName
+        appInsightsId: appInsights.outputs.appInsightsId
+    }
+}
