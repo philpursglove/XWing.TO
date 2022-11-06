@@ -6,7 +6,7 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-10
   location: location
   properties: {
     sku: {
-      name: 'Free'
+      name: 'PerGB2018'
     }
   }
 }
@@ -20,6 +20,8 @@ resource appInsightsComponents 'Microsoft.Insights/components@2020-02-02' = {
     Application_Type: 'web'
     WorkspaceResourceId: logAnalyticsWorkspace.id
     RetentionInDays: 60
+    Flow_Type: 'Bluefield'
+    Request_Source: 'rest'
   }
 }
 
