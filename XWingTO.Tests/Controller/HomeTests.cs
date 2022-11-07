@@ -16,7 +16,7 @@ using XWingTO.Web.Controllers;
 namespace XWingTO.Tests.Controller
 {
 	[TestFixture]
-	public class HomeControllerTests
+	public class HomeTests
 	{
 		[Test]
 		public async Task Unauthenticated_Index_Shows_Anonymous_View()
