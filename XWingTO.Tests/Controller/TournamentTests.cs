@@ -18,6 +18,7 @@ using NSubstitute;
 using XWingTO.Core;
 using XWingTO.Data;
 using XWingTO.Web.Controllers;
+using Microsoft.Extensions.Options;
 
 namespace XWingTO.Tests.Controller
 {
@@ -44,8 +45,7 @@ namespace XWingTO.Tests.Controller
 			_round = new TournamentRound() { Id = Guid.NewGuid(), TournamentId = _tournament.Id };
 			_tournament.Rounds = new List<TournamentRound>() { _round };
 			_tournamentRepository = Substitute.For<IRepository<Tournament, Guid>>();
-			_tournamentQuery = Substitute.For<IQuery<Tournament>>();
-			_tournamentQuery.Include(t => t.Rounds).FirstOrDefault(t => t.Id == _tournament.Id).Returns(_tournament);
+			_tournamentQuery = new FakeQuery<Tournament>((new List<Tournament> {_tournament}).AsQueryable());
 			_tournamentRepository.Query().Returns(_tournamentQuery);
 			_tournamentPlayerRepository = Substitute.For<IRepository<TournamentPlayer, Guid>>();
 			_gameRepository = Substitute.For<IRepository<Game, Guid>>();
@@ -56,16 +56,19 @@ namespace XWingTO.Tests.Controller
 			_userStore.FindByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(_user);
 			_userStore.FindByNameAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(_user);
 			
-
 			_tournamentRoundQuery = new FakeQuery<TournamentRound>((new List<TournamentRound> {_round}).AsQueryable());
 			_tournamentRoundRepository.Query().Returns(_tournamentRoundQuery);
 
 			HttpContext context = Substitute.For<HttpContext>();
-			ClaimsPrincipal principal = Substitute.For<ClaimsPrincipal>();
-			IIdentity identity = Substitute.For<IIdentity>();
-			identity.IsAuthenticated.Returns(false);
-			principal.Identity.Returns(identity);
+			List<Claim> claims = new List<Claim>
+			{
+				new Claim(new IdentityOptions().ClaimsIdentity.UserIdClaimType, _user.Id.ToString())
+			};
+			ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims);
+			ClaimsPrincipal principal = new ClaimsPrincipal(claimsIdentity);
+
 			context.User.Returns(principal);
+
 			var serviceProvider = Substitute.For<IServiceProvider>();
 			serviceProvider
 				.GetService(Arg.Is(typeof(ITempDataDictionaryFactory)))
@@ -75,7 +78,6 @@ namespace XWingTO.Tests.Controller
 				.Returns(Substitute.For<IUrlHelperFactory>());
 			context.RequestServices.Returns(serviceProvider);
 			_controllerContext = new ControllerContext(new ActionContext(context, new RouteData(), new ControllerActionDescriptor(), new ModelStateDictionary()));
-
 		}
 
 		[Test]

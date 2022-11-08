@@ -251,7 +251,7 @@ namespace XWingTO.Web.Controllers
 		{
 			List<TournamentRound> rounds =
 				await _tournamentRoundRepository.Query().Where(t => t.TournamentId == tournamentId).ExecuteAsync();
-			if (rounds.Any())
+			if (!rounds.Any())
 			{
 				ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
 				bool existingPlayer = _tournamentPlayerRepository.Query().Any(tp => tp.PlayerId == currentUser.Id);
