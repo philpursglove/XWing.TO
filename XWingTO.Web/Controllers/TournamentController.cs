@@ -278,7 +278,10 @@ namespace XWingTO.Web.Controllers
 			TournamentPlayer tournamentPlayer = await _tournamentPlayerRepository.Query()
 				.FirstOrDefault(tp => tp.PlayerId == currentUser.Id && tp.TournamentId == tournamentId);
 
-			await _tournamentPlayerRepository.Delete(tournamentPlayer);
+			if (tournamentPlayer != null)
+			{
+				await _tournamentPlayerRepository.Delete(tournamentPlayer);
+			}
 
 			return RedirectToAction("Display", new { id = tournamentId });
 		}

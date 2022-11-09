@@ -1,24 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using NSubstitute;
+using System.Security.Claims;
 using XWingTO.Core;
 using XWingTO.Data;
 using XWingTO.Web.Controllers;
-using Microsoft.Extensions.Options;
 
 namespace XWingTO.Tests.Controller
 {
@@ -37,6 +30,7 @@ namespace XWingTO.Tests.Controller
 		IUserStore<ApplicationUser> _userStore;
 		IQuery<TournamentRound> _tournamentRoundQuery;
 		ControllerContext _controllerContext;
+		IQuery<TournamentPlayer> _tournamentPlayerQuery;
 
 		[SetUp]
 		public void Setup()
@@ -58,6 +52,10 @@ namespace XWingTO.Tests.Controller
 			
 			_tournamentRoundQuery = new FakeQuery<TournamentRound>((new List<TournamentRound> {_round}).AsQueryable());
 			_tournamentRoundRepository.Query().Returns(_tournamentRoundQuery);
+
+			//_tournamentPlayerQuery = new FakeQuery<TournamentPlayer>((new List<TournamentPlayer>
+			//	{new TournamentPlayer {TournamentId = _tournament.Id, PlayerId = _user.Id}}).AsQueryable());
+			//_tournamentPlayerRepository.Query().Returns(_tournamentPlayerQuery);
 
 			HttpContext context = Substitute.For<HttpContext>();
 			List<Claim> claims = new List<Claim>
@@ -81,7 +79,7 @@ namespace XWingTO.Tests.Controller
 		}
 
 		[Test]
-		public async Task Player_Should_Not_Be_Able_To_Registe_For_A_Tournament_That_Has_Started()
+		public async Task Player_Should_Not_Be_Able_To_Register_For_A_Tournament_That_Has_Started()
 		{
 			TournamentController controller = new TournamentController(_tournamentRepository,
 				_tournamentPlayerRepository, new UserManager<ApplicationUser>(_userStore, null, null, null, null, null, null, null, null ), 
@@ -91,19 +89,35 @@ namespace XWingTO.Tests.Controller
 
 			await controller.Register(_tournament.Id);
 
-			_tournamentPlayerRepository.DidNotReceive().Add(Arg.Any<TournamentPlayer>());
+			await _tournamentPlayerRepository.DidNotReceive().Add(Arg.Any<TournamentPlayer>());
 		}
 
 		[Test]
-		public void Player_Should_Not_Be_Able_To_Register_For_A_Tournament_Multiple_Times()
+		public async Task Player_Should_Not_Be_Able_To_Register_For_A_Tournament_Multiple_Times()
 		{
-			Assert.That(true, Is.False);
+			TournamentController controller = new TournamentController(_tournamentRepository,
+				_tournamentPlayerRepository, new UserManager<ApplicationUser>(_userStore, null, null, null, null, null, null, null, null),
+				_gameRepository, _configuration, _tournamentRoundRepository);
+
+			controller.ControllerContext = _controllerContext;
+
+			await controller.Register(_tournament.Id);
+
+			await _tournamentPlayerRepository.DidNotReceive().Add(Arg.Any<TournamentPlayer>());
 		}
 
 		[Test]
-		public void Unregistered_Player_Should_Not_Be_Able_To_Unregister_From_A_Tournament()
+		public async Task Unregistered_Player_Should_Not_Be_Able_To_Unregister_From_A_Tournament()
 		{
-			Assert.That(true, Is.False);
+			TournamentController controller = new TournamentController(_tournamentRepository,
+				_tournamentPlayerRepository, new UserManager<ApplicationUser>(_userStore, null, null, null, null, null, null, null, null),
+				_gameRepository, _configuration, _tournamentRoundRepository);
+
+			controller.ControllerContext = _controllerContext;
+
+			await controller.Unregister(_tournament.Id);
+
+			await _tournamentPlayerRepository.DidNotReceive().Delete(Arg.Any<TournamentPlayer>());
 		}
 	}
 }
