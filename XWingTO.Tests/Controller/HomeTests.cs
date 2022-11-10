@@ -92,7 +92,7 @@ namespace XWingTO.Tests.Controller
 
 			IRepository<Tournament, Guid> tournamentRepository = Substitute.For<IRepository<Tournament, Guid>>();
 
-			HomeController controller = new HomeController(new UserManager<ApplicationUser>(Substitute.For<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null),
+			HomeController controller = new HomeController(new UserManager<ApplicationUser>(_userStore, null, null, null, null, null, null, null, null),
 				tournamentRepository, Substitute.For<IRepository<TournamentPlayer, Guid>>());
 
 			controller.ControllerContext = new ControllerContext(new ActionContext(context, new RouteData(), new ControllerActionDescriptor(), new ModelStateDictionary()));

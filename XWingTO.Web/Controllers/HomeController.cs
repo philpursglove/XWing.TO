@@ -35,9 +35,18 @@ namespace XWingTO.Web.Controllers
                 List<TournamentListDisplayModel> upcomingEvents = new List<TournamentListDisplayModel>();
                 List<TournamentListDisplayModel> previousEvents = new List<TournamentListDisplayModel>();
 
-                var myEvents = myTOEvents.Union(myPlayEvents);
+                List<Tournament> myEvents = new List<Tournament>();
+                if (myTOEvents != null && myTOEvents.Any())
+                {
+	                myEvents.AddRange(myTOEvents);
+                }
 
-                foreach (Tournament tournament in myEvents.Where(t => t.Date >= DateOnly.FromDateTime(DateTime.Today)).Take(10))
+                if (myPlayEvents != null && myPlayEvents.Any())
+                {
+	                myEvents.AddRange(myPlayEvents);
+                }
+
+				foreach (Tournament tournament in myEvents.Where(t => t.Date >= DateOnly.FromDateTime(DateTime.Today)).Take(10))
                 {
 	                upcomingEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
 		                tournament.Players));
