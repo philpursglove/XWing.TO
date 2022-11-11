@@ -84,7 +84,16 @@
 					</h2>
 					<div id="@collapse" class="accordion-collapse collapse show" aria-labelledby="@heading" data-bs-parent="#roundsAccordion">
 						<div class="accordion-body">
-							Round games
+							@foreach (TournamentGameDisplayModel game in round.Games)
+							{
+								<div class="row">
+									<div class="col-3">@game.Player1</div>
+									<div class="col-1">@game.Player1Score</div>
+									<div class="col-1">vs.</div>
+									<div class="col-1">@game.Player2Score</div>
+									<div class="col-3">@game.Player2</div>
+								</div>
+							}
 						</div>
 					</div>
 				</div>
