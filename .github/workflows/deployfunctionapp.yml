@@ -4,4 +4,11 @@ on:
   workflow_call:
   
 jobs:
-  
+  deploy-function-app:
+    runs-on: windows-latest
+    steps:
+    - name: Azure CLI Action
+      uses: Azure/cli@v1
+      with:
+        # Specify the script here
+        inlineScript: echo Deploying function app
