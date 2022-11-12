@@ -29,6 +29,10 @@ jobs:
   #   runs-on: windows-latest
 
   #   steps:
+  # Deploy infrastructure
+  # Migrate db
+  # Deploy web app
+  # Deploy function app
     
   # test: 
   #   needs: dev
