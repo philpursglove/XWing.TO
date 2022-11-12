@@ -28,37 +28,28 @@ jobs:
     needs: build
     runs-on: windows-latest
 
-    deploy-infrastructure:
-      uses: ./.github/workflows/deployinfrastructure.yml
-    migrate-database:
-      uses: ./.github/workflows/migratedatabase.yml
-    deploy-application:
-      uses: ./.github/workflows/deployapplication.yml
-    deploy-function-app:
-      uses: ./.github/workflows/deployfunctionapp.yml
+    steps:
+      - uses: ./.github/workflows/deployinfrastructure.yml
+      - uses: ./.github/workflows/migratedatabase.yml
+      - uses: ./.github/workflows/deployapplication.yml
+      - uses: ./.github/workflows/deployfunctionapp.yml
     
   test: 
     needs: dev
     runs-on: windows-latest
 
-    deploy-infrastructure:
-      uses: ./.github/workflows/deployinfrastructure.yml
-    migrate-database:
-      uses: ./.github/workflows/migratedatabase.yml
-    deploy-application:
-      uses: ./.github/workflows/deployapplication.yml
-    deploy-function-app:
-      uses: ./.github/workflows/deployfunctionapp.yml
+    steps:
+      - uses: ./.github/workflows/deployinfrastructure.yml
+      - uses: ./.github/workflows/migratedatabase.yml
+      - uses: ./.github/workflows/deployapplication.yml
+      - uses: ./.github/workflows/deployfunctionapp.yml
 
   prod:
     needs: test
     runs-on: windows-latest
 
-    deploy-infrastructure:
-      uses: ./.github/workflows/deployinfrastructure.yml
-    migrate-database:
-      uses: ./.github/workflows/migratedatabase.yml
-    deploy-application:
-      uses: ./.github/workflows/deployapplication.yml
-    deploy-function-app:
-      uses: ./.github/workflows/deployfunctionapp.yml
+    steps:
+      - uses: ./.github/workflows/deployinfrastructure.yml
+      - uses: ./.github/workflows/migratedatabase.yml
+      - uses: ./.github/workflows/deployapplication.yml
+      - uses: ./.github/workflows/deployfunctionapp.yml
