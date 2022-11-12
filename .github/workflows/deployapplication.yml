@@ -1,0 +1,7 @@
+name: DeployApplication
+
+on:
+  workflow_call:
+  
+jobs:
+  

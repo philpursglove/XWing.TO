@@ -1,0 +1,7 @@
+name: DeployInfrastructure
+
+on:
+  workflow_call:
+
+jobs:
+  

@@ -24,24 +24,41 @@ jobs:
     - name: Test
       run: dotnet test XWingTO.sln --no-build --verbosity normal
 
-  # dev:
-  #   needs: build
-  #   runs-on: windows-latest
+  dev:
+    needs: build
+    runs-on: windows-latest
 
-  #   steps:
-  # Deploy infrastructure
-  # Migrate db
-  # Deploy web app
-  # Deploy function app
+    deploy-infrastructure:
+      uses: ./.github/workflows/deployinfrastructure.yml
+    migrate-database:
+      uses: ./.github/workflows/migratedatabase.yml
+    deploy-application:
+      uses: ./.github/workflows/deployapplication.yml
+    deploy-function-app:
+      uses: ./.github/workflows/deployfunctionapp.yml
     
-  # test: 
-  #   needs: dev
-  #   runs-on: windows-latest
+  test: 
+    needs: dev
+    runs-on: windows-latest
 
-  #   steps:
+    deploy-infrastructure:
+      uses: ./.github/workflows/deployinfrastructure.yml
+    migrate-database:
+      uses: ./.github/workflows/migratedatabase.yml
+    deploy-application:
+      uses: ./.github/workflows/deployapplication.yml
+    deploy-function-app:
+      uses: ./.github/workflows/deployfunctionapp.yml
 
-  # prod:
-  #   needs: test
-  #   runs-on: windows-latest
+  prod:
+    needs: test
+    runs-on: windows-latest
 
-  #   steps:
+    deploy-infrastructure:
+      uses: ./.github/workflows/deployinfrastructure.yml
+    migrate-database:
+      uses: ./.github/workflows/migratedatabase.yml
+    deploy-application:
+      uses: ./.github/workflows/deployapplication.yml
+    deploy-function-app:
+      uses: ./.github/workflows/deployfunctionapp.yml

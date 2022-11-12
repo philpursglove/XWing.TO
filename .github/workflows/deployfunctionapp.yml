@@ -1,0 +1,7 @@
+name: DeployFunctionApp
+
+on:
+  workflow_call:
+  
+jobs:
+  
