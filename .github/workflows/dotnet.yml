@@ -24,16 +24,20 @@ jobs:
     - name: Test
       run: dotnet test XWingTO.sln --no-build --verbosity normal
 
-  dev:
-    needs: build
-    runs-on: windows-latest
+  # dev:
+  #   needs: build
+  #   runs-on: windows-latest
 
-    steps:
+  #   steps:
     
-  test: 
-    needs: dev
-    runs-on: windows-latest
+  # test: 
+  #   needs: dev
+  #   runs-on: windows-latest
 
-  prod:
-    needs: test
-    runs-on: windows-latest
+  #   steps:
+
+  # prod:
+  #   needs: test
+  #   runs-on: windows-latest
+
+  #   steps:
