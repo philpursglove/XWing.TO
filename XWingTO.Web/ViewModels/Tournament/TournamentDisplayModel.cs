@@ -25,7 +25,8 @@ namespace XWingTO.Web.ViewModels.Tournament
 					TournamentGameDisplayModel gameModel = new TournamentGameDisplayModel
 					{
 						Player1Score = roundGame.Player1MissionPoints,
-						Player2Score = roundGame.Player2MissionPoints
+						Player2Score = roundGame.Player2MissionPoints,
+						GameId = roundGame.Id
 					};
 					roundModel.Games.Add(gameModel);
 				}
@@ -63,5 +64,7 @@ namespace XWingTO.Web.ViewModels.Tournament
 		public string Player2 { get; set; }
 		public int Player1Score { get; set; }
 		public int Player2Score { get; set; }
+
+		public Guid GameId { get; set; }
 	}
 }
