@@ -1,5 +1,20 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model XWingTO.Web.ViewModels.Tournament.SearchViewModel
+
 @{
+	Layout = "_Layout";
+}
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+	<div class="row">
+		<div class="col-2">
+			@Html.LabelFor(m => m.Name)
+		</div>
+		<div class="col-5">
+			@Html.TextBoxFor(m => m.Name)
+		</div>
+	</div>
+	<div class="row">
+		<input type="submit" class="btn btn-default" value="Search"/>
+	</div>
 }

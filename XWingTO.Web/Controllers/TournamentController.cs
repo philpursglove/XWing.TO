@@ -94,7 +94,7 @@ namespace XWingTO.Web.Controllers
 
 		public IActionResult Search()
 		{
-			return View();
+			return View(new SearchViewModel());
 		}
 
 		[Authorize]
@@ -326,13 +326,13 @@ namespace XWingTO.Web.Controllers
 		public async Task<IActionResult> ResultSubmission(Guid gameId)
 		{
 			Game game = await _gameRepository.Query().Include(g => g.Round).FirstOrDefault(g => g.Id == gameId);
-			Guid tournamentId = game.Round.TournamentId;
-			Guid toId = _tournamentRepository.Query().FirstOrDefault(t => t.Id == tournamentId).Result.TOId;
-
 			if (game == null)
 			{
 				return NotFound();
 			}
+
+			Guid tournamentId = game.Round.TournamentId;
+			Guid toId = _tournamentRepository.Query().FirstOrDefault(t => t.Id == tournamentId).Result.TOId;
 
 			ResultSubmissionViewModel model = new ResultSubmissionViewModel();
 
