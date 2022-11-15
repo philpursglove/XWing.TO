@@ -1,20 +1,46 @@
-﻿@model XWingTO.Web.ViewModels.Tournament.SearchViewModel
+﻿@using XWingTO.Core
+@model XWingTO.Web.ViewModels.Tournament.SearchViewModel
 
 @{
 	Layout = "_Layout";
 }
 
-@using (Html.BeginForm(FormMethod.Post))
-{
+<form asp-controller="Tournament" asp-action="Search">
 	<div class="row">
 		<div class="col-2">
-			@Html.LabelFor(m => m.Name)
+			Name
 		</div>
 		<div class="col-5">
-			@Html.TextBoxFor(m => m.Name)
+			<input asp-for="Name" />
 		</div>
 	</div>
 	<div class="row">
-		<input type="submit" class="btn btn-default" value="Search"/>
+		<div class="col-2">
+			Start Date
+		</div>
+		<div class="col-2">
+			<input asp-for="StartDate" type="date" value="@DateTime.Today.AddMonths(-1).ToString("yyyy-MM-dd")" />
+		</div>
+		<div class="col-2">
+			End Date
+		</div>
+		<div class="col-2">
+			<input asp-for="EndDate" type="date" value="@DateTime.Today.AddMonths(1).ToString("yyyy-MM-dd")" />
+		</div>
+	</div>
+	<div class="row">
+		<input type="submit" class="btn btn-default" value="Search" />
+	</div>
+</form>
+@if (Model.Tournaments != null && Model.Tournaments.Any())
+{
+	<div>
+		@foreach (Tournament tournament in Model.Tournaments)
+		{
+			<div class="row">
+				@tournament.Name
+			</div>
+
+		}
 	</div>
 }

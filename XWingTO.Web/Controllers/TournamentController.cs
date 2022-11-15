@@ -97,6 +97,30 @@ namespace XWingTO.Web.Controllers
 			return View(new SearchViewModel());
 		}
 
+		[HttpPost]
+		public async Task<IActionResult> Search(SearchViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				IQuery<Tournament> query = _tournamentRepository.Query();
+				if (!string.IsNullOrWhiteSpace(model.Name))
+				{
+					query = query.Where(t => t.Name == model.Name);
+				}
+
+				query = query.Where(t => t.Date >= model.StartDate);
+				query = query.Where(t => t.Date <= model.EndDate);
+
+				List<Tournament> searchTournaments = await query.ExecuteAsync();
+
+				model.Tournaments = searchTournaments;
+
+				return View(model);
+			}
+
+			return View(model);
+		}
+
 		[Authorize]
 		public async Task<IActionResult> MyEvents()
 		{
