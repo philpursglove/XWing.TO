@@ -38,7 +38,7 @@
 		@foreach (Tournament tournament in Model.Tournaments)
 		{
 			<div class="row">
-				@tournament.Name
+				<a href="@Url.Action("Display", new {id = @tournament.Id})">@tournament.Name</a>
 			</div>
 
 		}
