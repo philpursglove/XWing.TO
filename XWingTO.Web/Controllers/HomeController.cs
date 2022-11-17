@@ -46,6 +46,8 @@ namespace XWingTO.Web.Controllers
 	                myEvents.AddRange(myPlayEvents);
                 }
 
+                myEvents = myEvents.Distinct().ToList();
+
 				foreach (Tournament tournament in myEvents.Where(t => t.Date >= DateOnly.FromDateTime(DateTime.Today)).Take(10))
                 {
 	                upcomingEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
