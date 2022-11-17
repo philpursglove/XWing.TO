@@ -8,7 +8,7 @@ namespace XWingTO.Web.ViewModels.Tournament
 		[ValidateNever]
 		public string Name { get; set; }
 
-		public List<Core.Tournament> Tournaments { get; set; }
+		public List<TournamentListDisplayModel> Tournaments { get; set; }
 
 		public DateOnly StartDate { get; set; }
 		public DateOnly EndDate { get; set; }

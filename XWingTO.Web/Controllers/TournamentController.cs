@@ -112,9 +112,16 @@ namespace XWingTO.Web.Controllers
 				query = query.Where(t => t.Date >= model.StartDate);
 				query = query.Where(t => t.Date <= model.EndDate);
 
-				List<Tournament> searchTournaments = await query.ExecuteAsync();
+				List<Tournament> searchTournaments = await query.Include(t => t.Players).ExecuteAsync();
 
-				model.Tournaments = searchTournaments;
+				List<TournamentListDisplayModel> modelList = new List<TournamentListDisplayModel>();
+
+				foreach (Tournament searchTournament in searchTournaments)
+				{
+					modelList.Add(new TournamentListDisplayModel(searchTournament.Id, searchTournament.Name, searchTournament.Date, searchTournament.Players));
+				}
+
+				model.Tournaments = modelList;
 
 				return View(model);
 			}
