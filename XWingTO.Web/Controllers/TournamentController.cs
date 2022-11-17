@@ -55,6 +55,7 @@ namespace XWingTO.Web.Controllers
 			tournament.Rounds = rounds;
 
 			TournamentDisplayModel model = new TournamentDisplayModel(tournament);
+			model.Tournament = tournament;
 
 			var organiser = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 			model.TOName = organiser.UserName;
