@@ -32,6 +32,10 @@ namespace XWingTO.Tests.Controller
 		[Test]
 		public async Task Unauthenticated_Index_Shows_Anonymous_View()
 		{
+			_user = new ApplicationUser() { Id = Guid.NewGuid(), UserName = "test user"};
+			_userStore = Substitute.For<IUserStore<ApplicationUser>>();
+			_userStore.FindByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(_user);
+			_userStore.FindByNameAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(_user);
 			HttpContext context = Substitute.For<HttpContext>();
 			ClaimsPrincipal principal = Substitute.For<ClaimsPrincipal>();
 			IIdentity identity = Substitute.For<IIdentity>();
@@ -51,7 +55,7 @@ namespace XWingTO.Tests.Controller
 			
 			tournamentRepository.Query().Returns(new FakeQuery<Tournament>(new List<Tournament>{new Tournament{Name = "test tournament"}}.AsQueryable()));
 
-			HomeController controller = new HomeController(new UserManager<ApplicationUser>(Substitute.For<IUserStore<ApplicationUser>>(), null, null, null, null, null,null,null, null), 
+			HomeController controller = new HomeController(new UserManager<ApplicationUser>(_userStore, null, null, null, null, null,null,null, null), 
 				tournamentRepository, Substitute.For<IRepository<TournamentPlayer, Guid>>());
 
 			controller.ControllerContext = new ControllerContext(new ActionContext(context, new RouteData(), new ControllerActionDescriptor(), new ModelStateDictionary()));
