@@ -5,7 +5,6 @@ namespace XWingTO.Web.ViewModels.Tournament
 {
 	public class SearchViewModel
 	{
-		[ValidateNever]
 		public string Name { get; set; }
 
 		public List<TournamentListDisplayModel> Tournaments { get; set; }

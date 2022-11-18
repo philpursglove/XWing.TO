@@ -101,30 +101,36 @@ namespace XWingTO.Web.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Search(SearchViewModel model)
 		{
-			if (ModelState.IsValid)
+			if (model.StartDate == new DateOnly(1, 1, 1))
 			{
-				IQuery<Tournament> query = _tournamentRepository.Query();
-				if (!string.IsNullOrWhiteSpace(model.Name))
-				{
-					query = query.Where(t => t.Name == model.Name);
-				}
-
-				query = query.Where(t => t.Date >= model.StartDate);
-				query = query.Where(t => t.Date <= model.EndDate);
-
-				List<Tournament> searchTournaments = await query.Include(t => t.Players).ExecuteAsync();
-
-				List<TournamentListDisplayModel> modelList = new List<TournamentListDisplayModel>();
-
-				foreach (Tournament searchTournament in searchTournaments)
-				{
-					modelList.Add(new TournamentListDisplayModel(searchTournament.Id, searchTournament.Name, searchTournament.Date, searchTournament.Players));
-				}
-
-				model.Tournaments = modelList;
-
-				return View(model);
+				model.StartDate = DateOnly.Parse(Request.Form["StartDate"]);
 			}
+			if (model.EndDate == new DateOnly(1, 1, 1))
+			{
+				model.EndDate = DateOnly.Parse(Request.Form["EndDate"]);
+			}
+
+			IQuery<Tournament> query = _tournamentRepository.Query();
+			if (!string.IsNullOrWhiteSpace(model.Name))
+			{
+				query = query.Where(t => t.Name == model.Name);
+			}
+
+			query = query.Where(t => t.Date >= model.StartDate);
+			query = query.Where(t => t.Date <= model.EndDate);
+
+			List<Tournament> searchTournaments = await query.Include(t => t.Players).ExecuteAsync();
+
+			List<TournamentListDisplayModel> modelList = new List<TournamentListDisplayModel>();
+
+			foreach (Tournament searchTournament in searchTournaments)
+			{
+				modelList.Add(new TournamentListDisplayModel(searchTournament.Id, searchTournament.Name, searchTournament.Date, searchTournament.Players));
+			}
+
+			model.Tournaments = modelList;
+
+			ModelState.Clear();
 
 			return View(model);
 		}
@@ -264,7 +270,7 @@ namespace XWingTO.Web.Controllers
 
 					await _tournamentRepository.Update(tournament);
 
-					return RedirectToAction("Edit", new {model.Id});
+					return RedirectToAction("Edit", new { model.Id });
 				}
 				else
 				{
@@ -298,7 +304,7 @@ namespace XWingTO.Web.Controllers
 
 			}
 
-			return RedirectToAction("Display", new {id = tournamentId});
+			return RedirectToAction("Display", new { id = tournamentId });
 		}
 
 		[Authorize]
@@ -344,7 +350,7 @@ namespace XWingTO.Web.Controllers
 
 			await _tournamentRoundRepository.Add(round);
 
-			return RedirectToAction("Display", new {id = tournament.Id});
+			return RedirectToAction("Display", new { id = tournament.Id });
 		}
 
 		[Authorize]
@@ -375,7 +381,7 @@ namespace XWingTO.Web.Controllers
 
 			Guid currentUserId = _userManager.GetUserAsync(HttpContext.User).Result.Id;
 			if (currentUserId == toId || currentUserId == game.TournamentPlayer1Id ||
-			    currentUserId == game.TournamentPlayer2Id)
+				currentUserId == game.TournamentPlayer2Id)
 			{
 				model.Player1Name = user1.UserName;
 				model.Player2Name = user2.UserName;
@@ -417,7 +423,7 @@ namespace XWingTO.Web.Controllers
 					await queueClient.SendMessageAsync(SerializeObject(scoreMessage));
 				}
 
-				return RedirectToAction("Display", new {id = model.TournamentId});
+				return RedirectToAction("Display", new { id = model.TournamentId });
 			}
 
 			return View(model);
