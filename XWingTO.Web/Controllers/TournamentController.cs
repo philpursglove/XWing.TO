@@ -103,11 +103,33 @@ namespace XWingTO.Web.Controllers
 		{
 			if (model.StartDate == new DateOnly(1, 1, 1))
 			{
-				model.StartDate = DateOnly.Parse(Request.Form["StartDate"]);
+				switch (Request.Form["StartDate"].Count)
+				{
+					case 0:
+						model.StartDate = DateOnly.FromDateTime(DateTime.Today.AddMonths(-1));
+						break;
+					case > 1:
+						model.StartDate = DateOnly.Parse(Request.Form["StartDate"][0]);
+						break;
+					default:
+						model.StartDate = DateOnly.Parse(Request.Form["StartDate"]);
+						break;
+				}
 			}
 			if (model.EndDate == new DateOnly(1, 1, 1))
 			{
-				model.EndDate = DateOnly.Parse(Request.Form["EndDate"]);
+				switch (Request.Form["EndDate"].Count)
+				{
+					case 0:
+						model.EndDate = DateOnly.FromDateTime(DateTime.Today.AddMonths(1));
+						break;
+					case > 1:
+						model.EndDate = DateOnly.Parse(Request.Form["EndDate"][0]);
+						break;
+					default:
+						model.EndDate = DateOnly.Parse(Request.Form["EndDate"]);
+						break;
+				}
 			}
 
 			IQuery<Tournament> query = _tournamentRepository.Query();
@@ -125,7 +147,8 @@ namespace XWingTO.Web.Controllers
 
 			foreach (Tournament searchTournament in searchTournaments)
 			{
-				modelList.Add(new TournamentListDisplayModel(searchTournament.Id, searchTournament.Name, searchTournament.Date, searchTournament.Players));
+				ApplicationUser TO = await _userManager.FindByIdAsync(searchTournament.TOId.ToString());
+				modelList.Add(new TournamentListDisplayModel(searchTournament.Id, searchTournament.Name, searchTournament.Date, searchTournament.Players, TO));
 			}
 
 			model.Tournaments = modelList;
@@ -150,16 +173,20 @@ namespace XWingTO.Web.Controllers
 
 			var myEvents = myTOEvents.Union(myPlayEvents);
 
+			ApplicationUser TO;
+
 			foreach (Tournament tournament in myEvents.Where(t => t.Date >= DateOnly.FromDateTime(DateTime.Today)).Take(10))
 			{
+				TO = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 				upcomingEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
-					tournament.Players));
+					tournament.Players, TO));
 			}
 
 			foreach (Tournament tournament in myEvents.Where(t => t.Date < DateOnly.FromDateTime(DateTime.Today)).Take(10))
 			{
+				TO = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 				previousEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
-					tournament.Players));
+					tournament.Players, TO));
 			}
 
 			MyHomeViewModel model = new MyHomeViewModel

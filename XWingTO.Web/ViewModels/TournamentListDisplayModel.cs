@@ -11,7 +11,7 @@ namespace XWingTO.Web.ViewModels
 		public string TOName { get; set; }
 		public string Location { get; set; }
 
-		public TournamentListDisplayModel(Guid id, string name, DateOnly date, IEnumerable<TournamentPlayer> players)
+		public TournamentListDisplayModel(Guid id, string name, DateOnly date, IEnumerable<TournamentPlayer> players, ApplicationUser TO)
 		{
 			Id = id;
 			Name = name;
@@ -24,6 +24,8 @@ namespace XWingTO.Web.ViewModels
 			{
 				PlayerCount = players.Any() ? players.Count().ToString() : "0";
 			}
+
+			TOName = TO.UserName;
 		}
 	}
 }

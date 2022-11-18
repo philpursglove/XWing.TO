@@ -20,13 +20,27 @@
 			Start Date
 		</div>
 		<div class="col-2">
-			<input asp-for="StartDate" type="date" value="@DateTime.Today.AddMonths(-1).ToString("yyyy-MM-dd")" />
+			@if (Model.StartDate == new DateOnly(1,1,1))
+			{
+				<input asp-for="StartDate" type="date" value="@DateTime.Today.AddMonths(-1).ToString("yyyy-MM-dd")"/>
+			}
+			else
+			{
+				<input asp-for="StartDate" type="date" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+			}
 		</div>
 		<div class="col-2">
 			End Date
 		</div>
 		<div class="col-2">
-			<input asp-for="EndDate" type="date" value="@DateTime.Today.AddMonths(1).ToString("yyyy-MM-dd")" />
+		@if (Model.EndDate == new DateOnly(1, 1, 1))
+		{
+			<input asp-for="EndDate" type="date" value="@DateTime.Today.AddMonths(1).ToString("yyyy-MM-dd")"/>
+		}
+		else
+		{
+			<input asp-for="EndDate" type="date" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+		}
 		</div>
 	</div>
 	<div class="row">

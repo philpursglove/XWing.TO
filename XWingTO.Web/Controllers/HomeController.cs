@@ -23,6 +23,8 @@ namespace XWingTO.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+	        ApplicationUser TO;
+
             if (HttpContext.User.Identity.IsAuthenticated)
             {
 	            ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
@@ -49,15 +51,17 @@ namespace XWingTO.Web.Controllers
                 myEvents = myEvents.Distinct().ToList();
 
 				foreach (Tournament tournament in myEvents.Where(t => t.Date >= DateOnly.FromDateTime(DateTime.Today)).Take(10))
-                {
+				{
+					TO = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 	                upcomingEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
-		                tournament.Players));
+		                tournament.Players, TO));
                 }
 
                 foreach (Tournament tournament in myEvents.Where(t => t.Date < DateOnly.FromDateTime(DateTime.Today)).Take(10))
                 {
+	                TO = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 	                previousEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
-		                tournament.Players));
+		                tournament.Players, TO));
                 }
 
                 MyHomeViewModel model = new MyHomeViewModel
@@ -76,7 +80,8 @@ namespace XWingTO.Web.Controllers
 
 	            foreach (Tournament recentEvent in recentEvents)
 	            {
-		            tournaments.Add(new TournamentListDisplayModel(recentEvent.Id, recentEvent.Name, recentEvent.Date, recentEvent.Players));
+		            TO = await _userManager.FindByIdAsync(recentEvent.TOId.ToString());
+		            tournaments.Add(new TournamentListDisplayModel(recentEvent.Id, recentEvent.Name, recentEvent.Date, recentEvent.Players, TO));
 	            }
                 return View("Index", tournaments);
             }
