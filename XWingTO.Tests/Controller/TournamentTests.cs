@@ -30,7 +30,6 @@ namespace XWingTO.Tests.Controller
 		IUserStore<ApplicationUser> _userStore;
 		IQuery<TournamentRound> _tournamentRoundQuery;
 		ControllerContext _controllerContext;
-		IQuery<TournamentPlayer> _tournamentPlayerQuery;
 
 		[SetUp]
 		public void Setup()
