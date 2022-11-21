@@ -29,17 +29,24 @@ namespace XWingTO.Web.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+            public string Country { get; set; }
+            public string State { get; set; }
+            public string City { get; set; }
+            public string Venue { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             Username = userName;
 
             Input = new InputModel
             {
+                Country = user.Country,
+                State = user.State,
+                City = user.City,
+                Venue = user.Venue
             };
         }
 
@@ -69,6 +76,12 @@ namespace XWingTO.Web.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
+            user.Country = Input.Country;
+            user.State = Input.State;
+            user.City = Input.City;
+            user.Venue = Input.Venue;
+
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
