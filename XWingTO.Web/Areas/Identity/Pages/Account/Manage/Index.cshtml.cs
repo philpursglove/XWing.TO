@@ -28,10 +28,10 @@ namespace XWingTO.Web.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            public string Country { get; set; }
-            public string State { get; set; }
-            public string City { get; set; }
-            public string Venue { get; set; }
+            public string? Country { get; set; }
+            public string? State { get; set; }
+            public string? City { get; set; }
+            public string? Venue { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
