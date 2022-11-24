@@ -14,5 +14,20 @@
         public virtual IEnumerable<TournamentPlayer> Players { get; set; }
 
         public virtual IEnumerable<TournamentRound> Rounds { get; set; }
-    }
+
+        public string Location()
+        {
+	        List<string> locationElements = new List<string>();
+            if (!string.IsNullOrWhiteSpace(Country)) locationElements.Add(Country);
+            if (!string.IsNullOrWhiteSpace(State)) locationElements.Add(State);
+			if (!string.IsNullOrWhiteSpace(City)) locationElements.Add(City);
+			if (!string.IsNullOrWhiteSpace(Venue)) locationElements.Add(Venue);
+
+			if (locationElements.Any())
+			{
+				return string.Join("/", locationElements);
+			}
+            return string.Empty;
+        }
+	}
 }
