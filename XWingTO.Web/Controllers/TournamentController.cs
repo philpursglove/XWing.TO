@@ -243,14 +243,14 @@ namespace XWingTO.Web.Controllers
 
 				await _tournamentRepository.Add(tournament);
 
-				return RedirectToAction("Edit", "Tournament", new { tournament.Id });
+				return RedirectToAction("Admin", "Tournament", new { tournament.Id });
 			}
 
 			return View(model);
 		}
 
 		[Authorize]
-		public async Task<IActionResult> Edit(Guid id)
+		public async Task<IActionResult> Admin(Guid id)
 		{
 			ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
 
@@ -278,7 +278,7 @@ namespace XWingTO.Web.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public async Task<IActionResult> Edit(EditTournamentViewModel model)
+		public async Task<IActionResult> Admin(EditTournamentViewModel model)
 		{
 			if (ModelState.IsValid)
 			{
@@ -297,7 +297,7 @@ namespace XWingTO.Web.Controllers
 
 					await _tournamentRepository.Update(tournament);
 
-					return RedirectToAction("Edit", new { model.Id });
+					return RedirectToAction("Admin", new { model.Id });
 				}
 				else
 				{
