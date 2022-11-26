@@ -145,10 +145,27 @@ namespace XWingTO.Web.Controllers
 
 			List<TournamentListDisplayModel> modelList = new List<TournamentListDisplayModel>();
 
-			foreach (Tournament searchTournament in searchTournaments)
+			if (HttpContext.User.Identity.IsAuthenticated)
 			{
-				ApplicationUser TO = await _userManager.FindByIdAsync(searchTournament.TOId.ToString());
-				modelList.Add(new TournamentListDisplayModel(searchTournament.Id, searchTournament.Name, searchTournament.Date, searchTournament.Players, TO, searchTournament.Location()));
+				ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
+				Guid userId = user.Id;
+
+				foreach (Tournament searchTournament in searchTournaments)
+				{
+					ApplicationUser TO = await _userManager.FindByIdAsync(searchTournament.TOId.ToString());
+					modelList.Add(new TournamentListDisplayModel(searchTournament.Id, searchTournament.Name, searchTournament.Date,
+						searchTournament.Players, TO.UserName, searchTournament.Location(), searchTournament.TOId == userId));
+				}
+			}
+			else
+			{
+				foreach (Tournament searchTournament in searchTournaments)
+				{
+					ApplicationUser TO = await _userManager.FindByIdAsync(searchTournament.TOId.ToString());
+					modelList.Add(new TournamentListDisplayModel(searchTournament.Id, searchTournament.Name, searchTournament.Date,
+						searchTournament.Players, TO.UserName, searchTournament.Location(), false));
+				}
+
 			}
 
 			model.Tournaments = modelList;
@@ -179,14 +196,14 @@ namespace XWingTO.Web.Controllers
 			{
 				TO = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 				upcomingEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
-					tournament.Players, TO , tournament.Location()));
+					tournament.Players, TO.UserName , tournament.Location(), TO.Id == userId));
 			}
 
 			foreach (Tournament tournament in myEvents.Where(t => t.Date < DateOnly.FromDateTime(DateTime.Today)).Take(10))
 			{
 				TO = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 				previousEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
-					tournament.Players, TO, tournament.Location()));
+					tournament.Players, TO.UserName, tournament.Location(), TO.Id == userId));
 			}
 
 			MyHomeViewModel model = new MyHomeViewModel
