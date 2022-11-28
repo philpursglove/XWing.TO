@@ -38,33 +38,4 @@ namespace XWingTO.Web.ViewModels.Tournament
 		public string PlayerCount { get; set; }
 		public bool UserIsRegistered { get; set; }
 	}
-
-	public class TournamentPlayerDisplayModel
-	{
-		public string Name { get; set; }
-		public int Points { get; set; }
-
-	}
-
-	public class TournamentRoundDisplayModel
-	{
-		public int Round { get; set; }
-
-		public List<TournamentGameDisplayModel> Games { get; set; }
-
-		public TournamentRoundDisplayModel()
-		{
-			Games = new List<TournamentGameDisplayModel>();
-		}
-	}
-
-	public class TournamentGameDisplayModel
-	{
-		public string Player1 { get; set; }
-		public string Player2 { get; set; }
-		public int Player1Score { get; set; }
-		public int Player2Score { get; set; }
-
-		public Guid GameId { get; set; }
-	}
 }
