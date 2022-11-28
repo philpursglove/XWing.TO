@@ -1,5 +1,98 @@
-﻿@model XWingTO.Web.ViewModels.Tournament.TournamentAdminModel
+﻿@using XWingTO.Web.ViewModels.Tournament
+@model XWingTO.Web.ViewModels.Tournament.TournamentAdminModel
 @{
 	Layout = "_Layout";
 }
 
+<div class="row">
+	<h2>@Model.Name</h2>
+</div>
+<div class="row">
+	<div>
+		<i class="fa-solid fa-calendar-days"></i>&nbsp;@Model.Date
+		<i class="fa-solid fa-crown"></i>&nbsp;@Model.TOName
+		<i class="fa-solid fa-people-group"></i>&nbsp;@Model.PlayerCount
+		<i class="fa-solid fa-globe"></i>&nbsp;@Model.Location
+	</div>
+</div>
+<div class="row">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>
+					Player
+				</th>
+				<th>
+					Points
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (TournamentPlayerDisplayModel player in Model.Players.OrderByDescending(p => p.Points))
+			{
+				<tr>
+					<td>
+						@player.Name
+					</td>
+					<td>
+						@player.Points
+					</td>
+					<td>
+						@if (@player.Dropped)
+						{
+							// Undrop
+						}
+						else
+						{
+							// Drop
+						}
+					</td>
+
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+<div class="row">
+	<div class="accordion" id="roundsAccordion">
+		@foreach (TournamentRoundDisplayModel round in Model.Rounds.OrderBy(r => r.Round))
+		{
+			string heading = $"heading{@round.Round}";
+			string collapse = $"collapse{@round.Round}";
+			string buttonStyle;
+
+			@if (round.Round == Model.Rounds.Count)
+			{
+				buttonStyle = "accordion-collapse";
+			}
+			else
+			{
+				buttonStyle = "accordion-collapse collapsed";
+			}
+			<div class="accordion-item">
+				<h2 class="accordion-header" id="@heading">
+					<button class="@buttonStyle" type="button" data-bs-toggle="collapse" data-bs-target="#@collapse" aria-expanded="true" aria-controls="@collapse">
+						Round @round.Round
+					</button>
+				</h2>
+				<div id="@collapse" class="accordion-collapse collapse show" aria-labelledby="@heading" data-bs-parent="#roundsAccordion">
+					<div class="accordion-body">
+						@foreach (TournamentGameDisplayModel game in round.Games)
+						{
+							<div class="row">
+								<div class="col-3">@game.Player1</div>
+								<div class="col-1">@game.Player1Score</div>
+								<div class="col-1">vs.</div>
+								<div class="col-1">@game.Player2Score</div>
+								<div class="col-3">@game.Player2</div>
+							</div>
+							<div class="row">
+								<div class="col-9"><a class="btn btn-default" href="@Url.Action("ResultSubmission", new {gameId = game.GameId})">Enter Score</a> </div>
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>
