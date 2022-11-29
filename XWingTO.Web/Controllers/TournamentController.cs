@@ -275,7 +275,7 @@ namespace XWingTO.Web.Controllers
 
 			if (tournament.TOId == currentUser.Id)
 			{
-				EditTournamentViewModel model = new EditTournamentViewModel()
+				TournamentAdminModel model = new TournamentAdminModel()
 				{
 					Id = id,
 					Name = tournament.Name,
@@ -285,6 +285,38 @@ namespace XWingTO.Web.Controllers
 					City = tournament.City,
 					Venue = tournament.Venue
 				};
+
+				model.Players = new List<TournamentPlayerDisplayModel>();
+				List<TournamentPlayer> tournamentPlayers = await _tournamentPlayerRepository.Query()
+					.Where(tp => tp.TournamentId == tournament.Id).ExecuteAsync();
+				foreach (TournamentPlayer tournamentPlayer in tournamentPlayers)
+				{
+					ApplicationUser playerUser = await _userManager.FindByIdAsync(tournamentPlayer.PlayerId.ToString());
+					model.Players.Add(new TournamentPlayerDisplayModel(){Name = playerUser.UserName, TournamentPlayerId = tournamentPlayer.Id, 
+						Points = tournamentPlayer.Points, Dropped = tournamentPlayer.Dropped});
+				}
+
+				model.Rounds = new List<TournamentRoundDisplayModel>();
+				List<TournamentRound> tournamentRounds = await _tournamentRoundRepository.Query()
+					.Where(tr => tr.TournamentId == id).ExecuteAsync();
+				foreach (TournamentRound tournamentRound in tournamentRounds)
+				{
+					TournamentRoundDisplayModel roundDisplayModel = new TournamentRoundDisplayModel();
+					roundDisplayModel.Round = tournamentRound.RoundNumber;
+
+					roundDisplayModel.Games = new List<TournamentGameDisplayModel>();
+					List<Game> roundGames = await _gameRepository.Query().Where(g => g.TournamentRoundId == tournamentRound.Id).ExecuteAsync();
+					foreach (Game roundGame in roundGames)
+					{
+						ApplicationUser player1 = await _userManager.FindByIdAsync(roundGame.TournamentPlayer1Id.ToString());
+						ApplicationUser player2 = await _userManager.FindByIdAsync(roundGame.TournamentPlayer2Id.ToString());
+						roundDisplayModel.Games.Add(new TournamentGameDisplayModel(){GameId = roundGame.Id, Player1 = player1.UserName, 
+							Player2 = player2.UserName, Player1Score = roundGame.Player1MissionPoints, Player2Score = roundGame.Player2MissionPoints});
+					}
+
+					model.Rounds.Add(roundDisplayModel);
+				}
+
 				return View(model);
 			}
 			else
@@ -295,7 +327,7 @@ namespace XWingTO.Web.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public async Task<IActionResult> Admin(EditTournamentViewModel model)
+		public async Task<IActionResult> Admin(TournamentAdminModel model)
 		{
 			if (ModelState.IsValid)
 			{
