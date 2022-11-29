@@ -18,40 +18,46 @@
 <div class="row">
 	<table class="table">
 		<thead>
-			<tr>
-				<th>
-					Player
-				</th>
-				<th>
-					Points
-				</th>
-			</tr>
+		<tr>
+			<th>
+				Player
+			</th>
+			<th>
+				Points
+			</th>
+			<th>
+				Dropped
+			</th>
+		</tr>
 		</thead>
 		<tbody>
-			@foreach (TournamentPlayerDisplayModel player in Model.Players.OrderByDescending(p => p.Points))
-			{
-				<tr>
-					<td>
-						@player.Name
-					</td>
-					<td>
-						@player.Points
-					</td>
-					<td>
-						@if (@player.Dropped)
-						{
-							// Undrop
-						}
-						else
-						{
-							// Drop
-						}
-					</td>
+		@foreach (TournamentPlayerDisplayModel player in Model.Players.OrderByDescending(p => p.Points))
+		{
+			<tr>
+				<td>
+					@player.Name
+				</td>
+				<td>
+					@player.Points
+				</td>
+				<td>
+					@if (@player.Dropped)
+					{
+						// Undrop
+					}
+					else
+					{
+						// Drop
+					}
+				</td>
 
-				</tr>
-			}
+			</tr>
+		}
 		</tbody>
 	</table>
+</div>
+<div class="row">
+	Rounds
 </div>
 <div class="row">
 	<div class="accordion" id="roundsAccordion">
