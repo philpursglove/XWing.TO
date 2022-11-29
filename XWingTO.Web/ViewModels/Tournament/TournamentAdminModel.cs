@@ -12,5 +12,10 @@
 		public List<TournamentPlayerDisplayModel> Players { get; set; }
 
 		public List<TournamentRoundDisplayModel> Rounds { get; set; }
+		public Guid Id { get; set; }
+		public string? Country { get; set; }
+		public string? State { get; set; }
+		public string? City { get; set; }
+		public string? Venue { get; set; }
 	}
 }
