@@ -118,5 +118,24 @@ namespace XWingTO.Tests.Controller
 
 			await _tournamentPlayerRepository.DidNotReceive().Delete(Arg.Any<TournamentPlayer>());
 		}
+
+		[TestCase(false, true, Description = "Drop")]
+		[TestCase(true, false, Description = "Undrop")]
+		public async Task Drop_Drops_or_Undrops_A_Player(bool initialState, bool dropped)
+		{
+			TournamentPlayer tournamentPlayer = new TournamentPlayer() {Id = Guid.NewGuid(), Dropped = initialState};
+
+			_tournamentPlayerRepository.Get(tournamentPlayer.Id).Returns(tournamentPlayer);
+
+			TournamentController controller = new TournamentController(_tournamentRepository,
+				_tournamentPlayerRepository, new UserManager<ApplicationUser>(_userStore, null, null, null, null, null, null, null, null),
+				_gameRepository, _configuration, _tournamentRoundRepository);
+
+			controller.ControllerContext = _controllerContext;
+
+			await controller.Drop(tournamentPlayer.Id, dropped, Guid.NewGuid());
+
+			Assert.That(tournamentPlayer.Dropped, Is.EqualTo(dropped));
+		}
 	}
 }

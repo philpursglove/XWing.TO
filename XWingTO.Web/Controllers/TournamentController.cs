@@ -505,5 +505,16 @@ namespace XWingTO.Web.Controllers
 			return View(model);
 		}
 
+		[HttpPost]
+		public async Task<IActionResult> Drop(Guid tournamentPlayerId, bool dropped, Guid tournamentId)
+		{
+			TournamentPlayer player = await _tournamentPlayerRepository.Get(tournamentPlayerId);
+
+			player.Dropped = dropped;
+
+			await _tournamentPlayerRepository.Update(player);
+
+			return RedirectToAction("Admin", new {id = tournamentId});
+		}
 	}
 }
