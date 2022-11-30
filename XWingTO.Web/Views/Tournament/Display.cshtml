@@ -50,6 +50,10 @@
 				<tr>
 					<td>
 						@player.Name
+						@if (player.Dropped)
+						{
+							<span>(D)</span>
+						}
 					</td>
 					<td>
 						@player.Points
