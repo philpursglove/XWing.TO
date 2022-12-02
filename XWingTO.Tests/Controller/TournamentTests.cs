@@ -114,7 +114,7 @@ namespace XWingTO.Tests.Controller
 
 			controller.ControllerContext = _controllerContext;
 
-			await controller.Unregister(_tournament.Id);
+			await controller.Unregister(_tournament.Id, null);
 
 			await _tournamentPlayerRepository.DidNotReceive().Delete(Arg.Any<TournamentPlayer>());
 		}
