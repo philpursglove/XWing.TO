@@ -386,17 +386,17 @@ namespace XWingTO.Web.Controllers
 		[Authorize]
 		public async Task<IActionResult> Unregister(Guid tournamentId, Guid? tournamentPlayerId)
 		{
-            if (tournamentPlayerId == null)
-            {
-                ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
-                TournamentPlayer tournamentPlayer = await _tournamentPlayerRepository.Query()
-                    .FirstOrDefault(tp => tp.PlayerId == currentUser.Id && tp.TournamentId == tournamentId);
-            }
+			TournamentPlayer tournamentPlayer;
+			if (tournamentPlayerId == null)
+			{
+				ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+				tournamentPlayer = await _tournamentPlayerRepository.Query()
+					.FirstOrDefault(tp => tp.PlayerId == currentUser.Id && tp.TournamentId == tournamentId);
+			}
             else
-            {
-                TournamentPlayer tournamentPlayer = await _tournamentPlayerRepository.Get(tournamentPlayerId.Value);
-            }
-
+			{
+				tournamentPlayer = await _tournamentPlayerRepository.Get(tournamentPlayerId.Value);
+			}
 
 			if (tournamentPlayer != null)
 			{
