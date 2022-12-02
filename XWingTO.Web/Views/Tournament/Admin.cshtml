@@ -49,10 +49,17 @@
 					}
 					else
 					{
-							<form asp-action="Drop" asp-route-tournamentPlayerId="@player.TournamentPlayerId" asp-route-tournamentId="@Model.Id" asp-route-dropped="true">
-								<input type="submit" class="btn btn-danger" value="Drop" />
-							</form>
-						}
+						<form asp-action="Drop" asp-route-tournamentPlayerId="@player.TournamentPlayerId" asp-route-tournamentId="@Model.Id" asp-route-dropped="true">
+							<input type="submit" class="btn btn-danger" value="Drop" />
+						</form>
+					}
+					
+					@if (!Model.Rounds.Any())
+					{
+						<form asp-action="Unregister" asp-route-tournamentId="@Model.Id" asp-route-tournamentPlayerId="@player.TournamentPlayerId">
+							<input type="submit" class="btn btn-danger" value="Unregister"/>
+						</form>
+					}
 				</td>
 
 			</tr>

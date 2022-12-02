@@ -384,19 +384,34 @@ namespace XWingTO.Web.Controllers
 		}
 
 		[Authorize]
-		public async Task<IActionResult> Unregister(Guid tournamentId)
+		public async Task<IActionResult> Unregister(Guid tournamentId, Guid? tournamentPlayerId)
 		{
-			ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
-			TournamentPlayer tournamentPlayer = await _tournamentPlayerRepository.Query()
-				.FirstOrDefault(tp => tp.PlayerId == currentUser.Id && tp.TournamentId == tournamentId);
+            if (tournamentPlayerId == null)
+            {
+                ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                TournamentPlayer tournamentPlayer = await _tournamentPlayerRepository.Query()
+                    .FirstOrDefault(tp => tp.PlayerId == currentUser.Id && tp.TournamentId == tournamentId);
+            }
+            else
+            {
+                TournamentPlayer tournamentPlayer = await _tournamentPlayerRepository.Get(tournamentPlayerId.Value);
+            }
+
 
 			if (tournamentPlayer != null)
 			{
 				await _tournamentPlayerRepository.Delete(tournamentPlayer);
 			}
 
-			return RedirectToAction("Display", new { id = tournamentId });
-		}
+            if (tournamentPlayerId.HasValue)
+            {
+                return RedirectToAction("Admin", new {id = tournamentId});
+            }
+            else
+            {
+                return RedirectToAction("Display", new { id = tournamentId });
+            }
+        }
 
 		[Authorize]
 		public async Task<IActionResult> GenerateRound(Guid id)
