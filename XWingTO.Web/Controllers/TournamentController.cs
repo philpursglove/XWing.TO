@@ -327,8 +327,13 @@ namespace XWingTO.Web.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public async Task<IActionResult> Admin(TournamentAdminModel model)
+		public async Task<IActionResult> Admin(TournamentAdminUpdateModel model)
 		{
+			if (model.Date == new DateOnly(1, 1, 1))
+			{
+				model.Date = DateOnly.Parse(Request.Form["Date"]);
+			}
+
 			if (ModelState.IsValid)
 			{
 				ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);

@@ -4,66 +4,91 @@
 	Layout = "_Layout";
 }
 
-<div class="row">
-	<h2>@Model.Name</h2>
-</div>
-<div class="row">
-	<div>
-		<i class="fa-solid fa-calendar-days"></i>&nbsp;@Model.Date
-		<i class="fa-solid fa-crown"></i>&nbsp;@Model.TOName
-		<i class="fa-solid fa-people-group"></i>&nbsp;@Model.PlayerCount
-		<i class="fa-solid fa-globe"></i>&nbsp;@Model.Location
+<form method="post" asp-controller="Tournament" asp-action="Admin">
+	<input type="hidden" value="@Model.Id"/>
+	<div class="row">
+		<div class="col-2">
+			<label asp-for="Name"></label>
+		</div>
+		<input asp-for="Name" class="col-4">
+		<div class="col-2">
+			<label asp-for="Date"></label>
+		</div>
+		<input asp-for="Date" class="col-4" min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" type="date" value="@Model.Date.ToString("yyyy-MM-dd")">
 	</div>
-</div>
+	<p class="h5">Location</p>
+	<div class="row">
+		<div class="col-2">
+			<label asp-for="Country"></label>
+		</div>
+		<input asp-for="Country" class="col-4">
+		<div class="col-2">
+			<label asp-for="State"></label>
+		</div>
+		<input asp-for="State" class="col-4">
+	</div>
+	<div class="row">
+		<div class="col-2">
+			<label asp-for="City"></label>
+		</div>
+		<input asp-for="City" class="col-4">
+		<div class="col-2">
+			<label asp-for="Venue"></label>
+		</div>
+		<input asp-for="Venue" class="col-4">
+	</div>
+
+	<input type="submit" class="btn btn-primary"/>
+</form>
 <div class="row">
 	<table class="table">
 		<thead>
-		<tr>
-			<th>
-				Player
-			</th>
-			<th>
-				Points
-			</th>
-			<th>
-				Dropped
-			</th>
-		</tr>
+			<tr>
+				<th>
+					Player
+				</th>
+				<th>
+					Points
+				</th>
+				<th>
+					Dropped
+				</th>
+			</tr>
 		</thead>
 		<tbody>
-		@foreach (TournamentPlayerDisplayModel player in Model.Players.OrderByDescending(p => p.Points))
-		{
-			<tr>
-				<td>
-					@player.Name
-				</td>
-				<td>
-					@player.Points
-				</td>
-				<td>
-					@if (@player.Dropped)
-					{
-						<form asp-action="Drop" asp-route-tournamentPlayerId="@player.TournamentPlayerId" asp-route-tournamentId="@Model.Id" asp-route-dropped="false">
-							<input type="submit" class="btn btn-success" value="Undrop"/>
-						</form>
-					}
-					else
-					{
-						<form asp-action="Drop" asp-route-tournamentPlayerId="@player.TournamentPlayerId" asp-route-tournamentId="@Model.Id" asp-route-dropped="true">
-							<input type="submit" class="btn btn-danger" value="Drop" />
-						</form>
-					}
-					
-					@if (!Model.Rounds.Any())
-					{
-						<form asp-action="Unregister" asp-route-tournamentId="@Model.Id" asp-route-tournamentPlayerId="@player.TournamentPlayerId">
-							<input type="submit" class="btn btn-danger" value="Unregister"/>
-						</form>
-					}
-				</td>
+			@foreach (TournamentPlayerDisplayModel player in Model.Players.OrderByDescending(p => p.Points))
+			{
+				<tr>
+					<td>
+						@player.Name
+					</td>
+					<td>
+						@player.Points
+					</td>
+					<td>
+						@if (@player.Dropped)
+						{
+							<form asp-action="Drop" asp-route-tournamentPlayerId="@player.TournamentPlayerId" asp-route-tournamentId="@Model.Id" asp-route-dropped="false">
+								<input type="submit" class="btn btn-success" value="Undrop" />
+							</form>
+						}
+						else
+						{
+							<form asp-action="Drop" asp-route-tournamentPlayerId="@player.TournamentPlayerId" asp-route-tournamentId="@Model.Id" asp-route-dropped="true">
+								<input type="submit" class="btn btn-danger" value="Drop" />
+							</form>
+						}
 
-			</tr>
-		}
+						@if (!Model.Rounds.Any())
+						{
+							<form asp-action="Unregister" asp-route-tournamentId="@Model.Id" asp-route-tournamentPlayerId="@player.TournamentPlayerId">
+								<input type="submit" class="btn btn-danger" value="Unregister" />
+							</form>
+						}
+					</td>
+
+				</tr>
+			}
 		</tbody>
 	</table>
 </div>

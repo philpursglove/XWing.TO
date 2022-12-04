@@ -18,4 +18,16 @@
 		public string? City { get; set; }
 		public string? Venue { get; set; }
 	}
+
+	public class TournamentAdminUpdateModel
+	{
+		public string Name { get; set; }
+		public DateOnly Date { get; set; }
+		public Guid Id { get; set; }
+		public string? Country { get; set; }
+		public string? State { get; set; }
+		public string? City { get; set; }
+		public string? Venue { get; set; }
+
+	}
 }
