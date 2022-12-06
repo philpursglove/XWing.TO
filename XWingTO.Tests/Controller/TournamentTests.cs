@@ -38,6 +38,7 @@ namespace XWingTO.Tests.Controller
 			_round = new TournamentRound() { Id = Guid.NewGuid(), TournamentId = _tournament.Id };
 			_tournament.Rounds = new List<TournamentRound>() { _round };
 			_tournamentRepository = Substitute.For<IRepository<Tournament, Guid>>();
+			_tournamentRepository.Get(_tournament.Id).Returns(_tournament);
 			_tournamentQuery = new FakeQuery<Tournament>((new List<Tournament> {_tournament}).AsQueryable());
 			_tournamentRepository.Query().Returns(_tournamentQuery);
 			_tournamentPlayerRepository = Substitute.For<IRepository<TournamentPlayer, Guid>>();
@@ -45,6 +46,7 @@ namespace XWingTO.Tests.Controller
 			_tournamentRoundRepository = Substitute.For<IRepository<TournamentRound, Guid>>();
 			_configuration = Substitute.For<IConfiguration>();
 			_user = new ApplicationUser() {Id = Guid.NewGuid()};
+			_tournament.TOId = _user.Id;
 			_userStore = Substitute.For<IUserStore<ApplicationUser>>();
 			_userStore.FindByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(_user);
 			_userStore.FindByNameAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(_user);
@@ -136,6 +138,20 @@ namespace XWingTO.Tests.Controller
 			await controller.Drop(tournamentPlayer.Id, dropped, Guid.NewGuid());
 
 			Assert.That(tournamentPlayer.Dropped, Is.EqualTo(dropped));
+		}
+
+		[Test]
+		public async Task Cancel_A_Tournament()
+		{
+			TournamentController controller = new TournamentController(_tournamentRepository,
+				_tournamentPlayerRepository, new UserManager<ApplicationUser>(_userStore, null, null, null, null, null, null, null, null),
+				_gameRepository, _configuration, _tournamentRoundRepository);
+
+			controller.ControllerContext = _controllerContext;
+
+			await controller.Cancel(_tournament.Id);
+
+			await _tournamentRepository.Received(1).Delete(_tournament);
 		}
 	}
 }

@@ -327,6 +327,25 @@ namespace XWingTO.Web.Controllers
 
 		[Authorize]
 		[HttpPost]
+		public async Task<IActionResult> Cancel(Guid id)
+		{
+			ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
+			Tournament tournament = await _tournamentRepository.Get(id);
+
+			if (tournament != null && currentUser.Id == tournament.TOId)
+			{
+				await _tournamentRepository.Delete(tournament);
+				return RedirectToAction("Index", "Home");
+			}
+			else
+			{
+				return Forbid();
+			}
+
+		}
+
+		[Authorize]
+		[HttpPost]
 		public async Task<IActionResult> Admin(TournamentAdminUpdateModel model)
 		{
 			if (model.Date == new DateOnly(1, 1, 1))
