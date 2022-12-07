@@ -502,6 +502,8 @@ namespace XWingTO.Web.Controllers
 				model.Player2Name = user2.UserName;
 				model.GameId = game.Id;
 				model.TournamentId = tournamentId;
+				model.Player1MissionPoints = game.Player1MissionPoints;
+				model.Player2MissionPoints = game.Player2MissionPoints;
 
 				return View(model);
 			}
