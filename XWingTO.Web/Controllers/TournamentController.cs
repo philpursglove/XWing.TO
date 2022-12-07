@@ -378,7 +378,7 @@ namespace XWingTO.Web.Controllers
 				}
 			}
 
-			return View(model);
+			return RedirectToAction("Admin", new {id = model.Id});
 
 		}
 
