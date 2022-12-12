@@ -83,6 +83,13 @@ namespace XWingTO.Functions
 	            player2.Dropped = true;
             }
 
+            game.Player1MissionPoints = gameScoreMessage.Player1Points;
+            game.Player2MissionPoints = gameScoreMessage.Player2Points;
+            game.Turns = gameScoreMessage.Turns;
+            game.OutOfTime = gameScoreMessage.OutOfTime;
+
+            await _gameRepository.Update(game);
+
             await _tournamentPlayerRepository.Update(player1);
             await _tournamentPlayerRepository.Update(player2);
         }

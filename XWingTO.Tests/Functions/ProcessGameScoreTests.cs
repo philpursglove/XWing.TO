@@ -21,12 +21,12 @@ namespace XWingTO.Tests.Functions
 		[SetUp]
 		public void Setup()
 		{
-			Game game = new Game {Id = _gameId, TournamentPlayer1Id = _player1Id, TournamentPlayer2Id = _player2Id};
+			Game game = new Game { Id = _gameId, TournamentPlayer1Id = _player1Id, TournamentPlayer2Id = _player2Id };
 			_gameRepository = Substitute.For<IRepository<Game, Guid>>();
 			_gameRepository.Get(_gameId).Returns(game);
 
-			TournamentPlayer player1 = new TournamentPlayer {Id = _player1Id};
-			TournamentPlayer player2 = new TournamentPlayer {Id = _player2Id};
+			TournamentPlayer player1 = new TournamentPlayer { Id = _player1Id };
+			TournamentPlayer player2 = new TournamentPlayer { Id = _player2Id };
 			_tournamentPlayerRepository = Substitute.For<IRepository<TournamentPlayer, Guid>>();
 			_tournamentPlayerRepository.Get(_player1Id).Returns(player1);
 			_tournamentPlayerRepository.Get(_player2Id).Returns(player2);
@@ -37,7 +37,7 @@ namespace XWingTO.Tests.Functions
 		[Test]
 		public async Task When_Player_1_Wins_Player_1_Gets_Three_Points()
 		{
-			GameScoreMessage message = new GameScoreMessage {GameId = _gameId, Player1Points = 20, Player2Points = 10};
+			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 20, Player2Points = 10 };
 
 			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
@@ -78,7 +78,7 @@ namespace XWingTO.Tests.Functions
 		[Test]
 		public async Task When_Player_1_Concedes_Player_2_Receives_Three_Points()
 		{
-			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player1Concede = true};
+			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player1Concede = true };
 
 			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
@@ -102,7 +102,7 @@ namespace XWingTO.Tests.Functions
 		[Test]
 		public async Task When_Player_1_Drops_TournamentPlayer_Is_Updated()
 		{
-			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player1Drop = true};
+			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player1Drop = true };
 
 			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
@@ -126,7 +126,7 @@ namespace XWingTO.Tests.Functions
 		[Test]
 		public async Task When_Both_Players_Drop_Both_TournamentPlayers_Are_Updated()
 		{
-			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player1Drop = true, Player2Drop = true};
+			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player1Drop = true, Player2Drop = true };
 
 			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
@@ -189,6 +189,49 @@ namespace XWingTO.Tests.Functions
 				Assert.That(player1.MissionPoints, Is.EqualTo(20));
 				Assert.That(player2.MissionPoints, Is.EqualTo(0));
 			});
+		}
+
+		[Test]
+		public async Task Game_Stores_Players_Mission_Points()
+		{
+			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10 };
+
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			await function.Run(JsonConvert.SerializeObject(message), _logger);
+
+			Game game = await _gameRepository.Get(_gameId);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(game.Player1MissionPoints, Is.EqualTo(10));
+				Assert.That(game.Player2MissionPoints, Is.EqualTo(10));
+			});
+		}
+
+		[Test]
+		public async Task Game_Stores_Number_Of_Turns_Played()
+		{
+			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Turns = 8 };
+
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			await function.Run(JsonConvert.SerializeObject(message), _logger);
+
+			Game game = await _gameRepository.Get(_gameId);
+
+			Assert.That(game.Turns, Is.EqualTo(8));
+		}
+
+		[Test]
+		public async Task Game_Stores_Out_Of_Time()
+		{
+			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, OutOfTime = true };
+
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			await function.Run(JsonConvert.SerializeObject(message), _logger);
+
+			Game game = await _gameRepository.Get(_gameId);
+
+			Assert.That(game.OutOfTime, Is.EqualTo(true));
 		}
 
 	}
