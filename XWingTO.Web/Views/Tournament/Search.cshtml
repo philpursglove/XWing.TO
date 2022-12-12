@@ -20,7 +20,7 @@
 			Start Date
 		</div>
 		<div class="col-2">
-			@if (Model.StartDate == new DateOnly(1,1,1))
+			@if (Model.StartDate == new Date(1,1,1))
 			{
 				<input asp-for="StartDate" type="date" value="@DateTime.Today.AddMonths(-1).ToString("yyyy-MM-dd")"/>
 			}
@@ -33,7 +33,7 @@
 			End Date
 		</div>
 		<div class="col-2">
-		@if (Model.EndDate == new DateOnly(1, 1, 1))
+		@if (Model.EndDate == new Date(1, 1, 1))
 		{
 			<input asp-for="EndDate" type="date" value="@DateTime.Today.AddMonths(1).ToString("yyyy-MM-dd")"/>
 		}

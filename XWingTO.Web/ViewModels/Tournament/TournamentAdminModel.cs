@@ -4,7 +4,7 @@
 	{
 		public string Name { get; set; }
 
-		public DateOnly Date { get; set; }
+		public Date Date { get; set; }
 		public string TOName { get; set; }
 		public int PlayerCount { get; set; }
 		public string Location { get; set; }
@@ -22,7 +22,7 @@
 	public class TournamentAdminUpdateModel
 	{
 		public string Name { get; set; }
-		public DateOnly Date { get; set; }
+		public Date Date { get; set; }
 		public Guid Id { get; set; }
 		public string? Country { get; set; }
 		public string? State { get; set; }

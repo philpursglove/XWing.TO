@@ -9,7 +9,7 @@ namespace XWingTO.Web.ViewModels.Tournament
 
         [Required]
         [DataType(DataType.Date)]
-        public DateOnly Date { get; set; }
+        public Date Date { get; set; }
 
         public string? Country { get; set; }
         public string? State { get; set; }

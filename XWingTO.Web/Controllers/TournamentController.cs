@@ -101,33 +101,33 @@ namespace XWingTO.Web.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Search(SearchViewModel model)
 		{
-			if (model.StartDate == new DateOnly(1, 1, 1))
+			if (model.StartDate == new Date(1, 1, 1))
 			{
 				switch (Request.Form["StartDate"].Count)
 				{
 					case 0:
-						model.StartDate = DateOnly.FromDateTime(DateTime.Today.AddMonths(-1));
+						model.StartDate = Date.FromDateTime(DateTime.Today.AddMonths(-1));
 						break;
 					case > 1:
-						model.StartDate = DateOnly.Parse(Request.Form["StartDate"][0]);
+						model.StartDate = Date.Parse(Request.Form["StartDate"][0]);
 						break;
 					default:
-						model.StartDate = DateOnly.Parse(Request.Form["StartDate"]);
+						model.StartDate = Date.Parse(Request.Form["StartDate"]);
 						break;
 				}
 			}
-			if (model.EndDate == new DateOnly(1, 1, 1))
+			if (model.EndDate == new Date(1, 1, 1))
 			{
 				switch (Request.Form["EndDate"].Count)
 				{
 					case 0:
-						model.EndDate = DateOnly.FromDateTime(DateTime.Today.AddMonths(1));
+						model.EndDate = Date.FromDateTime(DateTime.Today.AddMonths(1));
 						break;
 					case > 1:
-						model.EndDate = DateOnly.Parse(Request.Form["EndDate"][0]);
+						model.EndDate = Date.Parse(Request.Form["EndDate"][0]);
 						break;
 					default:
-						model.EndDate = DateOnly.Parse(Request.Form["EndDate"]);
+						model.EndDate = Date.Parse(Request.Form["EndDate"]);
 						break;
 				}
 			}
@@ -192,14 +192,14 @@ namespace XWingTO.Web.Controllers
 
 			ApplicationUser TO;
 
-			foreach (Tournament tournament in myEvents.Where(t => t.Date >= DateOnly.FromDateTime(DateTime.Today)).Take(10))
+			foreach (Tournament tournament in myEvents.Where(t => t.Date >= Date.FromDateTime(DateTime.Today)).Take(10))
 			{
 				TO = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 				upcomingEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
 					tournament.Players, TO.UserName , tournament.Location(), TO.Id == userId));
 			}
 
-			foreach (Tournament tournament in myEvents.Where(t => t.Date < DateOnly.FromDateTime(DateTime.Today)).Take(10))
+			foreach (Tournament tournament in myEvents.Where(t => t.Date < Date.FromDateTime(DateTime.Today)).Take(10))
 			{
 				TO = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 				previousEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
@@ -235,9 +235,9 @@ namespace XWingTO.Web.Controllers
 		[Authorize]
 		public async Task<IActionResult> Create(CreateTournamentViewModel model)
 		{
-			if (model.Date == new DateOnly(1, 1, 1))
+			if (model.Date == new Date(1, 1, 1))
 			{
-				model.Date = DateOnly.Parse(Request.Form["Date"]);
+				model.Date = Date.Parse(Request.Form["Date"]);
 			}
 
 			model.Validate(new ValidationContext(model));
@@ -348,9 +348,9 @@ namespace XWingTO.Web.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Admin(TournamentAdminUpdateModel model)
 		{
-			if (model.Date == new DateOnly(1, 1, 1))
+			if (model.Date == new Date(1, 1, 1))
 			{
-				model.Date = DateOnly.Parse(Request.Form["Date"]);
+				model.Date = Date.Parse(Request.Form["Date"]);
 			}
 
 			if (ModelState.IsValid)

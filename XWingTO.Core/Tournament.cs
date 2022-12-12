@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public DateOnly Date { get; set; }
+        public Date Date { get; set; }
         public Guid TOId { get; set; }
         public string? Country { get; set; }
         public string? State { get; set; }

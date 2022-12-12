@@ -13,7 +13,7 @@ namespace XWingTO.Web.ViewModels
 
 		public bool UserIsTO { get; set; }
 
-		public TournamentListDisplayModel(Guid id, string name, DateOnly date, IEnumerable<TournamentPlayer> players, string toName, string location, bool userIsTo)
+		public TournamentListDisplayModel(Guid id, string name, Date date, IEnumerable<TournamentPlayer> players, string toName, string location, bool userIsTo)
 		{
 			Id = id;
 			Name = name;

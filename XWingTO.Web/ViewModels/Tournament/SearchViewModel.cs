@@ -9,7 +9,7 @@ namespace XWingTO.Web.ViewModels.Tournament
 
 		public List<TournamentListDisplayModel> Tournaments { get; set; }
 
-		public DateOnly StartDate { get; set; }
-		public DateOnly EndDate { get; set; }
+		public Date StartDate { get; set; }
+		public Date EndDate { get; set; }
 	}
 }

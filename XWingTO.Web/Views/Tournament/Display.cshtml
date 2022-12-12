@@ -17,7 +17,7 @@
 	</div>
 </div>
 <div class="row">
-	@if (Model.Tournament.Date >= DateOnly.FromDateTime(DateTime.Today))
+	@if (Model.Tournament.Date >= Date.FromDateTime(DateTime.Today))
 	{
 		if (Model.UserIsRegistered)
 		{

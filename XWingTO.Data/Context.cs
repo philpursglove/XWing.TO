@@ -21,17 +21,17 @@ namespace XWingTO.Data
         {
             base.ConfigureConventions(configurationBuilder);
 
-            configurationBuilder.Properties<DateOnly>()
-                .HaveConversion<DateOnlyConverter>()
+            configurationBuilder.Properties<Date>()
+                .HaveConversion<DateConverter>()
                 .HaveColumnType("date");
         }
     }
 
-    public class DateOnlyConverter : ValueConverter<DateOnly, DateTime>
+    public class DateConverter : ValueConverter<Date, DateTime>
     {
-        public DateOnlyConverter() : base(
+        public DateConverter() : base(
             d => d.ToDateTime(TimeOnly.MinValue),
-            d => DateOnly.FromDateTime(d))
+            d => Date.FromDateTime(d))
         { }
     }
 }
