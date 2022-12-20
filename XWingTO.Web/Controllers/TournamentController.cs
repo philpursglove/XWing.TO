@@ -470,7 +470,7 @@ namespace XWingTO.Web.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public async Task<IActionResult> GenerateRound(RoundViewModel round)
+		public async Task<IActionResult> GenerateRound(GenerateRoundViewModel round)
 		{
 			return Ok(Task.CompletedTask);
 		}
