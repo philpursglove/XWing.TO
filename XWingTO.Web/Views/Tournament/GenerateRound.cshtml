@@ -3,13 +3,16 @@
 
 @{
 	Layout = "_Layout";
+
+	Game[] gamesArray = Model.Round.Games.OrderBy(g => g.TableNumber).ToArray();
 }
 
 <div class="row">
 	Round @Model.Round.RoundNumber
 </div>
-@foreach (Game game in Model.Round.Games.OrderBy(g => g.TableNumber))
+@for (int i = 0; i < Model.Round.Games.Count(); i++)
 {
+	Game game = gamesArray[i];
 	<div>
 		<div class="row">
 			<div class="text-center">
@@ -26,5 +29,7 @@
 			</div>
 		</div>
 	</div>
+
 }
+
 
