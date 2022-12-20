@@ -100,6 +100,9 @@
 	<strong>Rounds</strong>
 </div>
 <div class="row">
+	<a href="@Url.Action("GenerateRound")" role="button" class="btn btn-default" asp-route-tournamentId="@Model.Id">Generate Round</a>
+	</div>
+<div class="row">
 	<div class="accordion" id="roundsAccordion">
 		@foreach (TournamentRoundDisplayModel round in Model.Rounds.OrderBy(r => r.Round))
 		{
