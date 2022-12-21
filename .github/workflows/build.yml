@@ -25,12 +25,6 @@ jobs:
       run: dotnet test XWingTO.sln --no-build --verbosity normal
     - name: Bicep lint 
       run: az bicep build --file ./XWingTO.bicep
-    - name: Publish data assembly
-      run: dotnet publish ./XWingTO.Data/XWingTO.Data.csproj
-    - name: Publish web app
-      run: dotnet publish ./XWingTO.Web/XWingTO.Web.csproj
-    - name: Publish function app
-      run: dotnet publish ./XWingTO.Functions/XWingTO.Functions.csproj
     
 
   # dev:
