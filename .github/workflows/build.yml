@@ -25,7 +25,10 @@ jobs:
       run: dotnet test XWingTO.sln --no-build --verbosity normal
     - name: Bicep lint 
       run: az bicep build --file ./XWingTO.bicep
-    
+    - name: Azure logon
+      
+    - name: Bicep validate
+      uses: azure/arm-deploy@v2
 
   # dev:
   #   needs: build
