@@ -38,7 +38,6 @@ jobs:
     - uses: azure/arm-deploy@v1
       name: Bicep validation
       with:
-        resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
         template: ./XWingTO.bicep
         deploymentMode: Validate
 
