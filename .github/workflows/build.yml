@@ -41,6 +41,7 @@ jobs:
         template: ./XWingTO.bicep
         deploymentMode: Validate
         scope: subscription
+        region: uksouth
 
   # dev:
   #   needs: build
