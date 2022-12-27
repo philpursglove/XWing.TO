@@ -36,7 +36,7 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     - uses: azure/arm-deploy@v1
-      name: Bicep validation
+      name: Bicep Dev validation
       with:
         template: ./XWingTO.bicep
         deploymentMode: Validate
@@ -44,7 +44,7 @@ jobs:
         region: uksouth
         parameters: environment=Development sqlAdminPassword=${{ secrets.Validation_SQL_Admin_Password }}
     - uses: azure/arm-deploy@v1
-      name: Bicep validation
+      name: Bicep Test validation
       with:
         template: ./XWingTO.bicep
         deploymentMode: Validate
@@ -52,7 +52,7 @@ jobs:
         region: uksouth
         parameters: environment=Test sqlAdminPassword=${{ secrets.Validation_SQL_Admin_Password }}
     - uses: azure/arm-deploy@v1
-      name: Bicep validation
+      name: Bicep Prod validation
       with:
         template: ./XWingTO.bicep
         deploymentMode: Validate
