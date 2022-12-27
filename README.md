@@ -1,4 +1,4 @@
-[![Build](https://github.com/philpursglove/XWing.TO/actions/workflows/dotnet.yml/badge.svg)](https://github.com/philpursglove/XWing.TO/actions/workflows/dotnet.yml)
+[![Build](https://github.com/philpursglove/XWing.TO/actions/workflows/build.yml/badge.svg)](https://github.com/philpursglove/XWing.TO/actions/workflows/build.yml)
 
 XWing.TO
 
