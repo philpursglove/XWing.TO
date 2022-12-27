@@ -2,11 +2,25 @@
 param environment string
 param abbreviation string
 
+var skuSettings = {
+    Development: {
+        skuAbbreviation: 'F1'
+    }
+    Test: {
+        skuAbbreviation: 'F1'
+    }
+    Production: {
+        skuAbbreviation: 'S1'
+    }
+}
+
+var skuSetting = skuSettings[environment].skuAbbreviation
+
 resource appServicePlan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name: 'plan-xwingto${abbreviation}'
   location: location
   sku: {
-    name: 'F1'
+    name: skuSetting
     capacity: 1
   }
 }
