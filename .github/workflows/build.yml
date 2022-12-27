@@ -42,6 +42,7 @@ jobs:
         deploymentMode: Validate
         scope: subscription
         region: uksouth
+        parameters: environment=Development sqlAdminPassword=!MyR34lP455w0rd
 
   # dev:
   #   needs: build
