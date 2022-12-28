@@ -100,8 +100,17 @@
 	<strong>Rounds</strong>
 </div>
 <div class="row">
-	<a asp-action="GenerateRound" role="button" class="btn btn-primary" asp-route-tournamentId="@Model.Id">Generate Round</a>
-	</div>
+	@if (Model.Players.Count >= 4)
+	{
+		<a asp-action="GenerateRound" role="button" class="btn btn-primary" asp-route-tournamentId="@Model.Id">Generate Round</a>
+	}
+	else
+	{
+		<div class="alert alert-primary" role="alert">
+			Round generation will be available once four or more players are registered.
+		</div>
+	}
+</div>
 <div class="row">
 	<div class="accordion" id="roundsAccordion">
 		@foreach (TournamentRoundDisplayModel round in Model.Rounds.OrderBy(r => r.Round))
