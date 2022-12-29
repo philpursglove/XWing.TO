@@ -296,6 +296,11 @@ namespace XWingTO.Web.Controllers
 						Points = tournamentPlayer.Points, Dropped = tournamentPlayer.Dropped});
 				}
 
+				if (tournamentPlayers.Select(tp => tp.PlayerId).Contains(currentUser.Id))
+				{
+					model.UserIsRegistered = true;
+				}
+
 				model.Rounds = new List<TournamentRoundDisplayModel>();
 				List<TournamentRound> tournamentRounds = await _tournamentRoundRepository.Query()
 					.Where(tr => tr.TournamentId == id).ExecuteAsync();
@@ -385,12 +390,12 @@ namespace XWingTO.Web.Controllers
 		[Authorize]
 		public async Task<IActionResult> Register(Guid tournamentId)
 		{
+			ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
 			List<TournamentRound> rounds =
 				await _tournamentRoundRepository.Query().Where(t => t.TournamentId == tournamentId).ExecuteAsync();
 			if (!rounds.Any())
 			{
-				ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
-				bool existingPlayer = _tournamentPlayerRepository.Query().Any(tp => tp.PlayerId == currentUser.Id);
+				bool existingPlayer = _tournamentPlayerRepository.Query().Any(tp => tp.PlayerId == currentUser.Id && tp.TournamentId == tournamentId);
 
 				if (!existingPlayer)
 				{
@@ -404,7 +409,15 @@ namespace XWingTO.Web.Controllers
 
 			}
 
-			return RedirectToAction("Display", new { id = tournamentId });
+			Tournament tournament = await _tournamentRepository.Get(tournamentId);
+			if (tournament.TOId == currentUser.Id)
+			{
+				return RedirectToAction("Admin", new {id = tournamentId});
+			}
+			else
+			{
+				return RedirectToAction("Display", new { id = tournamentId });
+			}
 		}
 
 		[Authorize]
@@ -463,16 +476,21 @@ namespace XWingTO.Web.Controllers
 
 			round.Games = pairer.Pair(tournament.Players.ToList());
 
-			await _tournamentRoundRepository.Add(round);
-
-			return RedirectToAction("Display", new { id = tournament.Id });
+			return View();
 		}
 
 		[Authorize]
 		[HttpPost]
-		public async Task<IActionResult> GenerateRound(GenerateRoundViewModel round)
+		public async Task<IActionResult> GenerateRound(GenerateRoundViewModel model)
 		{
-			return Ok(Task.CompletedTask);
+			if (ModelState.IsValid)
+			{
+				_tournamentRoundRepository.Add(model.Round);
+
+				return RedirectToAction("Admin", new {ID = model.Round.TournamentId});
+			}
+
+			return View(model);
 		}
 
 		[Authorize]

@@ -17,6 +17,8 @@
 		public string? State { get; set; }
 		public string? City { get; set; }
 		public string? Venue { get; set; }
+
+		public bool UserIsRegistered { get; set; }
 	}
 
 	public class TournamentAdminUpdateModel
