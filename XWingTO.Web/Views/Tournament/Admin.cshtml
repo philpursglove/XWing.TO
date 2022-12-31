@@ -69,24 +69,24 @@
 					<td>
 						@player.Points
 					</td>
-					<td>
+					<td >
 						@if (@player.Dropped)
 						{
-							<form asp-action="Drop" asp-route-tournamentPlayerId="@player.TournamentPlayerId" asp-route-tournamentId="@Model.Id" asp-route-dropped="false">
-								<input type="submit" class="btn btn-success" value="Undrop" />
+							<form style="display: inline-block" asp-action="Drop" asp-route-tournamentPlayerId="@player.TournamentPlayerId" asp-route-tournamentId="@Model.Id" asp-route-dropped="false">
+								<input type="submit" class="btn btn-success" value="Undrop"/>
 							</form>
 						}
 						else
 						{
-							<form asp-action="Drop" asp-route-tournamentPlayerId="@player.TournamentPlayerId" asp-route-tournamentId="@Model.Id" asp-route-dropped="true">
-								<input type="submit" class="btn btn-danger" value="Drop" />
+							<form style="display: inline-block" asp-action="Drop" asp-route-tournamentPlayerId="@player.TournamentPlayerId" asp-route-tournamentId="@Model.Id" asp-route-dropped="true">
+								<input type="submit" class="btn btn-danger" value="Drop"/>
 							</form>
 						}
 
 						@if (!Model.Rounds.Any())
 						{
-							<form asp-action="Unregister" asp-route-tournamentId="@Model.Id" asp-route-tournamentPlayerId="@player.TournamentPlayerId">
-								<input type="submit" class="btn btn-danger" value="Unregister" />
+							<form style="display: inline-block" asp-action="Unregister" asp-route-tournamentId="@Model.Id" asp-route-tournamentPlayerId="@player.TournamentPlayerId">
+								<input type="submit" class="btn btn-danger" value="Unregister"/>
 							</form>
 						}
 					</td>
