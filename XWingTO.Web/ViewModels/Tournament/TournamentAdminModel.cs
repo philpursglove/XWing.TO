@@ -5,10 +5,6 @@
 		public string Name { get; set; }
 
 		public Date Date { get; set; }
-		public string TOName { get; set; }
-		public int PlayerCount { get; set; }
-		public string Location { get; set; }
-
 		public List<TournamentPlayerDisplayModel> Players { get; set; }
 
 		public List<TournamentRoundDisplayModel> Rounds { get; set; }
