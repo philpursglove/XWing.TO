@@ -30,9 +30,15 @@ namespace XWingTO.Web.Controllers
 	            ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
                 Guid userId = user.Id;
 
-                var myTOEvents = await _tournamentRepository.Query().Where(t => t.TOId == userId).ExecuteAsync();
+                var myTOEvents = await _tournamentRepository.Query().Include(t => t.Players).Where(t => t.TOId == userId).ExecuteAsync();
                 var myTournamentPlayers = _tournamentPlayerRepository.Query().Where(t => t.PlayerId == userId);
                 var myPlayEvents = await myTournamentPlayers.Select(t => t.Tournament).ExecuteAsync();
+
+                foreach (Tournament myPlayEvent in myPlayEvents)
+                {
+	                myPlayEvent.Players = await _tournamentPlayerRepository.Query()
+		                .Where(tp => tp.TournamentId == myPlayEvent.Id).ExecuteAsync();
+                }
                 
                 List<TournamentListDisplayModel> upcomingEvents = new List<TournamentListDisplayModel>();
                 List<TournamentListDisplayModel> previousEvents = new List<TournamentListDisplayModel>();
@@ -87,5 +93,43 @@ namespace XWingTO.Web.Controllers
                 return View("Index", tournaments);
             }
         }
+
+        [HttpGet]
+        public IActionResult MultiTest()
+        {
+	        MultiTestViewModel model = new MultiTestViewModel();
+            model.Persons.Add(new Person(){FamilyName = "Solo", GivenName = "Han", Title = "Smugggler"});
+            model.Persons.Add(new Person(){FamilyName = "Fel", GivenName = "Soontir", Title = "Baron"});
+            model.Persons.Add(new Person() {FamilyName = "Fett", GivenName = "Boba", Title = "Bounty Hunter"});
+
+            return View(model);
+        }
+
+        public IActionResult MultiTest(MultiTestViewModel model)
+        {
+	        if (ModelState.IsValid)
+	        {
+
+	        }
+
+            return View(model);
+        }
+    }
+
+    public class MultiTestViewModel
+    {
+	    public MultiTestViewModel()
+	    {
+		    Persons = new List<Person>();
+	    }
+	    public List<Person> Persons { get; set; }
+    }
+
+    public class Person
+    {
+	    public string GivenName { get; set; }
+        public string FamilyName { get; set; }
+
+        public string Title { get; set; }
     }
 }

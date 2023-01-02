@@ -181,9 +181,15 @@ namespace XWingTO.Web.Controllers
 			ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
 			Guid userId = user.Id;
 
-			var myTOEvents = await _tournamentRepository.Query().Where(t => t.TOId == userId).ExecuteAsync();
+			var myTOEvents = await _tournamentRepository.Query().Include(t => t.Players).Where(t => t.TOId == userId).ExecuteAsync();
 			var myTournamentPlayers = _tournamentPlayerRepository.Query().Where(t => t.PlayerId == userId);
 			var myPlayEvents = await myTournamentPlayers.Select(t => t.Tournament).ExecuteAsync();
+
+			foreach (Tournament myPlayEvent in myPlayEvents)
+			{
+				myPlayEvent.Players = await _tournamentPlayerRepository.Query()
+					.Where(tp => tp.TournamentId == myPlayEvent.Id).ExecuteAsync();
+			}
 
 			List<TournamentListDisplayModel> upcomingEvents = new List<TournamentListDisplayModel>();
 			List<TournamentListDisplayModel> previousEvents = new List<TournamentListDisplayModel>();
