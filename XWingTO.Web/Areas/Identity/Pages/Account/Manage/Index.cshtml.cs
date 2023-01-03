@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using XWingTO.Core;
@@ -33,6 +34,8 @@ namespace XWingTO.Web.Areas.Identity.Pages.Account.Manage
             public string? City { get; set; }
             public string? Venue { get; set; }
 
+            [Required]
+            [Display(Name = "Display Name")]
             public string DisplayName { get; set; }
         }
 
