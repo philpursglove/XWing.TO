@@ -9,7 +9,7 @@
 	<form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right navbar-nav">
 		<li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-				@UserManager.GetUserName(User)
+				@UserManager.GetUserAsync(User).Result.DisplayName
 			</a>
 			<ul class="dropdown-menu">
 				<li>
