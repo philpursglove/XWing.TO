@@ -10,5 +10,7 @@ namespace XWingTO.Core
         public string Venue { get; set; }
 
         public IEnumerable<TournamentPlayer> TournamentPlayers { get; set; }
+
+        public string DisplayName { get; set; }
     }
 }

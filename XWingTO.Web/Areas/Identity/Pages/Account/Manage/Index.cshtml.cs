@@ -32,6 +32,8 @@ namespace XWingTO.Web.Areas.Identity.Pages.Account.Manage
             public string? State { get; set; }
             public string? City { get; set; }
             public string? Venue { get; set; }
+
+            public string DisplayName { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -45,7 +47,8 @@ namespace XWingTO.Web.Areas.Identity.Pages.Account.Manage
                 Country = user.Country,
                 State = user.State,
                 City = user.City,
-                Venue = user.Venue
+                Venue = user.Venue,
+                DisplayName = user.DisplayName,
             };
         }
 
@@ -79,6 +82,7 @@ namespace XWingTO.Web.Areas.Identity.Pages.Account.Manage
             user.State = Input.State;
             user.City = Input.City;
             user.Venue = Input.Venue;
+            user.DisplayName = Input.DisplayName;
 
             await _userManager.UpdateAsync(user);
 
