@@ -83,11 +83,19 @@ jobs:
         path: .\XWingTO.Functions.zip
         retention-days: 1
 
-  # dev:
-  #   needs: build
-  #   runs-on: windows-latest
+  dev:
+    needs: build
+    runs-on: windows-latest
 
-  #  steps:
+    steps:
+    - name: Download web app artifact
+      uses: actions/download-artifact@v2
+        with:
+          name: WebApp
+    - name: Download web app artifact
+      uses: actions/download-artifact@v2
+        with:
+          name: FunctionApp
   #    - uses: ./.github/workflows/deployinfrastructure.yml
   #    - uses: ./.github/workflows/migratedatabase.yml
   #    - uses: ./.github/workflows/deployapplication.yml
