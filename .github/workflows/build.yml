@@ -65,8 +65,11 @@ jobs:
     - name: Publish web app
       run: dotnet publish ./XWingTO.Web/XWingTO.Web.csproj -o .\publish\web
     - name: Publish function app
-      run: dotnet publish ./XWingTO.Functions/XWingTO.Functions.csproj -o .\publish\function
-
+      run: dotnet publish ./XWingTO.Functions/XWingTO.Functions.csproj -o .\publish\functions
+    - name: Zip web app
+      run: zip -r .\publish\zip\web\XWingTO.Web.zip .\publish\web
+    - name: Zip function app
+      run: zip -r .\publish\zip\functions\XWingTO.Functions.zip .\publish\functions
   # dev:
   #   needs: build
   #   runs-on: windows-latest
