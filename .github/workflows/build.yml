@@ -59,6 +59,10 @@ jobs:
         scope: subscription
         region: uksouth
         parameters: environment=Production sqlAdminPassword=${{ secrets.Validation_SQL_Admin_Password }}
+    - name: Publish web app
+      run: dotnet publish ./XWingTO.Web/XWingTO.Web.csproj -o .\publish\web
+    - name: Publish function app
+      run: dotnet publish ./XWingTO.Functions/XWingTO.Functions.csproj -o .\publish\function
 
   # dev:
   #   needs: build
