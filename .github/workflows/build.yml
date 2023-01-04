@@ -71,13 +71,13 @@ jobs:
     - name: Zip function app
       run: tar -czf XWingTO.Functions.zip .\publish\functions
     - name: Upload web app artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: WebApp
         path: .\XWingTO.Web.zip
         retention-days: 1
     - name: Upload function app artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: FunctionApp
         path: .\XWingTO.Functions.zip
@@ -89,11 +89,11 @@ jobs:
 
     steps:
     - name: Download web app artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: WebApp
     - name: Download web app artifact
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: FunctionApp
   #    - uses: ./.github/workflows/deployinfrastructure.yml
