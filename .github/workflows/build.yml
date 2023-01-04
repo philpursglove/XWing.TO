@@ -72,16 +72,16 @@ jobs:
       run: tar -czf XWingTO.Functions.zip .\publish\functions
     - name: Upload web app artifact
       uses: actions/upload-artifact@v2
-        with:
-          name: WebApp
-          path: .\XWingTO.Web.zip
-          retention-days: 1
+      with:
+        name: WebApp
+        path: .\XWingTO.Web.zip
+        retention-days: 1
     - name: Upload function app artifact
       uses: actions/upload-artifact@v2
-        with:
-          name: FunctionApp
-          path: .\XWingTO.Functions.zip
-          retention-days: 1
+      with:
+        name: FunctionApp
+        path: .\XWingTO.Functions.zip
+        retention-days: 1
 
   # dev:
   #   needs: build
