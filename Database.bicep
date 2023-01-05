@@ -58,4 +58,4 @@ resource sqlServerDatabase 'Microsoft.Sql/servers/databases@2021-11-01' = {
 }
 
 // Needs to be calculated
-output connectionString string = ''
+output connectionString string = 'Server=tcp:${sqlServer.name}${az.environment().suffixes.sqlServerHostname},1433;Initial catalog=${sqlServerDatabase.name};Persist Security Info=False;User ID=darthvader;Password=${sqlAdminPassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
