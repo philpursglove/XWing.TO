@@ -6,23 +6,23 @@ param sqlAdminPassword string
 
 var skuSettings = {
   Development: {
-    capacity: 1,
-    family: 'Gen5',
-    name: 'GP_S_Gen5',
-    size: null,
+    capacity: 1
+    family: 'Gen5'
+    name: 'GP_S_Gen5'
+    size: null
     tier: 'GeneralPurpose'
   }
   Test: {
-    capacity: 1,
-    family: 'Gen5',
-    name: 'GP_S_Gen5',
-    size: null,
+    capacity: 1
+    family: 'Gen5'
+    name: 'GP_S_Gen5'
+    size: null
     tier: 'GeneralPurpose'
   }
   Production: {
-    capacity: '10',
-    family: null,
-    name: 'Standard',
+    capacity: 10
+    family: null
+    name: 'Standard'
     size: null
     tier: 'Standard'
   }
