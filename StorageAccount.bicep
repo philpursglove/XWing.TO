@@ -14,7 +14,7 @@ var environmentSettings = {
 }
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
-  name: 'stxwing${environmentSettings[environment].environmentAbbreviation}'
+  name: 'stxwingto${environmentSettings[environment].environmentAbbreviation}'
   location: location
   kind: 'StorageV2'
   sku: {
