@@ -66,7 +66,7 @@ namespace XWingTO.Web.Controllers
 				foreach (TournamentPlayer tournamentPlayer in tournamentPlayers)
 				{
 					model.Players.Add(new TournamentPlayerDisplayModel
-					{ Points = tournamentPlayer.Points, Name = tournamentPlayer.Player.UserName, Dropped = tournamentPlayer.Dropped});
+					{ Points = tournamentPlayer.Points, Name = tournamentPlayer.Player.DisplayName, Dropped = tournamentPlayer.Dropped});
 				}
 
 				if (HttpContext.User.Identity.IsAuthenticated)
@@ -298,7 +298,7 @@ namespace XWingTO.Web.Controllers
 				foreach (TournamentPlayer tournamentPlayer in tournamentPlayers)
 				{
 					ApplicationUser playerUser = await _userManager.FindByIdAsync(tournamentPlayer.PlayerId.ToString());
-					model.Players.Add(new TournamentPlayerDisplayModel(){Name = playerUser.UserName, TournamentPlayerId = tournamentPlayer.Id, 
+					model.Players.Add(new TournamentPlayerDisplayModel(){Name = playerUser.DisplayName, TournamentPlayerId = tournamentPlayer.Id, 
 						Points = tournamentPlayer.Points, Dropped = tournamentPlayer.Dropped});
 				}
 
