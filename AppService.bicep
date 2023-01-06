@@ -4,10 +4,10 @@ param abbreviation string
 
 var skuSettings = {
     Development: {
-        skuAbbreviation: 'F1'
+        skuAbbreviation: 'B1'
     }
     Test: {
-        skuAbbreviation: 'F1'
+        skuAbbreviation: 'B1'
     }
     Production: {
         skuAbbreviation: 'S1'
