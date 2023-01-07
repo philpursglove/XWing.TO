@@ -78,3 +78,6 @@ module functionApp 'FunctionApp.bicep' = {
         appInsightsId: appInsights.outputs.appInsightsId
     }
 }
+
+output sqlconnectionString string = database.outputs.connectionString
+output appInsightsConnectionString string = appInsights.outputs.appInsightsId
