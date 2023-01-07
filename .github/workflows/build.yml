@@ -64,8 +64,6 @@ jobs:
         deploymentName: ${{ github.sha }}
     - name: Publish web app
       run: dotnet publish ./XWingTO.Web/XWingTO.Web.csproj -o .\publish\web
-    - name: List web app contents
-      run: ls .\publish\web
     - name: Publish function app
       run: dotnet publish ./XWingTO.Functions/XWingTO.Functions.csproj -o .\publish\functions
     - name: Zip web app
