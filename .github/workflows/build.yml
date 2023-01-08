@@ -67,9 +67,9 @@ jobs:
     - name: Publish function app
       run: dotnet publish ./XWingTO.Functions/XWingTO.Functions.csproj -o .\publish\functions
     - name: Zip web app
-      run: tar -czf XWingTO.Web.zip .\publish\web
+      run: Compress-Archive .\publish\web XWingTO.Web.zip
     - name: Zip function app
-      run: tar -czf XWingTO.Functions.zip .\publish\functions
+      run: Compress-Archive .\publish\functions XWingTO.Functions.zip
     - name: Upload web app artifact
       uses: actions/upload-artifact@v3
       with:
