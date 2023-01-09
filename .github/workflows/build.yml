@@ -111,7 +111,7 @@ jobs:
     #needs: dev
     #runs-on: windows-latest
 
-    steps:
+    #steps:
   #    - uses: ./.github/workflows/deployinfrastructure.yml
   #    - uses: ./.github/workflows/migratedatabase.yml
   #    - uses: ./.github/workflows/deployapplication.yml
@@ -121,7 +121,7 @@ jobs:
     #needs: test
     #runs-on: windows-latest
 
-    steps:
+    #steps:
   #    - uses: ./.github/workflows/deployinfrastructure.yml
   #    - uses: ./.github/workflows/migratedatabase.yml
   #    - uses: ./.github/workflows/deployapplication.yml
