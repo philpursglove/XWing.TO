@@ -107,9 +107,9 @@ jobs:
   #    - uses: ./.github/workflows/deployapplication.yml
   #    - uses: ./.github/workflows/deployfunctionapp.yml
     
-  test: 
-    needs: dev
-    runs-on: windows-latest
+  #test: 
+    #needs: dev
+    #runs-on: windows-latest
 
     steps:
   #    - uses: ./.github/workflows/deployinfrastructure.yml
@@ -117,9 +117,9 @@ jobs:
   #    - uses: ./.github/workflows/deployapplication.yml
   #    - uses: ./.github/workflows/deployfunctionapp.yml
 
-  prod:
-    needs: test
-    runs-on: windows-latest
+  #prod:
+    #needs: test
+    #runs-on: windows-latest
 
     steps:
   #    - uses: ./.github/workflows/deployinfrastructure.yml
