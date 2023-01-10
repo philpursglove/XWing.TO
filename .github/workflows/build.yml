@@ -92,7 +92,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: WebApp
-    - name: Download web app artifact
+    - name: Download function app artifact
       uses: actions/download-artifact@v3
       with:
         name: FunctionApp
