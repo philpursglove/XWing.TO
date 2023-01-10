@@ -490,7 +490,12 @@ namespace XWingTO.Web.Controllers
 
 			round.Games = pairer.Pair(tournament.Players.ToList());
 
-			return View();
+			GenerateRoundViewModel model = new GenerateRoundViewModel
+			{
+				Round = round
+			};
+
+			return View(model);
 		}
 
 		[Authorize]
