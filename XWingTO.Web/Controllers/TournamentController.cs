@@ -464,9 +464,17 @@ namespace XWingTO.Web.Controllers
 
 			TournamentRound round = new TournamentRound
 			{
-				TournamentId = id,
-				RoundNumber = tournament.Rounds.Count() + 1
+				TournamentId = id
 			};
+
+			if (tournament.Rounds.Any())
+			{
+				round.RoundNumber = tournament.Rounds.Count() + 1;
+			}
+			else
+			{
+				round.RoundNumber = 1;
+			}
 
 			IPairingStrategy strategy;
 			if (tournament.Rounds.Any())
