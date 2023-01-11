@@ -58,6 +58,7 @@ namespace XWingTO.Web.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [Required]
+            [Display(Name = "Display Name")]
             public string DisplayName { get; set; }    
         }
 
