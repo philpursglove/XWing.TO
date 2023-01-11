@@ -88,24 +88,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Download web app artifact
-      uses: actions/download-artifact@v3
-      with:
-        name: WebApp
-    - name: Download function app artifact
-      uses: actions/download-artifact@v3
-      with:
-        name: FunctionApp
-    - name: Azure logon
-      uses: azure/login@v1
-      with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  #    - uses: ./.github/workflows/deployinfrastructure.yml
+     - uses: ./.github/workflows/deployinfrastructure.yml
   #    - uses: ./.github/workflows/migratedatabase.yml
-  #    - uses: ./.github/workflows/deployapplication.yml
-  #    - uses: ./.github/workflows/deployfunctionapp.yml
+     - uses: ./.github/workflows/deployapplication.yml
+     - uses: ./.github/workflows/deployfunctionapp.yml
     
   #test: 
     #needs: dev

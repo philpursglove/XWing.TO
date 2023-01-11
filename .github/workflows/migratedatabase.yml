@@ -7,8 +7,6 @@ jobs:
   migrate-database:
     runs-on: windows-latest
     steps:
-    - name: Azure CLI Action
-      uses: Azure/cli@v1
-      with:
-        # Specify the script here
-        inlineScript: echo Migrating DB
+      - uses: actions/checkout@v2
+      - uses: azure/login@v1
+      
