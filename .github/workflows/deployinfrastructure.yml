@@ -15,7 +15,7 @@ jobs:
   deploy-infrastructure:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: azure/login@v1
       name: Azure login
       with:
