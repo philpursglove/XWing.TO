@@ -87,13 +87,11 @@ jobs:
     needs: build
     runs-on: windows-latest
 
-      uses: ./.github/workflows/deployinfrastructure.yml
-      name: Deploy Infrastructure
+    uses: ./.github/workflows/deployinfrastructure.yml
+      
  #    uses: ./.github/workflows/migratedatabase.yml
-      uses: ./.github/workflows/deployapplication.yml
-      name: Deploy Web app
-      uses: ./.github/workflows/deployfunctionapp.yml
-      name: Deploy Function app
+    uses: ./.github/workflows/deployapplication.yml
+    uses: ./.github/workflows/deployfunctionapp.yml
     
   #test: 
     #needs: dev
