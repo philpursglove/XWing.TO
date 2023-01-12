@@ -87,15 +87,13 @@ jobs:
     needs: build
     runs-on: windows-latest
 
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/workflows/deployinfrastructure.yml
-        name: Deploy Infrastructure
- #    - uses: ./.github/workflows/migratedatabase.yml
-      - uses: ./.github/workflows/deployapplication.yml
-        name: Deploy Web app
-      - uses: ./.github/workflows/deployfunctionapp.yml
-        name: Deploy Function app
+      uses: ./.github/workflows/deployinfrastructure.yml
+      name: Deploy Infrastructure
+ #    uses: ./.github/workflows/migratedatabase.yml
+      uses: ./.github/workflows/deployapplication.yml
+      name: Deploy Web app
+      uses: ./.github/workflows/deployfunctionapp.yml
+      name: Deploy Function app
     
   #test: 
     #needs: dev
