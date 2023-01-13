@@ -83,15 +83,15 @@ jobs:
         path: .\XWingTO.Functions.zip
         retention-days: 1
 
-  dev:
-    needs: build
-    runs-on: windows-latest
+#Pull steps up from child workflows
+#  dev:
+#    needs: build
+#    runs-on: windows-latest
 
-    uses: ./.github/workflows/deployinfrastructure.yml
-      
- #    uses: ./.github/workflows/migratedatabase.yml
-    uses: ./.github/workflows/deployapplication.yml
-    uses: ./.github/workflows/deployfunctionapp.yml
+#    uses: ./.github/workflows/deployinfrastructure.yml
+#    uses: ./.github/workflows/migratedatabase.yml
+#    uses: ./.github/workflows/deployapplication.yml
+#    uses: ./.github/workflows/deployfunctionapp.yml
     
   #test: 
     #needs: dev
