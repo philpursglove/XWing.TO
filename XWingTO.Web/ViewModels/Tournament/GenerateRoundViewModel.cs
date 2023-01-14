@@ -12,7 +12,7 @@ namespace XWingTO.Web.ViewModels.Tournament
 		}
 		public TournamentRound Round { get; set; }
 
-		private List<TournamentPlayer> TournamentPlayers { get; set; }
+		public List<TournamentPlayer> TournamentPlayers { get; set; }
 
 		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
 		{
@@ -45,7 +45,7 @@ namespace XWingTO.Web.ViewModels.Tournament
 
 		public SelectList MakePlayerSelectList(TournamentPlayer currentSelectedPlayer)
 		{
-			return new SelectList(TournamentPlayers, "Id", "Player.Name", currentSelectedPlayer);
+			return new SelectList(TournamentPlayers, "Id", "Player.DisplayName", currentSelectedPlayer);
 		}
 	}
 }

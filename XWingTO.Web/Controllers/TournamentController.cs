@@ -492,8 +492,10 @@ namespace XWingTO.Web.Controllers
 
 			GenerateRoundViewModel model = new GenerateRoundViewModel
 			{
-				Round = round
+				Round = round,
+				TournamentPlayers = tournament.Players.ToList()
 			};
+			
 
 			return View(model);
 		}
