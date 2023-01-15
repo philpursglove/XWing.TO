@@ -464,7 +464,8 @@ namespace XWingTO.Web.Controllers
 
 			TournamentRound round = new TournamentRound
 			{
-				TournamentId = id
+				TournamentId = id,
+				Id = Guid.NewGuid()
 			};
 
 			if (tournament.Rounds.Any())
