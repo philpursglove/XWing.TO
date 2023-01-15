@@ -8,11 +8,16 @@ public class RandomPairingStrategy : IPairingStrategy
 
         while (players.Any())
         {
-            Game newGame = new Game();
+	        Game newGame = new Game
+	        {
+		        Id = Guid.NewGuid()
+	        };
 
             newGame.TableNumber = games.Count + 1;
 
             newGame.Player1 = players.Random();
+            newGame.TournamentPlayer1Id = newGame.Player1.PlayerId;
+
             players.Remove(newGame.Player1);
 
             if (!players.Any())
@@ -24,6 +29,8 @@ public class RandomPairingStrategy : IPairingStrategy
                 newGame.Player2 = players.Random();
                 players.Remove(newGame.Player2);
             }
+
+            newGame.TournamentPlayer2Id = newGame.Player2.PlayerId;
 
             games.Add(newGame);
         }
