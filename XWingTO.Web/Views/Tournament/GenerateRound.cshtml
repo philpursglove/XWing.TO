@@ -21,12 +21,14 @@
 			</div>
 		</div>
 		<div class="row">
-			<div>
-				@Html.DropDownListFor(m => game.TournamentPlayer1Id, Model.MakePlayerSelectList(game.Player1))
+			<div class="col-3">
+				@Html.DropDownListFor(m => game.TournamentPlayer1Id, Model.MakePlayerSelectList(game.TournamentPlayer1Id))
 			</div>
-			Vs
-			<div>
-				@Html.DropDownListFor(m => game.TournamentPlayer2Id, Model.MakePlayerSelectList(game.Player2))
+			<div class="col-1">
+				Vs
+			</div>
+				<div class="col-3">
+				@Html.DropDownListFor(m => game.TournamentPlayer2Id, Model.MakePlayerSelectList(game.TournamentPlayer2Id))
 			</div>
 		</div>
 	</div>
