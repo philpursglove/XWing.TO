@@ -43,9 +43,9 @@ namespace XWingTO.Web.ViewModels.Tournament
 			return results;
 		}
 
-		public SelectList MakePlayerSelectList(TournamentPlayer currentSelectedPlayer)
+		public SelectList MakePlayerSelectList(Guid currentSelectedPlayerId)
 		{
-			return new SelectList(TournamentPlayers, "Id", "Player.DisplayName", currentSelectedPlayer);
+			return new SelectList(TournamentPlayers, "Id", "Player.DisplayName", currentSelectedPlayerId);
 		}
 	}
 }
