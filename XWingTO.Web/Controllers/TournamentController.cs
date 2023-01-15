@@ -493,7 +493,8 @@ namespace XWingTO.Web.Controllers
 			GenerateRoundViewModel model = new GenerateRoundViewModel
 			{
 				Round = round,
-				TournamentPlayers = tournament.Players.ToList()
+				TournamentPlayers = await _tournamentPlayerRepository.Query().Include(p => p.Player)
+					.Where(tp => tp.TournamentId == id).ExecuteAsync()
 			};
 			
 
