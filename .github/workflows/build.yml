@@ -27,6 +27,11 @@ jobs:
       run: dotnet build XWingTO.sln --no-restore
     - name: Test
       run: dotnet test XWingTO.sln --no-build --verbosity normal
+    - name: SonarCloud Scan
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}    
     - name: Bicep lint 
       run: az bicep build --file ./XWingTO.bicep
     - name: Azure logon
