@@ -54,10 +54,6 @@ namespace XWingTO.Tests.Controller
 			_tournamentRoundQuery = new FakeQuery<TournamentRound>((new List<TournamentRound> {_round}).AsQueryable());
 			_tournamentRoundRepository.Query().Returns(_tournamentRoundQuery);
 
-			//_tournamentPlayerQuery = new FakeQuery<TournamentPlayer>((new List<TournamentPlayer>
-			//	{new TournamentPlayer {TournamentId = _tournament.Id, PlayerId = _user.Id}}).AsQueryable());
-			//_tournamentPlayerRepository.Query().Returns(_tournamentPlayerQuery);
-
 			HttpContext context = Substitute.For<HttpContext>();
 			List<Claim> claims = new List<Claim>
 			{
