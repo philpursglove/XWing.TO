@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XWingTO.Infrastructure", "X
 		Database.bicep = Database.bicep
 		FunctionApp.bicep = FunctionApp.bicep
 		StorageAccount.bicep = StorageAccount.bicep
+		VNet.bicep = VNet.bicep
 		XWingTO.bicep = XWingTO.bicep
 	EndProjectSection
 EndProject
