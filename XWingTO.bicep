@@ -29,6 +29,15 @@ resource rgXWing 'Microsoft.Resources/resourceGroups@2021-01-01' = {
     location: location
 }
 
+module vnet 'VNet.bicep' = {
+    name: 'vnet'
+    scope: rgXWing
+    params: {
+        location: rgXWing.location
+        abbreviation: abbreviation
+    }
+}
+
 module database 'Database.bicep' = {
     name: 'database'
     scope: rgXWing
