@@ -75,13 +75,11 @@ jobs:
       with:
         name: WebApp
         path: .\XWingTO.Web.zip
-        retention-days: 1
     - name: Upload function app artifact
       uses: actions/upload-artifact@v3
       with:
         name: FunctionApp
         path: .\XWingTO.Functions.zip
-        retention-days: 1
 
 #Pull steps up from child workflows
 #  dev:
