@@ -30,7 +30,7 @@ jobs:
     - name: Install EF tools
       run: dotnet tool install --global dotnet-ef
     - name: Generate migration SQL script
-      run: dotnet ef migrations script --idempotent --output ./XWingTO.sql
+      run: dotnet ef migrations script --idempotent --project ./XWingTO.Data/XWingTO.Data.csproj --output ./XWingTO.sql
     - name: Bicep lint 
       run: az bicep build --file ./XWingTO.bicep
     - name: Azure logon
