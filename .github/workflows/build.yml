@@ -84,6 +84,11 @@ jobs:
       with:
         name: FunctionApp
         path: .\XWingTO.Functions.zip
+    - name: Upload SQL script
+      uses: actions/upload-artifact@v3
+      with:
+        name: SqlScript
+        path: ./XWingTO.sql
 
 #Pull steps up from child workflows
 #  dev:
