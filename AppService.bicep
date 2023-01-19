@@ -25,7 +25,6 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2020-12-01' = {
   }
 }
 
-
 resource appService 'Microsoft.Web/sites@2021-01-15' = {
   name: 'app-xwingto${abbreviation}'
   location: location
@@ -34,5 +33,23 @@ resource appService 'Microsoft.Web/sites@2021-01-15' = {
   }
   properties: {
     serverFarmId: appServicePlan.id
+  }
+}
+
+resource ftpRule 'Microsoft.Web/sites/basicPublishingCredentialsPolicies@2022-03-01' = {
+  name: 'ftp'
+  kind: 'string'
+  parent: appService
+  properties: {
+    allow: false
+  }
+}
+
+resource scmRule 'Microsoft.Web/sites/basicPublishingCredentialsPolicies@2022-03-01' = {
+  name: 'scm'
+  kind: 'string'
+  parent: appService
+  properties: {
+    allow: false
   }
 }
