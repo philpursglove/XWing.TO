@@ -27,6 +27,8 @@ jobs:
       run: dotnet build XWingTO.sln --no-restore
     - name: Test
       run: dotnet test XWingTO.sln --no-build --verbosity normal
+    - name: Generate migration SQL script
+      run: dotnet ef migrations script --idempotent --output ./XWingTO.sql
     - name: Bicep lint 
       run: az bicep build --file ./XWingTO.bicep
     - name: Azure logon
