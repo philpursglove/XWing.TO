@@ -491,12 +491,9 @@ namespace XWingTO.Web.Controllers
 
 			round.Games = pairer.Pair(tournament.Players.ToList());
 
-			GenerateRoundViewModel model = new GenerateRoundViewModel
-			{
-				Round = round,
-				TournamentPlayers = await _tournamentPlayerRepository.Query().Include(p => p.Player)
-					.Where(tp => tp.TournamentId == id).ExecuteAsync()
-			};
+			GenerateRoundViewModel model = new GenerateRoundViewModel(
+				await _tournamentPlayerRepository.Query().Include(p => p.Player)
+					.Where(tp => tp.TournamentId == id).ExecuteAsync(), round);
 			
 
 			return View(model);

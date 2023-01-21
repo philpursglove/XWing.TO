@@ -6,9 +6,14 @@ namespace XWingTO.Web.ViewModels.Tournament
 {
 	public class GenerateRoundViewModel : IValidatableObject
 	{
-		public GenerateRoundViewModel()
+		private IEnumerable<TournamentPlayerViewModel> PlayerList;
+		public GenerateRoundViewModel(List<TournamentPlayer> Players, TournamentRound round)
 		{
-			TournamentPlayers = new List<TournamentPlayer>();
+			TournamentPlayers = Players;
+
+			PlayerList = TournamentPlayers.Select(p => new TournamentPlayerViewModel(p.Id, p.Player.DisplayName));
+
+			Round = round;
 		}
 		public TournamentRound Round { get; set; }
 
@@ -45,7 +50,19 @@ namespace XWingTO.Web.ViewModels.Tournament
 
 		public SelectList MakePlayerSelectList(Guid currentSelectedPlayerId)
 		{
-			return new SelectList(TournamentPlayers, "Id", "Player.DisplayName", currentSelectedPlayerId);
+			return new SelectList(PlayerList, "Id", "Name", currentSelectedPlayerId);
+		}
+
+		class TournamentPlayerViewModel
+		{
+			public Guid Id { get; set; }
+			public string Name { get; set; }
+
+			public TournamentPlayerViewModel(Guid id, string name)
+			{
+				Id = id;
+				Name = name;
+			}
 		}
 	}
 }
