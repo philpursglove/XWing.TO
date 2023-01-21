@@ -11,16 +11,26 @@ namespace XWingTO.Tests
 		private TournamentPlayer player2;
 		private TournamentPlayer player3;
 
+		private List<TournamentPlayer> PlayerList;
+
 		private GenerateRoundViewModel model;
 
 		[SetUp]
 		public void Setup()
 		{
-			player1 = new TournamentPlayer() {Id = Guid.NewGuid()};
-			player2 = new TournamentPlayer() {Id = Guid.NewGuid()};
-			player3 = new TournamentPlayer() {Id = Guid.NewGuid()};
+			player1 = new TournamentPlayer
+			{
+				Id = Guid.NewGuid(),
+				Player = new ApplicationUser() {DisplayName = "Alice"}
+			};
+			player2 = new TournamentPlayer()
+				{Id = Guid.NewGuid(), Player = new ApplicationUser() {DisplayName = "Bob"}};
+			player3 = new TournamentPlayer() {Id = Guid.NewGuid(), Player = new ApplicationUser(){DisplayName = "Charlie"}};
 
-			model = new GenerateRoundViewModel();
+			PlayerList = new List<TournamentPlayer>
+			{
+				player1, player2, player3
+			};
 		}
 
 		[Test]
@@ -42,7 +52,8 @@ namespace XWingTO.Tests
 				game1,
 				game2
 			};
-			model.Round = round;
+
+			model = new GenerateRoundViewModel(PlayerList, round);
 
 			IEnumerable<ValidationResult> results = model.Validate(new ValidationContext(model));
 			Assert.That(results.Any(), Is.True);
@@ -67,7 +78,7 @@ namespace XWingTO.Tests
 				game1,
 				game2
 			};
-			model.Round = round;
+			model = new GenerateRoundViewModel(PlayerList, round);
 
 			IEnumerable<ValidationResult> results = model.Validate(new ValidationContext(model));
 			Assert.That(results.Any(), Is.True);
@@ -92,12 +103,10 @@ namespace XWingTO.Tests
 				game1,
 				game2
 			};
-			model.Round = round;
+			model = new GenerateRoundViewModel(PlayerList, round);
 
 			IEnumerable<ValidationResult> results = model.Validate(new ValidationContext(model));
 			Assert.That(results.Any(), Is.True);
-
 		}
-
 	}
 }
