@@ -5,16 +5,18 @@ on:
   
 jobs:
   migrate-database:
+
     runs-on: windows-latest
+    
     steps:
     - uses: actions/checkout@v2
     - uses: azure/login@v1
     - uses: actions/download-artifact@v3
       with:
         name: SqlScript
-    - uses: azure/sql-action
+    - uses: azure/sql-action@v2
       with:
         action: Script
-        path: ./XWingTo.sql
+        path: ./XWingTO.sql
 #       connectionstring: 
       
