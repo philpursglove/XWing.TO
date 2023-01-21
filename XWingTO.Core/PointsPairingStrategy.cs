@@ -62,8 +62,8 @@ public class PointsPairingStrategy : IPairingStrategy
                     bracketPlayers.Remove(newGame.Player2);
                 }
 
-                newGame.TournamentPlayer1Id = newGame.Player1.PlayerId;
-                newGame.TournamentPlayer2Id = newGame.Player2.PlayerId;
+                newGame.TournamentPlayer1Id = newGame.Player1.Id;
+                newGame.TournamentPlayer2Id = newGame.Player2.Id;
 
                 games.Add(newGame);
             }
