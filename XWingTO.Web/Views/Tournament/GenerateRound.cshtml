@@ -19,13 +19,16 @@
 		Game game = gamesArray[i];
 		<div>
 			<div class="row">
+				<input type="hidden" value="@game.Id" name="Round.Games[@i].Id"/>
+				<input type="hidden" value="@game.TableNumber" name="Round.Games[@i].TableNumber"/>
 				<div class="text-center">
 					Table @game.TableNumber
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-3">
-					@Html.DropDownListFor(m => game.TournamentPlayer1Id, Model.MakePlayerSelectList(game.TournamentPlayer1Id))
+					<!-- TODO Switch this for tag helpers version-->
+					@Html.DropDownListFor(m => game.TournamentPlayer1Id, Model.MakePlayerSelectList(game.TournamentPlayer1Id), new {name = $"Round.Games[{i}].TournamentPlayer1Id"})
 				</div>
 				<div class="col-1">
 					Vs
