@@ -7,6 +7,12 @@ namespace XWingTO.Web.ViewModels.Tournament
 	public class GenerateRoundViewModel : IValidatableObject
 	{
 		private IEnumerable<TournamentPlayerViewModel> PlayerList;
+
+		public GenerateRoundViewModel()
+		{
+			
+		}
+
 		public GenerateRoundViewModel(List<TournamentPlayer> Players, TournamentRound round)
 		{
 			TournamentPlayers = Players;
