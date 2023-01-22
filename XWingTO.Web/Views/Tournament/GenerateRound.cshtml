@@ -8,32 +8,35 @@
 }
 
 <form asp-action="GenerateRound" method="POST">
-<div class="row">
-	Round @Model.Round.RoundNumber
-</div>
-@for (int i = 0; i < Model.Round.Games.Count(); i++)
-{
-	Game game = gamesArray[i];
-	<div>
-		<div class="row">
-			<div class="text-center">
-				Table @game.TableNumber
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-3">
-				@Html.DropDownListFor(m => game.TournamentPlayer1Id, Model.MakePlayerSelectList(game.TournamentPlayer1Id))
-			</div>
-			<div class="col-1">
-				Vs
-			</div>
-			<div class="col-3">
-				@Html.DropDownListFor(m => game.TournamentPlayer2Id, Model.MakePlayerSelectList(game.TournamentPlayer2Id))
-			</div>
-		</div>
+	@Html.HiddenFor(r => r.Round.Id)
+	@Html.HiddenFor(r => r.Round.RoundNumber)
+	@Html.HiddenFor(r => r.Round.TournamentId)
+	<div class="row">
+		Round @Model.Round.RoundNumber
 	</div>
+	@for (int i = 0; i < Model.Round.Games.Count(); i++)
+	{
+		Game game = gamesArray[i];
+		<div>
+			<div class="row">
+				<div class="text-center">
+					Table @game.TableNumber
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-3">
+					@Html.DropDownListFor(m => game.TournamentPlayer1Id, Model.MakePlayerSelectList(game.TournamentPlayer1Id))
+				</div>
+				<div class="col-1">
+					Vs
+				</div>
+				<div class="col-3">
+					@Html.DropDownListFor(m => game.TournamentPlayer2Id, Model.MakePlayerSelectList(game.TournamentPlayer2Id))
+				</div>
+			</div>
+		</div>
 
-}
-<input type="submit" value="Generate Round" class="btn btn-primary"/>
+	}
+	<input type="submit" value="Generate Round" class="btn btn-primary"/>
 </form>
 
