@@ -16,11 +16,12 @@
 	</div>
 	@for (int i = 0; i < Model.Round.Games.Count(); i++)
 	{
+		int gameId = i;
 		Game game = gamesArray[i];
 		<div>
 			<div class="row">
-				<input type="hidden" value="@game.Id" name="Round.Games[@i].Id"/>
-				<input type="hidden" value="@game.TableNumber" name="Round.Games[@i].TableNumber"/>
+				<input type="hidden" value="@game.Id" name="Round.Games[@gameId].Id"/>
+				<input type="hidden" value="@game.TableNumber" name="Round.Games[@gameId].TableNumber"/>
 				<div class="text-center">
 					Table @game.TableNumber
 				</div>
@@ -28,12 +29,14 @@
 			<div class="row">
 				<div class="col-3">
 					<!-- TODO Switch this for tag helpers version-->
+					<select asp-for="Round.Games[@gameId].TournamentPlayer1Id" asp-items="Model.MakePlayerSelectList(game.TournamentPlayer1Id)" name="Round.Games[@gameId].TournamentPlayer1Id"></select>
 					@Html.DropDownListFor(m => game.TournamentPlayer1Id, Model.MakePlayerSelectList(game.TournamentPlayer1Id), new {name = $"Round.Games[{i}].TournamentPlayer1Id"})
 				</div>
 				<div class="col-1">
 					Vs
 				</div>
 				<div class="col-3">
+					<select asp-for="Round.Games[@gameId].TournamentPlayer2Id" asp-items="Model.MakePlayerSelectList(game.TournamentPlayer2Id)" name="Round.Games[@gameId].TournamentPlayer2Id"></select>
 					@Html.DropDownListFor(m => game.TournamentPlayer2Id, Model.MakePlayerSelectList(game.TournamentPlayer2Id))
 				</div>
 			</div>
