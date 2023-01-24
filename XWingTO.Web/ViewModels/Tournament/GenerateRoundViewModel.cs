@@ -54,9 +54,9 @@ namespace XWingTO.Web.ViewModels.Tournament
 			return results;
 		}
 
-		public SelectList MakePlayerSelectList(Guid currentSelectedPlayerId)
+		public List<SelectListItem> MakePlayerSelectList()
 		{
-			return new SelectList(PlayerList, "Id", "Name", currentSelectedPlayerId);
+			return PlayerList.Select(i => new SelectListItem(i.Name, i.Id.ToString())).ToList();
 		}
 
 		class TournamentPlayerViewModel
