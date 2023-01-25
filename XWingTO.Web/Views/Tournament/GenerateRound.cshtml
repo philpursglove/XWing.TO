@@ -20,6 +20,7 @@
 			<div class="row">
 				<input type="hidden" asp-for="Round.Games[@gameId].Id" name="Round.Games[@gameId].Id"/>
 				<input type="hidden" asp-for="Round.Games[@gameId].TableNumber" name="Round.Games[@gameId].TableNumber"/>
+				<input type="hidden" asp-for="Round.Games[@gameId].TournamentRoundId" name="Round.Games[@gameId].TournamentRoundId"/>
 				<div class="text-center">
 					Table @Model.Round.Games.ToList()[gameId].TableNumber
 				</div>
