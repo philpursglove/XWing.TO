@@ -18,9 +18,10 @@
 	{
 		<div>
 			<div class="row">
-				<input type="hidden" asp-for="Round.Games[@gameId].Id" name="Round.Games[@gameId].Id"/>
-				<input type="hidden" asp-for="Round.Games[@gameId].TableNumber" name="Round.Games[@gameId].TableNumber"/>
-				<input type="hidden" asp-for="Round.Games[@gameId].TournamentRoundId" name="Round.Games[@gameId].TournamentRoundId"/>
+				@Html.Hidden("",Model.Round.Games.ToList()[gameId].Id, new {@name = $"Round.Games[{gameId}].Id"})
+@*				@Html.HiddenFor(m => m.Round.Games.ToList()[gameId].Id, new {@name = $"Round.Games[{gameId}].Id"})
+*@				@Html.HiddenFor(m => m.Round.Games.ToList()[gameId].TableNumber)
+				@Html.HiddenFor(m => m.Round.Games.ToList()[gameId].TournamentRoundId)
 				<div class="text-center">
 					Table @Model.Round.Games.ToList()[gameId].TableNumber
 				</div>
@@ -28,15 +29,15 @@
 			<div class="row">
 				<div class="col-3">
 					<!-- TODO Switch this for tag helpers version-->
-					<select asp-for="Round.Games[@gameId].TournamentPlayer1Id" asp-items="Model.MakePlayerSelectList()" name="Round.Games[@gameId].TournamentPlayer1Id" id="Round.Games[@gameId].TournamentPlayer1Id"></select>
-					@*@Html.DropDownListFor(m => game.TournamentPlayer1Id, Model.MakePlayerSelectList(), new {name = $"Round.Games[{i}].TournamentPlayer1Id"})*@
+@*					<select asp-for="Round.Games[@gameId].TournamentPlayer1Id" asp-items="Model.MakePlayerSelectList()" name="Round.Games[@gameId].TournamentPlayer1Id" id="Round.Games[@gameId].TournamentPlayer1Id"></select> *@
+					@Html.DropDownListFor(m => Model.Round.Games.ToList()[gameId].TournamentPlayer1Id, Model.MakePlayerSelectList(), new {name = $"Round.Games[{gameId}].TournamentPlayer1Id"})
 				</div>
 				<div class="col-1">
 					Vs
 				</div>
 				<div class="col-3">
-					<select asp-for="Round.Games[@gameId].TournamentPlayer2Id" asp-items="Model.MakePlayerSelectList()" name="Round.Games[@gameId].TournamentPlayer2Id" id="Round.Games[@gameId].TournamentPlayer2Id"></select>
-					@*@Html.DropDownListFor(m => game.TournamentPlayer2Id, Model.MakePlayerSelectList())*@
+					@*<select asp-for="Round.Games[@gameId].TournamentPlayer2Id" asp-items="Model.MakePlayerSelectList()" name="Round.Games[@gameId].TournamentPlayer2Id" id="Round.Games[@gameId].TournamentPlayer2Id"></select>*@
+					@Html.DropDownListFor(m => Model.Round.Games.ToList()[gameId].TournamentPlayer2Id, Model.MakePlayerSelectList())
 				</div>
 			</div>
 		</div>
