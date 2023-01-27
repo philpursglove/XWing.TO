@@ -18,7 +18,7 @@
 	{
 		<div>
 			<div class="row">
-				@Html.Hidden("",Model.Round.Games.ToList()[gameId].Id, new {@name = $"Round.Games[{gameId}].Id"})
+				@Html.Hidden($"Round.Games[{gameId}].Id",Model.Round.Games.ToList()[gameId].Id)
 @*				@Html.HiddenFor(m => m.Round.Games.ToList()[gameId].Id, new {@name = $"Round.Games[{gameId}].Id"})
 *@				@Html.HiddenFor(m => m.Round.Games.ToList()[gameId].TableNumber)
 				@Html.HiddenFor(m => m.Round.Games.ToList()[gameId].TournamentRoundId)
