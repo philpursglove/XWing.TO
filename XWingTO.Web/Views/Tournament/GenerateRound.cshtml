@@ -19,9 +19,8 @@
 		<div>
 			<div class="row">
 				@Html.Hidden($"Round.Games[{gameId}].Id",Model.Round.Games.ToList()[gameId].Id)
-@*				@Html.HiddenFor(m => m.Round.Games.ToList()[gameId].Id, new {@name = $"Round.Games[{gameId}].Id"})
-*@				@Html.HiddenFor(m => m.Round.Games.ToList()[gameId].TableNumber)
-				@Html.HiddenFor(m => m.Round.Games.ToList()[gameId].TournamentRoundId)
+				@Html.Hidden($"Round.Games[{gameId}].TableNumber",Model.Round.Games.ToList()[gameId].TableNumber)
+				@Html.Hidden($"Round.Games[{gameId}].TournamentRoundId", Model.Round.Games.ToList()[gameId].TournamentRoundId)
 				<div class="text-center">
 					Table @Model.Round.Games.ToList()[gameId].TableNumber
 				</div>
