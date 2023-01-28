@@ -14,28 +14,26 @@
 	<div class="row">
 		Round @Model.Round.RoundNumber
 	</div>
-	@for (int gameId = 0; gameId < Model.Round.Games.Count(); gameId++)
+	@for (int gameId = 0; gameId < Model.Games.Count(); gameId++)
 	{
 		<div>
 			<div class="row">
-				@Html.Hidden($"Round.Games[{gameId}].Id",Model.Round.Games.ToList()[gameId].Id)
-				@Html.Hidden($"Round.Games[{gameId}].TableNumber",Model.Round.Games.ToList()[gameId].TableNumber)
-				@Html.Hidden($"Round.Games[{gameId}].TournamentRoundId", Model.Round.Games.ToList()[gameId].TournamentRoundId)
+				@Html.Hidden($"Games[{gameId}].Id",Model.Games[gameId].Id)
+				@Html.Hidden($"Games[{gameId}].TableNumber",Model.Games[gameId].TableNumber)
+				@Html.Hidden($"Games[{gameId}].TournamentRoundId", Model.Games[gameId].TournamentRoundId)
 				<div class="text-center">
-					Table @Model.Round.Games.ToList()[gameId].TableNumber
+					Table @Model.Games[gameId].TableNumber
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-3">
-@*					<select asp-for="Round.Games[@gameId].TournamentPlayer1Id" asp-items="Model.MakePlayerSelectList()" name="Round.Games[@gameId].TournamentPlayer1Id" id="Round.Games[@gameId].TournamentPlayer1Id"></select> *@
-					@Html.DropDownListFor(m => m.Round.Games.ToList()[gameId].TournamentPlayer1Id, Model.MakePlayerSelectList(), new { @name = $"Round.Games[{gameId}].TournamentPlayer1Id"} )
+					@Html.DropDownListFor(m => m.Games[gameId].TournamentPlayer1Id, Model.MakePlayerSelectList(), new { @name = $"Games[{gameId}].TournamentPlayer1Id"} )
 				</div>
 				<div class="col-1">
 					Vs
 				</div>
 				<div class="col-3">
-					@*<select asp-for="Round.Games[@gameId].TournamentPlayer2Id" asp-items="Model.MakePlayerSelectList()" name="Round.Games[@gameId].TournamentPlayer2Id" id="Round.Games[@gameId].TournamentPlayer2Id"></select>*@
-					@Html.DropDownListFor(m => m.Round.Games.ToList()[gameId].TournamentPlayer2Id, Model.MakePlayerSelectList(), new { @name = $"Round.Games[{gameId}].TournamentPlayer2Id"} )
+					@Html.DropDownListFor(m => m.Games[gameId].TournamentPlayer2Id, Model.MakePlayerSelectList(), new { @name = $"Games[{gameId}].TournamentPlayer2Id"} )
 				</div>
 			</div>
 		</div>

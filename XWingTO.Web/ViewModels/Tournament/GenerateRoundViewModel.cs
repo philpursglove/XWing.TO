@@ -20,8 +20,12 @@ namespace XWingTO.Web.ViewModels.Tournament
 			PlayerList = TournamentPlayers.Select(p => new TournamentPlayerViewModel(p.Id, p.Player.DisplayName));
 
 			Round = round;
+
+			Games = round.Games.ToList();
 		}
 		public TournamentRound Round { get; set; }
+
+		public List<Game> Games { get; set; }
 
 		public List<TournamentPlayer> TournamentPlayers { get; set; }
 

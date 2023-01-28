@@ -510,6 +510,8 @@ namespace XWingTO.Web.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				model.Round.Games = model.Games;
+
 				_tournamentRoundRepository.Add(model.Round);
 
 				return RedirectToAction("Admin", new {ID = model.Round.TournamentId});
