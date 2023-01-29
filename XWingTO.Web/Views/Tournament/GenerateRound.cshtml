@@ -27,13 +27,13 @@
 			</div>
 			<div class="row">
 				<div class="col-3">
-					@Html.DropDownListFor(m => m.Games[gameId].TournamentPlayer1Id, Model.MakePlayerSelectList(), new { @name = $"Games[{gameId}].TournamentPlayer1Id"} )
+					@Html.DropDownListFor(m => m.Games[gameId].TournamentPlayer1Id, Model.PlayerSelectList, new { @name = $"Games[{gameId}].TournamentPlayer1Id"} )
 				</div>
 				<div class="col-1">
 					Vs
 				</div>
 				<div class="col-3">
-					@Html.DropDownListFor(m => m.Games[gameId].TournamentPlayer2Id, Model.MakePlayerSelectList(), new { @name = $"Games[{gameId}].TournamentPlayer2Id"} )
+					@Html.DropDownListFor(m => m.Games[gameId].TournamentPlayer2Id, Model.PlayerSelectList, new { @name = $"Games[{gameId}].TournamentPlayer2Id"} )
 				</div>
 			</div>
 		</div>
