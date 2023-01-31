@@ -1,10 +1,7 @@
-﻿@using XWingTO.Core
-@model XWingTO.Web.ViewModels.Tournament.GenerateRoundViewModel
+﻿@model XWingTO.Web.ViewModels.Tournament.GenerateRoundViewModel
 
 @{
 	Layout = "_Layout";
-
-	Game[] gamesArray = Model.Round.Games.OrderBy(g => g.TableNumber).ToArray();
 }
 
 <form asp-action="GenerateRound" method="POST">
