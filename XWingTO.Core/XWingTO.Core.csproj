@@ -8,10 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup Condition="$(TargetFramework) == 'net6.0' OR $(TargetFramework) == 'net7.0'">
-    <Using Include="System.DateOnly" Alias="Date"/>
-    <Using Include="System.TimeOnly" Alias="Time"/>
+    <Using Include="System.DateOnly" Alias="Date" />
+    <Using Include="System.TimeOnly" Alias="Time" />
   </ItemGroup>
 </Project>
