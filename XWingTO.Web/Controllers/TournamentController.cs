@@ -319,10 +319,11 @@ namespace XWingTO.Web.Controllers
 					List<Game> roundGames = await _gameRepository.Query().Where(g => g.TournamentRoundId == tournamentRound.Id).ExecuteAsync();
 					foreach (Game roundGame in roundGames)
 					{
-						ApplicationUser player1 = await _userManager.FindByIdAsync(roundGame.TournamentPlayer1Id.ToString());
-						ApplicationUser player2 = await _userManager.FindByIdAsync(roundGame.TournamentPlayer2Id.ToString());
-						roundDisplayModel.Games.Add(new TournamentGameDisplayModel(){GameId = roundGame.Id, Player1 = player1.UserName, 
-							Player2 = player2.UserName, Player1Score = roundGame.Player1MissionPoints, Player2Score = roundGame.Player2MissionPoints});
+						TournamentPlayer player1 = await _tournamentPlayerRepository.Query().Include(p => p.Player)
+							.FirstOrDefault(tp => tp.Id == roundGame.TournamentPlayer1Id);
+						TournamentPlayer player2 = await _tournamentPlayerRepository.Query().Include(p => p.Player).FirstOrDefault(tp => tp.Id == roundGame.TournamentPlayer2Id);
+						roundDisplayModel.Games.Add(new TournamentGameDisplayModel(){GameId = roundGame.Id, Player1 = player1.Player.DisplayName, 
+							Player2 = player2.Player.DisplayName, Player1Score = roundGame.Player1MissionPoints, Player2Score = roundGame.Player2MissionPoints});
 					}
 
 					model.Rounds.Add(roundDisplayModel);
@@ -508,11 +509,15 @@ namespace XWingTO.Web.Controllers
 		[HttpPost]
 		public async Task<IActionResult> GenerateRound(GenerateRoundViewModel model)
 		{
+			model.Round.Games = model.Games;
+
+			ModelState.ClearValidationState(nameof(model));
+			TryValidateModel(model);
+			model.Validate(new ValidationContext(model));
+
 			if (ModelState.IsValid)
 			{
-				model.Round.Games = model.Games;
-
-				_tournamentRoundRepository.Add(model.Round);
+				await _tournamentRoundRepository.Add(model.Round);
 
 				return RedirectToAction("Admin", new {ID = model.Round.TournamentId});
 			}
@@ -543,8 +548,8 @@ namespace XWingTO.Web.Controllers
 			if (currentUserId == toId || currentUserId == game.TournamentPlayer1Id ||
 				currentUserId == game.TournamentPlayer2Id)
 			{
-				model.Player1Name = user1.UserName;
-				model.Player2Name = user2.UserName;
+				model.Player1Name = user1.DisplayName;
+				model.Player2Name = user2.DisplayName;
 				model.GameId = game.Id;
 				model.TournamentId = tournamentId;
 				model.Player1MissionPoints = game.Player1MissionPoints;

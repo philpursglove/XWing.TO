@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using XWingTO.Core;
 
@@ -6,6 +7,7 @@ namespace XWingTO.Web.ViewModels.Tournament
 {
 	public class GenerateRoundViewModel : IValidatableObject
 	{
+		[ValidateNever]
 		public List<SelectListItem> PlayerSelectList { get; set; }
 
 		public GenerateRoundViewModel()
@@ -27,25 +29,31 @@ namespace XWingTO.Web.ViewModels.Tournament
 
 		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
 		{
+
 			List<ValidationResult> results = new List<ValidationResult>();
+			if (Round.Games == null)
+			{
+				return results;
+			}
+
 			// CHeck that no player appears twice
 
-			IEnumerable<TournamentPlayer> player1Set = Round.Games.Select(g => g.Player1);
-			IEnumerable<TournamentPlayer> player2Set = Round.Games.Select(g => g.Player2);
+			IEnumerable<Guid> player1Set = Round.Games.Select(g => g.TournamentPlayer1Id);
+			IEnumerable<Guid> player2Set = Round.Games.Select(g => g.TournamentPlayer2Id);
 
-			IEnumerable<TournamentPlayer> distinctPlayer1 = player1Set.Distinct();
+			IEnumerable<Guid> distinctPlayer1 = player1Set.Distinct();
 			if (distinctPlayer1.Count() != Round.Games.Count())
 			{
 				results.Add(new ValidationResult("Player appears in Player 1 multiple times"));
 			}
 
-			IEnumerable<TournamentPlayer> distinctPlayer2 = player2Set.Distinct();
+			IEnumerable<Guid> distinctPlayer2 = player2Set.Distinct();
 			if (distinctPlayer2.Count() != Round.Games.Count())
 			{
 				results.Add(new ValidationResult("Player appears in Player 2 multiple times"));
 			}
 
-			IEnumerable<TournamentPlayer> playersInBothSets = player1Set.Intersect(player2Set);
+			IEnumerable<Guid> playersInBothSets = player1Set.Intersect(player2Set);
 			if (playersInBothSets.Any())
 			{
 				results.Add(new ValidationResult("Player appears in Player 1 and Player 2"));
