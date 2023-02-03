@@ -6,11 +6,12 @@
 
 @using (Html.BeginForm(FormMethod.Post))
 {
-	@Html.HiddenFor(m => m.GameId)
-	@Html.HiddenFor(m => m.TournamentId)
+	<input type="hidden" asp-for="GameId"/>
+	<input type="hidden" asp-for="TournamentId"/>
 	<div class="row">
 		<div>
 			@Model.Player1Name
+			<input type="hidden" asp-for="Player1Name"/>
 		</div>
 		<div>
 			@Html.TextBoxFor(m => m.Player1MissionPoints, new { type = "number", min = "0"})
@@ -19,6 +20,7 @@
 	<div class="row">
 		<div>
 			@Model.Player2Name
+			<input type="hidden" asp-for="Player2Name" />
 		</div>
 		<div>
 			@Html.TextBoxFor(m => m.Player2MissionPoints, new { type = "number", min = "0"})
