@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using XWingTO.Core;
 using XWingTO.Core.Messages;
@@ -13,14 +14,16 @@ namespace XWingTO.Functions
     {
         private readonly IRepository<Game, Guid> _gameRepository;
         private readonly IRepository<TournamentPlayer, Guid> _tournamentPlayerRepository;
-	    public ProcessGameScore(IRepository<Game, Guid> gameRepository, IRepository<TournamentPlayer, Guid> tournamentPlayerRepository)
+        private readonly Options _options;
+	    public ProcessGameScore(IRepository<Game, Guid> gameRepository, IRepository<TournamentPlayer, Guid> tournamentPlayerRepository, IOptions<Options> options)
 	    {
             _gameRepository = gameRepository;
             _tournamentPlayerRepository = tournamentPlayerRepository;
+            _options = options.Value;
 	    }
 
         [FunctionName("ProcessGameScore")]
-        public async Task Run([QueueTrigger("XWingTO.Queue", Connection = "XWingTO.Queue")]string scoreMessage, ILogger log)
+        public async Task Run([QueueTrigger("gamescorequeue", Connection = "AzureWebJobsStorage")]string scoreMessage, ILogger log)
         {
             GameScoreMessage gameScoreMessage = JsonConvert.DeserializeObject<GameScoreMessage>(scoreMessage);
 
