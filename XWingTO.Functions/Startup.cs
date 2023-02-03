@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using XWingTO.Data;
 using DbContext = XWingTO.Data.DbContext;
 
@@ -19,7 +18,13 @@ namespace XWingTO.Functions
 		}
 		public override void Configure(IFunctionsHostBuilder builder)
 		{
-			builder.Services.AddDbContext<DbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("XWingTO")));
+			builder.Services.AddOptions<Options>()
+				.Configure<IConfiguration>((settings, configuration) =>
+				{
+					configuration.GetSection("MyOptions").Bind(settings);
+				});
+
+			builder.Services.AddDbContext<DbContext>(options => options.UseSqlServer());
 			builder.Services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 		}
 	}
