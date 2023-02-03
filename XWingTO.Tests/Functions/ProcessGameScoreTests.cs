@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using NSubstitute;
 using XWingTO.Core;
 using XWingTO.Core.Messages;
 using XWingTO.Data;
 using XWingTO.Functions;
+using Options = XWingTO.Functions.Options;
 
 namespace XWingTO.Tests.Functions
 {
@@ -17,6 +19,7 @@ namespace XWingTO.Tests.Functions
 		private IRepository<Game, Guid> _gameRepository;
 		private IRepository<TournamentPlayer, Guid> _tournamentPlayerRepository;
 		private ILogger _logger;
+		private IOptions<Options> _options;
 
 		[SetUp]
 		public void Setup()
@@ -31,6 +34,8 @@ namespace XWingTO.Tests.Functions
 			_tournamentPlayerRepository.Get(_player1Id).Returns(player1);
 			_tournamentPlayerRepository.Get(_player2Id).Returns(player2);
 
+			_options = Substitute.For<IOptions<Options>>();
+
 			_logger = Substitute.For<ILogger>();
 		}
 
@@ -39,7 +44,7 @@ namespace XWingTO.Tests.Functions
 		{
 			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 20, Player2Points = 10 };
 
-			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository, _options);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
 
 			TournamentPlayer player1 = await _tournamentPlayerRepository.Get(_player1Id);
@@ -51,7 +56,7 @@ namespace XWingTO.Tests.Functions
 		{
 			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 20 };
 
-			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository, _options);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
 
 			TournamentPlayer player2 = await _tournamentPlayerRepository.Get(_player2Id);
@@ -63,7 +68,7 @@ namespace XWingTO.Tests.Functions
 		{
 			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10 };
 
-			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository, _options);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
 
 			TournamentPlayer player1 = await _tournamentPlayerRepository.Get(_player1Id);
@@ -80,7 +85,7 @@ namespace XWingTO.Tests.Functions
 		{
 			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player1Concede = true };
 
-			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository, _options);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
 
 			TournamentPlayer player2 = await _tournamentPlayerRepository.Get(_player2Id);
@@ -92,7 +97,7 @@ namespace XWingTO.Tests.Functions
 		{
 			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player2Concede = true };
 
-			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository, _options);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
 
 			TournamentPlayer player1 = await _tournamentPlayerRepository.Get(_player1Id);
@@ -104,7 +109,7 @@ namespace XWingTO.Tests.Functions
 		{
 			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player1Drop = true };
 
-			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository, _options);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
 
 			TournamentPlayer player1 = await _tournamentPlayerRepository.Get(_player1Id);
@@ -116,7 +121,7 @@ namespace XWingTO.Tests.Functions
 		{
 			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player2Drop = true };
 
-			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository, _options);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
 
 			TournamentPlayer player2 = await _tournamentPlayerRepository.Get(_player2Id);
@@ -127,8 +132,8 @@ namespace XWingTO.Tests.Functions
 		public async Task When_Both_Players_Drop_Both_TournamentPlayers_Are_Updated()
 		{
 			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player1Drop = true, Player2Drop = true };
-
-			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+					
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository, _options);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
 
 			TournamentPlayer player1 = await _tournamentPlayerRepository.Get(_player1Id);
@@ -145,7 +150,7 @@ namespace XWingTO.Tests.Functions
 		{
 			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10 };
 
-			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository, _options);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
 
 			TournamentPlayer player1 = await _tournamentPlayerRepository.Get(_player1Id);
@@ -162,7 +167,7 @@ namespace XWingTO.Tests.Functions
 		{
 			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player1Concede = true };
 
-			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository, _options);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
 
 			TournamentPlayer player1 = await _tournamentPlayerRepository.Get(_player1Id);
@@ -179,7 +184,7 @@ namespace XWingTO.Tests.Functions
 		{
 			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10, Player2Concede = true };
 
-			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository, _options);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
 
 			TournamentPlayer player1 = await _tournamentPlayerRepository.Get(_player1Id);
@@ -196,7 +201,7 @@ namespace XWingTO.Tests.Functions
 		{
 			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Player1Points = 10, Player2Points = 10 };
 
-			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository, _options);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
 
 			Game game = await _gameRepository.Get(_gameId);
@@ -213,7 +218,7 @@ namespace XWingTO.Tests.Functions
 		{
 			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, Turns = 8 };
 
-			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository, _options);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
 
 			Game game = await _gameRepository.Get(_gameId);
@@ -226,7 +231,7 @@ namespace XWingTO.Tests.Functions
 		{
 			GameScoreMessage message = new GameScoreMessage { GameId = _gameId, OutOfTime = true };
 
-			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository);
+			ProcessGameScore function = new ProcessGameScore(_gameRepository, _tournamentPlayerRepository, _options);
 			await function.Run(JsonConvert.SerializeObject(message), _logger);
 
 			Game game = await _gameRepository.Get(_gameId);
