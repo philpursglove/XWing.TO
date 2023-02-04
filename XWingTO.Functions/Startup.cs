@@ -24,7 +24,9 @@ namespace XWingTO.Functions
 					configuration.GetSection("MyOptions").Bind(settings);
 				});
 
-			builder.Services.AddDbContext<DbContext>(options => options.UseSqlServer());
+			var configuration = builder.Services.BuildServiceProvider().GetService<IConfiguration>();
+
+			builder.Services.AddDbContext<DbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DbConnectionString")));
 			builder.Services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 		}
 	}
