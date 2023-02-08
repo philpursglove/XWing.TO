@@ -582,7 +582,10 @@ namespace XWingTO.Web.Controllers
 				};
 
 				string queueConnectionString = _configuration.GetConnectionString("XWingTO.Queue");
-				QueueClient queueClient = new QueueClient(queueConnectionString, "gamescorequeue");
+				QueueClient queueClient = new QueueClient(queueConnectionString, "gamescorequeue", new QueueClientOptions
+				{
+					MessageEncoding = QueueMessageEncoding.Base64
+				});
 
 				await queueClient.CreateIfNotExistsAsync();
 
