@@ -12,16 +12,17 @@ namespace XWingTO.Functions
 {
 	public class Startup : FunctionsStartup
 	{
-		private readonly IConfiguration _configuration;
-		public Startup(IConfiguration configuration)
-		{
-			_configuration = configuration;
-		}
 		public override void Configure(IFunctionsHostBuilder builder)
 		{
+			builder.Services.AddOptions<Options>()
+				.Configure<IConfiguration>((settings, configuration) =>
+				{
+					configuration.GetSection("MyOptions").Bind(settings);
+				});
 
+			var configuration = builder.Services.BuildServiceProvider().GetService<IConfiguration>();
 
-			builder.Services.AddDbContext<DbContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("DbConnectionString")));
+			builder.Services.AddDbContext<DbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DbConnectionString")));
 			builder.Services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 		}
 	}
