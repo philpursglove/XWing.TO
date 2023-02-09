@@ -299,7 +299,7 @@ namespace XWingTO.Web.Controllers
 				{
 					ApplicationUser playerUser = await _userManager.FindByIdAsync(tournamentPlayer.PlayerId.ToString());
 					model.Players.Add(new TournamentPlayerDisplayModel(){Name = playerUser.DisplayName, TournamentPlayerId = tournamentPlayer.Id, 
-						Points = tournamentPlayer.Points, Dropped = tournamentPlayer.Dropped});
+						Points = tournamentPlayer.Points, Dropped = tournamentPlayer.Dropped, MissionPoints = tournamentPlayer.MissionPoints});
 				}
 
 				if (tournamentPlayers.Select(tp => tp.PlayerId).Contains(currentUser.Id))
