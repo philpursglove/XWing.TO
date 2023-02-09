@@ -55,12 +55,16 @@
 					Points
 				</th>
 				<th>
+					Mission Points
+				</th>
+				<th>
 					Dropped
 				</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (TournamentPlayerDisplayModel player in Model.Players.OrderByDescending(p => p.Points))
+			@foreach (TournamentPlayerDisplayModel player in Model.Players.OrderByDescending(p => p.Points)
+				.ThenByDescending(p => p.MissionPoints))
 			{
 				<tr>
 					<td>
@@ -68,6 +72,9 @@
 					</td>
 					<td>
 						@player.Points
+					</td>
+					<td>
+						@player.MissionPoints
 					</td>
 					<td >
 						@if (@player.Dropped)

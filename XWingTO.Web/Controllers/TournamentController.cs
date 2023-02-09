@@ -66,7 +66,7 @@ namespace XWingTO.Web.Controllers
 				foreach (TournamentPlayer tournamentPlayer in tournamentPlayers)
 				{
 					model.Players.Add(new TournamentPlayerDisplayModel
-					{ Points = tournamentPlayer.Points, Name = tournamentPlayer.Player.DisplayName, Dropped = tournamentPlayer.Dropped});
+					{ Points = tournamentPlayer.Points, Name = tournamentPlayer.Player.DisplayName, Dropped = tournamentPlayer.Dropped, MissionPoints = tournamentPlayer.MissionPoints});
 				}
 
 				if (HttpContext.User.Identity.IsAuthenticated)

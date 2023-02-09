@@ -9,4 +9,6 @@ public class TournamentPlayerDisplayModel
 
 	public Guid TournamentPlayerId { get; set; }
 
+	public int MissionPoints { get; set; }
+
 }
