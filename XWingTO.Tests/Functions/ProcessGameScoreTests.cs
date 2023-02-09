@@ -1,12 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using NSubstitute;
 using XWingTO.Core;
 using XWingTO.Core.Messages;
 using XWingTO.Data;
 using XWingTO.Functions;
-using Options = XWingTO.Functions.Options;
 
 namespace XWingTO.Tests.Functions
 {
@@ -19,7 +17,6 @@ namespace XWingTO.Tests.Functions
 		private IRepository<Game, Guid> _gameRepository;
 		private IRepository<TournamentPlayer, Guid> _tournamentPlayerRepository;
 		private ILogger _logger;
-		private IOptions<Options> _options;
 
 		[SetUp]
 		public void Setup()
@@ -33,8 +30,6 @@ namespace XWingTO.Tests.Functions
 			_tournamentPlayerRepository = Substitute.For<IRepository<TournamentPlayer, Guid>>();
 			_tournamentPlayerRepository.Get(_player1Id).Returns(player1);
 			_tournamentPlayerRepository.Get(_player2Id).Returns(player2);
-
-			_options = Substitute.For<IOptions<Options>>();
 
 			_logger = Substitute.For<ILogger>();
 		}
