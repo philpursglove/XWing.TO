@@ -6,19 +6,30 @@
 
 @using (Html.BeginForm(FormMethod.Post))
 {
-	<input type="hidden" asp-for="GameId"/>
-	<input type="hidden" asp-for="TournamentId"/>
+	<input type="hidden" asp-for="GameId" />
+	<input type="hidden" asp-for="TournamentId" />
 	<div class="row">
 		<div>
 			@Model.Player1Name
-			<input type="hidden" asp-for="Player1Name"/>
+			<input type="hidden" asp-for="Player1Name" />
 		</div>
 		<div>
 			@Html.TextBoxFor(m => m.Player1MissionPoints, new { type = "number", min = "0"})
 		</div>
+		<div>
+			Conceded?
+		</div>
+		<div>
+			@Html.CheckBoxFor(m => m.Player1Concede)
+		</div>
+		<div>
+			Wish to drop?
+		</div>
+		<div>
+			@Html.CheckBoxFor(m => m.Player1Drop)
+		</div>
 	</div>
 	<div class="row">
-	<!-- Fix up layout -->
 		<div>
 			@Model.Player2Name
 			<input type="hidden" asp-for="Player2Name" />
@@ -26,16 +37,18 @@
 		<div>
 			@Html.TextBoxFor(m => m.Player2MissionPoints, new { type = "number", min = "0"})
 		</div>
-	</div>
-	<div class="row">
-		<div>Conceded?</div>
-		<div>@Html.CheckBoxFor(m => m.Player1Concede)</div>
-		<div>@Html.CheckBoxFor(m => m.Player2Concede)</div>
-	</div>
-	<div class="row">
-		<div>Wish to drop?</div>
-		<div>@Html.CheckBoxFor(m => m.Player1Drop)</div>
-		<div>@Html.CheckBoxFor(m => m.Player2Drop)</div>
+		<div>
+			Conceded?
+		</div>
+		<div>
+			@Html.CheckBoxFor(m => m.Player2Concede)
+		</div>
+		<div>
+			Wish to drop?
+		</div>
+		<div>
+			@Html.CheckBoxFor(m => m.Player2Drop)
+		</div>
 	</div>
 	<div class="row">
 		<div>
@@ -44,9 +57,9 @@
 		<div>
 			@Html.TextBoxFor(m => m.Turns, new { type = "number", min="1" , max="12"})
 		</div>
-		
+
 	</div>
 	<div class="row">
-		<input type="submit" class="btn btn-success" value="Submit"/>
+		<input type="submit" class="btn btn-success" value="Submit" />
 	</div>
 }
