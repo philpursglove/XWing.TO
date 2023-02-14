@@ -20,7 +20,7 @@
 			Conceded?
 		</div>
 		<div>
-			@Html.CheckBoxFor(m => m.Player1Concede, new {@class = "form-check"})
+			@Html.CheckBoxFor(m => m.Player1Concede, new {@class = "form-check concedeCheckboxes"})
 		</div>
 		<div>
 			Wish to drop?
@@ -41,7 +41,7 @@
 			Conceded?
 		</div>
 		<div>
-			@Html.CheckBoxFor(m => m.Player2Concede, new {@class = "form-check"})
+			@Html.CheckBoxFor(m => m.Player2Concede, new {@class = "form-check concedeCheckboxes"})
 		</div>
 		<div>
 			Wish to drop?
@@ -62,4 +62,8 @@
 	<div class="row">
 		<input type="submit" class="btn btn-success" value="Submit" />
 	</div>
+}
+@section Scripts
+{
+	<script type="text/javascript" src="~/js/ResultSubmission.js" asp-append-version="true"></script>>
 }
