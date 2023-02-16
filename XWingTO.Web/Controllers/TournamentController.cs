@@ -565,7 +565,6 @@ namespace XWingTO.Web.Controllers
 		[HttpPost]
 		public async Task<IActionResult> ResultSubmission(ResultSubmissionViewModel model)
 		{
-			// TODO Check this
 			if (ModelState.IsValid)
 			{
 				GameScoreMessage scoreMessage = new GameScoreMessage
