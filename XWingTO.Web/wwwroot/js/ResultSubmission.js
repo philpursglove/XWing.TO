@@ -6,6 +6,13 @@ $('.concedeCheckboxes').click(function () {
         return;
     }
     else {
+        var name = $(this).prop('name');
 
+        if (name === 'Player1Concede') {
+            $('#Player2Concede').prop('checked', false);
+        }
+        else {
+            $('#Player1Concede').prop('checked', false);
+        }
     };
 });
