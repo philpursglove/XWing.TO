@@ -9,44 +9,47 @@
 	<input type="hidden" asp-for="GameId" />
 	<input type="hidden" asp-for="TournamentId" />
 	<div class="row">
-		<div>
+		<div class="col-2">
 			@Model.Player1Name
 			<input type="hidden" asp-for="Player1Name" />
 		</div>
-		<div>
-			@Html.TextBoxFor(m => m.Player1MissionPoints, new { type = "number", min = "0"})
+		<div class="col-1">
+			@Html.TextBoxFor(m => m.Player1MissionPoints, new { type = "number", min = "0", @class = "form-control"})
 		</div>
-		<div>
+		<div class="col-1">
 			Conceded?
 		</div>
-		<div>
+		<div class ="col-1">
 			@Html.CheckBoxFor(m => m.Player1Concede, new {@class = "form-check concedeCheckboxes"})
 		</div>
-		<div>
-			Wish to drop?
+		<div class="col-1">
+			Drop?
 		</div>
-		<div>
+		<div class="col-1">
 			@Html.CheckBoxFor(m => m.Player1Drop, new {@class = "form-check"})
 		</div>
 	</div>
+	<div class="text-center">
+		Vs.
+	</div>
 	<div class="row">
-		<div>
+		<div class="col-2">
 			@Model.Player2Name
 			<input type="hidden" asp-for="Player2Name" />
 		</div>
-		<div>
-			@Html.TextBoxFor(m => m.Player2MissionPoints, new { type = "number", min = "0"})
+		<div class="col-1">
+			@Html.TextBoxFor(m => m.Player2MissionPoints, new { type = "number", min = "0", @class = "form-control"})
 		</div>
-		<div>
+		<div class="col-1">
 			Conceded?
 		</div>
-		<div>
+		<div class="col-1">
 			@Html.CheckBoxFor(m => m.Player2Concede, new {@class = "form-check concedeCheckboxes"})
 		</div>
-		<div>
-			Wish to drop?
+		<div class="col-1">
+			Drop?
 		</div>
-		<div>
+		<div class="col-1">
 			@Html.CheckBoxFor(m => m.Player2Drop, new {@class = "form-check"})
 		</div>
 	</div>
