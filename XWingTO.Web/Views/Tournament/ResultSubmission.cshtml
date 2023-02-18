@@ -29,9 +29,11 @@
 			@Html.CheckBoxFor(m => m.Player1Drop, new {@class = "form-check"})
 		</div>
 	</div>
+	<hr/>
 	<div class="text-center">
 		Vs.
 	</div>
+	<hr/>
 	<div class="row">
 		<div class="col-2">
 			@Model.Player2Name
@@ -53,17 +55,22 @@
 			@Html.CheckBoxFor(m => m.Player2Drop, new {@class = "form-check"})
 		</div>
 	</div>
-	<div class="row">
-		<div>
-			Turns
+	<hr/>
+	<div class="row text-center">
+		<div class="col-2">
+			Number of Turns
 		</div>
-		<div>
-			@Html.TextBoxFor(m => m.Turns, new { type = "number", min="1" , max="12"})
+		<div class="col-1">
+			@Html.TextBoxFor(m => m.Turns, new { type = "number", min="1" , max="12", @class="form-control"})
 		</div>
 
 	</div>
+	
+
 	<div class="row">
 		<input type="submit" class="btn btn-success" value="Submit" />
+		
+
 	</div>
 }
 @section Scripts
