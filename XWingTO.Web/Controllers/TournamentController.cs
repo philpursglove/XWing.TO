@@ -323,7 +323,9 @@ namespace XWingTO.Web.Controllers
 							.FirstOrDefault(tp => tp.Id == roundGame.TournamentPlayer1Id);
 						TournamentPlayer player2 = await _tournamentPlayerRepository.Query().Include(p => p.Player).FirstOrDefault(tp => tp.Id == roundGame.TournamentPlayer2Id);
 						roundDisplayModel.Games.Add(new TournamentGameDisplayModel(){GameId = roundGame.Id, Player1 = player1.Player.DisplayName, 
-							Player2 = player2.Player.DisplayName, Player1Score = roundGame.Player1MissionPoints, Player2Score = roundGame.Player2MissionPoints});
+							Player2 = player2.Player.DisplayName, Player1Score = roundGame.Player1MissionPoints, Player2Score = roundGame.Player2MissionPoints,	
+							Turns = roundGame.Turns
+						});
 					}
 
 					model.Rounds.Add(roundDisplayModel);

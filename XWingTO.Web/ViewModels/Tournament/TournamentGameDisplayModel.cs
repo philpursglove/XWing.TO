@@ -8,4 +8,6 @@ public class TournamentGameDisplayModel
 	public int Player2Score { get; set; }
 
 	public Guid GameId { get; set; }
+
+	public int Turns { get; set; }
 }

@@ -122,7 +122,21 @@
 <div class="row">
 	@if (Model.Players.Count >= 4)
 	{
-		<a asp-action="GenerateRound" role="button" class="btn btn-primary" asp-route-Id="@Model.Id">Generate Round</a>
+		@if (Model.Rounds.Any())
+		{
+			TournamentRoundDisplayModel currentRound = Model.Rounds.Single(r => r.Round == Model.Rounds.Count);
+			if (currentRound.Games.Any(g => g.Turns == 0))
+			{
+				<div class="alert alert-primary" role="alert">
+					The next round will be available to generate once all game results for the current round have been received.
+				</div>
+
+			}
+			else
+			{
+				<a asp-action="GenerateRound" role="button" class="btn btn-primary" asp-route-Id="@Model.Id">Generate Round</a>
+			}
+		}
 	}
 	else
 	{
