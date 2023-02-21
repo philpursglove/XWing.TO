@@ -45,63 +45,66 @@
 	<input type="submit" value="Cancel Tournament" class="btn btn-danger" />
 </form>
 <div class="row">
-	<table class="table">
-		<thead>
-			<tr>
-				<th>
-					Player
-				</th>
-				<th>
-					Points
-				</th>
-				<th>
-					Mission Points
-				</th>
-				<th>
-					Dropped
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (TournamentPlayerDisplayModel player in Model.Players.OrderByDescending(p => p.Points)
-				.ThenByDescending(p => p.MissionPoints))
-			{
+	<a href="#playersDiv" class="btn btn-primary" data-bs-toggle="collapse" role="button">Players</a>
+	<div class="row collapse" id="playersDiv">
+		<table class="table">
+			<thead>
 				<tr>
-					<td>
-						@player.Name
-					</td>
-					<td>
-						@player.Points
-					</td>
-					<td>
-						@player.MissionPoints
-					</td>
-					<td >
-						@if (@player.Dropped)
-						{
-							<form class="inline-form" asp-action="Drop" asp-route-tournamentPlayerId="@player.TournamentPlayerId" asp-route-tournamentId="@Model.Id" asp-route-dropped="false">
-								<input type="submit" class="btn btn-success" value="Undrop"/>
-							</form>
-						}
-						else
-						{
-							<form class="inline-form" asp-action="Drop" asp-route-tournamentPlayerId="@player.TournamentPlayerId" asp-route-tournamentId="@Model.Id" asp-route-dropped="true">
-								<input type="submit" class="btn btn-danger" value="Drop"/>
-							</form>
-						}
-
-						@if (!Model.Rounds.Any())
-						{
-							<form class="inline-form" asp-action="Unregister" asp-route-tournamentId="@Model.Id" asp-route-tournamentPlayerId="@player.TournamentPlayerId">
-								<input type="submit" class="btn btn-danger" value="Unregister"/>
-							</form>
-						}
-					</td>
-
+					<th>
+						Player
+					</th>
+					<th>
+						Points
+					</th>
+					<th>
+						Mission Points
+					</th>
+					<th>
+						Dropped
+					</th>
 				</tr>
-			}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				@foreach (TournamentPlayerDisplayModel player in Model.Players.OrderByDescending(p => p.Points)
+					.ThenByDescending(p => p.MissionPoints))
+				{
+					<tr>
+						<td>
+							@player.Name
+						</td>
+						<td>
+							@player.Points
+						</td>
+						<td>
+							@player.MissionPoints
+						</td>
+						<td >
+							@if (@player.Dropped)
+							{
+								<form class="inline-form" asp-action="Drop" asp-route-tournamentPlayerId="@player.TournamentPlayerId" asp-route-tournamentId="@Model.Id" asp-route-dropped="false">
+									<input type="submit" class="btn btn-success" value="Undrop"/>
+								</form>
+							}
+							else
+							{
+								<form class="inline-form" asp-action="Drop" asp-route-tournamentPlayerId="@player.TournamentPlayerId" asp-route-tournamentId="@Model.Id" asp-route-dropped="true">
+									<input type="submit" class="btn btn-danger" value="Drop"/>
+								</form>
+							}
+
+							@if (!Model.Rounds.Any())
+							{
+								<form class="inline-form" asp-action="Unregister" asp-route-tournamentId="@Model.Id" asp-route-tournamentPlayerId="@player.TournamentPlayerId">
+									<input type="submit" class="btn btn-danger" value="Unregister"/>
+								</form>
+							}
+						</td>
+
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
 </div>
 <div class="row">
 	@if (Model.UserIsRegistered)
