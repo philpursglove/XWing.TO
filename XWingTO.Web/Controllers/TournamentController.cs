@@ -21,6 +21,7 @@ namespace XWingTO.Web.Controllers
 		private readonly IRepository<Game, Guid> _gameRepository;
 		private readonly IConfiguration _configuration;
 		private readonly IRepository<TournamentRound, Guid> _tournamentRoundRepository;
+		
 		public TournamentController(IRepository<Tournament, Guid> tournamentRepository,
 			IRepository<TournamentPlayer, Guid> tournamentPlayerRepository,
 			UserManager<ApplicationUser> userManager,
