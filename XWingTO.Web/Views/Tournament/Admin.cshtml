@@ -184,7 +184,14 @@
 								<div class="col-3">@game.Player2</div>
 							</div>
 							<div class="row">
-								<div class="col-9"><a class="btn btn-primary" role="button" href="@Url.Action("ResultSubmission", new {gameId = game.GameId})">Enter Score</a> </div>
+								@if (game.Turns == 0)
+								{
+									<div class="col-9"><a class="btn btn-primary" role="button" href="@Url.Action("ResultSubmission", new {gameId = game.GameId})">Enter Score</a> </div>
+								}
+								else
+								{
+									<div class="col-9"><a class="btn btn-warning" role="button" href="@Url.Action("ResultSubmission", new {gameId = game.GameId})">Adjust Score</a> </div>
+								}
 							</div>
 						}
 					</div>
