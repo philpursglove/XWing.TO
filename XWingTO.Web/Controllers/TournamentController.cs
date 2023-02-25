@@ -59,7 +59,7 @@ namespace XWingTO.Web.Controllers
 			model.Tournament = tournament;
 
 			var organiser = await _userManager.FindByIdAsync(tournament.TOId.ToString());
-			model.TOName = organiser.UserName;
+			model.TOName = organiser.DisplayName;
 
 			var tournamentPlayers = await _tournamentPlayerRepository.Query().Where(tp => tp.TournamentId == tournament.Id).Include(p => p.Player).ExecuteAsync();
 			if (tournamentPlayers.Any())
@@ -67,7 +67,8 @@ namespace XWingTO.Web.Controllers
 				foreach (TournamentPlayer tournamentPlayer in tournamentPlayers)
 				{
 					model.Players.Add(new TournamentPlayerDisplayModel
-					{ Points = tournamentPlayer.Points, Name = tournamentPlayer.Player.DisplayName, Dropped = tournamentPlayer.Dropped, MissionPoints = tournamentPlayer.MissionPoints});
+					{ Points = tournamentPlayer.Points, Name = tournamentPlayer.Player.DisplayName, Dropped = tournamentPlayer.Dropped, 
+						MissionPoints = tournamentPlayer.MissionPoints});
 				}
 
 				if (HttpContext.User.Identity.IsAuthenticated)
@@ -155,7 +156,7 @@ namespace XWingTO.Web.Controllers
 				{
 					ApplicationUser TO = await _userManager.FindByIdAsync(searchTournament.TOId.ToString());
 					modelList.Add(new TournamentListDisplayModel(searchTournament.Id, searchTournament.Name, searchTournament.Date,
-						searchTournament.Players, TO.UserName, searchTournament.Location(), searchTournament.TOId == userId));
+						searchTournament.Players, TO.DisplayName, searchTournament.Location(), searchTournament.TOId == userId));
 				}
 			}
 			else
@@ -164,7 +165,7 @@ namespace XWingTO.Web.Controllers
 				{
 					ApplicationUser TO = await _userManager.FindByIdAsync(searchTournament.TOId.ToString());
 					modelList.Add(new TournamentListDisplayModel(searchTournament.Id, searchTournament.Name, searchTournament.Date,
-						searchTournament.Players, TO.UserName, searchTournament.Location(), false));
+						searchTournament.Players, TO.DisplayName, searchTournament.Location(), false));
 				}
 
 			}
@@ -203,14 +204,14 @@ namespace XWingTO.Web.Controllers
 			{
 				TO = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 				upcomingEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
-					tournament.Players, TO.UserName , tournament.Location(), TO.Id == userId));
+					tournament.Players, TO.DisplayName , tournament.Location(), TO.Id == userId));
 			}
 
 			foreach (Tournament tournament in myEvents.Where(t => t.Date < Date.FromDateTime(DateTime.Today)).Take(10))
 			{
 				TO = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 				previousEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
-					tournament.Players, TO.UserName, tournament.Location(), TO.Id == userId));
+					tournament.Players, TO.DisplayName, tournament.Location(), TO.Id == userId));
 			}
 
 			MyHomeViewModel model = new MyHomeViewModel

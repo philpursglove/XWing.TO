@@ -64,14 +64,14 @@ namespace XWingTO.Web.Controllers
 				{
 					TO = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 	                upcomingEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
-		                tournament.Players, TO.UserName, tournament.Location(), TO.Id == userId));
+		                tournament.Players, TO.DisplayName, tournament.Location(), TO.Id == userId));
                 }
 
                 foreach (Tournament tournament in myEvents.Where(t => t.Date < Date.FromDateTime(DateTime.Today)).Take(10))
                 {
 	                TO = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 	                previousEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
-		                tournament.Players, TO.UserName, tournament.Location(), TO.Id == userId));
+		                tournament.Players, TO.DisplayName, tournament.Location(), TO.Id == userId));
                 }
 
                 MyHomeViewModel model = new MyHomeViewModel
@@ -93,7 +93,7 @@ namespace XWingTO.Web.Controllers
 	            {
 		            TO = await _userManager.FindByIdAsync(recentEvent.TOId.ToString());
 		            tournaments.Add(new TournamentListDisplayModel(recentEvent.Id, recentEvent.Name, recentEvent.Date, recentEvent.Players, 
-			            TO.UserName, recentEvent.Location(), false));
+			            TO.DisplayName, recentEvent.Location(), false));
 	            }
                 return View("Index", tournaments);
             }
