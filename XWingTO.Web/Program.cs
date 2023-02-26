@@ -50,4 +50,13 @@ app.UseEndpoints(endpoints =>
 	endpoints.MapRazorPages();
 });
 
+if (builder.Configuration.GetValue<bool>("MigrateDatabase"))
+{
+	using (var scope = app.Services.CreateScope())
+	{
+		var db = scope.ServiceProvider.GetRequiredService<DbContext>();
+		await db.Database.MigrateAsync();
+	}
+}
+
 app.Run();
