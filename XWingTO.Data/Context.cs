@@ -10,12 +10,12 @@ namespace XWingTO.Data
     {
         public DbContext(DbContextOptions<DbContext> options) : base(options) { }
 
-        public DbSet<Tournament> Tournaments { get; set; }
-        public DbSet<TournamentPlayer> TournamentPlayers { get; set; }
+        public DbSet<Tournament>? Tournaments { get; set; }
+        public DbSet<TournamentPlayer>? TournamentPlayers { get; set; }
 
-        public DbSet<TournamentRound> TournamentRounds { get; set; }
+        public DbSet<TournamentRound>? TournamentRounds { get; set; }
 
-        public DbSet<Game> Games { get; set; }
+        public DbSet<Game>? Games { get; set; }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
