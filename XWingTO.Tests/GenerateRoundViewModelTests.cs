@@ -36,7 +36,7 @@ namespace XWingTO.Tests
 		[Test]
 		public void A_Player_Should_Not_Appear_In_Player1_List_Multiple_Times()
 		{
-			TournamentRound round = new TournamentRound();
+			GenerateRoundRoundViewModel round = new GenerateRoundRoundViewModel();
 			Game game1 = new Game
 			{
 				Player1 = player1,
@@ -47,10 +47,10 @@ namespace XWingTO.Tests
 				Player1 = player1,
 				Player2 = player3
 			};
-			round.Games = new List<Game>
+			round.Games = new List<GenerateRoundGameViewModel>
 			{
-				game1,
-				game2
+				new(game1),
+				new(game2)
 			};
 
 			model = new GenerateRoundViewModel(PlayerList, round);
@@ -62,7 +62,7 @@ namespace XWingTO.Tests
 		[Test]
 		public void A_Player_Should_Not_Appear_In_Player2_List_Multiple_Times()
 		{
-			TournamentRound round = new TournamentRound();
+			GenerateRoundRoundViewModel round = new GenerateRoundRoundViewModel();
 			Game game1 = new Game
 			{
 				Player1 = player1,
@@ -73,10 +73,10 @@ namespace XWingTO.Tests
 				Player1 = player3,
 				Player2 = player2
 			};
-			round.Games = new List<Game>
+			round.Games = new List<GenerateRoundGameViewModel>
 			{
-				game1,
-				game2
+				new(game1),
+				new(game2)
 			};
 			model = new GenerateRoundViewModel(PlayerList, round);
 
@@ -87,7 +87,7 @@ namespace XWingTO.Tests
 		[Test]
 		public void A_Player_Should_Not_Appear_In_Player1_List_And_PLayer2_List()
 		{
-			TournamentRound round = new TournamentRound();
+			GenerateRoundRoundViewModel round = new GenerateRoundRoundViewModel();
 			Game game1 = new Game
 			{
 				Player1 = player1,
@@ -98,10 +98,10 @@ namespace XWingTO.Tests
 				Player1 = player3,
 				Player2 = player1
 			};
-			round.Games = new List<Game>
+			round.Games = new List<GenerateRoundGameViewModel>
 			{
-				game1,
-				game2
+				new(game1),
+				new(game2)
 			};
 			model = new GenerateRoundViewModel(PlayerList, round);
 

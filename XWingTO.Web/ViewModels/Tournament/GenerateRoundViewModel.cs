@@ -15,7 +15,7 @@ namespace XWingTO.Web.ViewModels.Tournament
 			
 		}
 
-		public GenerateRoundViewModel(List<TournamentPlayer> Players, TournamentRound round)
+		public GenerateRoundViewModel(List<TournamentPlayer> Players, GenerateRoundRoundViewModel round)
 		{
 			PlayerSelectList = Players.Select(i => new SelectListItem(i.Player.DisplayName, i.Id.ToString())).ToList();
 
@@ -23,9 +23,9 @@ namespace XWingTO.Web.ViewModels.Tournament
 
 			Games = round.Games.ToList();
 		}
-		public TournamentRound Round { get; set; }
+		public GenerateRoundRoundViewModel Round { get; set; }
 
-		public List<Game> Games { get; set; }
+		public List<GenerateRoundGameViewModel> Games { get; set; }
 
 		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
 		{
@@ -65,9 +65,12 @@ namespace XWingTO.Web.ViewModels.Tournament
 
 	public class GenerateRoundRoundViewModel
 	{
-		public List<GenerateRoundGameViewModel> Games {get; set;}
+		public List<GenerateRoundGameViewModel> Games {get; set;}	
+        public Guid Id { get; set; }
+        public Guid TournamentId { get; set; }
+        public int RoundNumber { get; set; }
 
-		public GenerateRoundRoundViewModel()
+        public GenerateRoundRoundViewModel()
 		{
 			Games = new List<GenerateRoundGameViewModel>();
 		}
@@ -75,6 +78,24 @@ namespace XWingTO.Web.ViewModels.Tournament
 
 	public class GenerateRoundGameViewModel
 	{
+        public Guid Id { get; set; }
+        public int TableNumber { get; set; }
+        public Guid TournamentRoundId { get; set; }
+        public Guid TournamentPlayer1Id { get; set; }
+        public Guid TournamentPlayer2Id { get; set; }
 
-	}
+        public GenerateRoundGameViewModel()
+        {
+            
+        }
+
+        public GenerateRoundGameViewModel(Game game)
+        {
+			Id = game.Id;
+			TableNumber = game.TableNumber;
+			TournamentRoundId = game.TournamentRoundId;
+			TournamentPlayer1Id = game.TournamentPlayer1Id;
+			TournamentPlayer2Id = game.TournamentPlayer2Id;
+        }
+    }
 }

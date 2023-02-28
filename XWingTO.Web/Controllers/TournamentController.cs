@@ -467,7 +467,7 @@ namespace XWingTO.Web.Controllers
 			Tournament tournament = await _tournamentRepository.Query().Include(t => t.Players).Include(t => t.Rounds)
 				.FirstOrDefault(t => t.Id == id);
 
-			TournamentRound round = new TournamentRound
+			GenerateRoundRoundViewModel round = new GenerateRoundRoundViewModel
 			{
 				TournamentId = id,
 				Id = Guid.NewGuid()
@@ -494,11 +494,11 @@ namespace XWingTO.Web.Controllers
 
 			Pairer pairer = new Pairer(strategy);
 
-			round.Games = pairer.Pair(tournament.Players.ToList());
+			List<Game> pairedGames = pairer.Pair(tournament.Players.ToList());
 
-			foreach (Game roundGame in round.Games)
+			foreach (Game pairedGame in pairedGames)
 			{
-				roundGame.TournamentRoundId = round.Id;
+				round.Games.Add(new GenerateRoundGameViewModel(pairedGame));
 			}
 
 			GenerateRoundViewModel model = new GenerateRoundViewModel(
@@ -521,7 +521,22 @@ namespace XWingTO.Web.Controllers
 
 			if (ModelState.IsValid)
 			{
-				await _tournamentRoundRepository.Add(model.Round);
+				TournamentRound round = new TournamentRound { Id = model.Round.Id, TournamentId = model.Round.TournamentId, RoundNumber = model.Round.RoundNumber };
+				List<Game> games = new List<Game>();
+				foreach (GenerateRoundGameViewModel gameViewModel in model.Games)
+				{
+					Game game = new Game()
+					{
+						Id = gameViewModel.Id,
+						TournamentRoundId = gameViewModel.TournamentRoundId,
+						TableNumber = gameViewModel.TableNumber,
+						TournamentPlayer1Id = gameViewModel.TournamentPlayer1Id,
+						TournamentPlayer2Id = gameViewModel.TournamentPlayer2Id
+					};
+					games.Add(game);
+				}
+				round.Games = games;
+				await _tournamentRoundRepository.Add(round);
 
 				return RedirectToAction("Admin", new {ID = model.Round.TournamentId});
 			}
