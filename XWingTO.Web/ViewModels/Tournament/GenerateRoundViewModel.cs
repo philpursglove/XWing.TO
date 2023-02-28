@@ -62,4 +62,19 @@ namespace XWingTO.Web.ViewModels.Tournament
 			return results;
 		}
 	}
+
+	public class GenerateRoundRoundViewModel
+	{
+		public List<GenerateRoundGameViewModel> Games {get; set;}
+
+		public GenerateRoundRoundViewModel()
+		{
+			Games = new List<GenerateRoundGameViewModel>();
+		}
+	}
+
+	public class GenerateRoundGameViewModel
+	{
+
+	}
 }
