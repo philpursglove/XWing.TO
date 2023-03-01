@@ -47,10 +47,7 @@
 			</div>
 		</div>
 	</nav>
-	<div class="text-center d-none d-md-block">
-		<!-- Randomised text to go here - View Component? -->
-		<h6 class="small fst-italic">Squadron up!</h6>
-	</div>
+    @await Component.InvokeAsync("QuoteDisplay")
 	<div>
 		@RenderBody()
 	</div>
