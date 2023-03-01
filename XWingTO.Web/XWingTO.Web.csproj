@@ -12,7 +12,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Quotes.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\js\ResultSubmission.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Quotes.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,7 +44,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Azure" Version="1.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.11" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.12" />
   </ItemGroup>
 
   <ItemGroup>
