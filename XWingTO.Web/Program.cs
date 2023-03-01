@@ -13,6 +13,10 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 	.AddEntityFrameworkStores<DbContext>();
 builder.Services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 
+List<string> quotes = File.ReadAllLines("quotes.txt").ToList();
+
+builder.Services.AddSingleton(typeof(List<string>), quotes);
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
