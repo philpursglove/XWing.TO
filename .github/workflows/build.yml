@@ -91,9 +91,32 @@ jobs:
         path: ./XWingTO.sql
 
 #Pull steps up from child workflows
-#  dev:
-#    needs: build
-#    runs-on: windows-latest
+  deploy-dev:
+    needs: build
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Placeholder
+      run: echo "Dev deployment"
+
+  deploy-test:
+    needs: deploy-dev
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Placeholder
+      run: echo "Test deployment"
+
+  deploy-prod:
+    needs: deploy-test
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Placeholder
+      run: echo "Prod deployment"
 
 #    uses: ./.github/workflows/deployinfrastructure.yml
 #    uses: ./.github/workflows/migratedatabase.yml
