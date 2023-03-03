@@ -99,7 +99,7 @@ jobs:
 
 #Pull steps up from child workflows
   deploy-dev:
-    needs: app-build, infra-build
+    needs: [app-build, infra-build]
     runs-on: windows-latest
 
     steps:
