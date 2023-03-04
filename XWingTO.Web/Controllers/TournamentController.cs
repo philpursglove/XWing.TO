@@ -462,14 +462,14 @@ namespace XWingTO.Web.Controllers
         }
 
 		[Authorize]
-		public async Task<IActionResult> GenerateRound(Guid id)
+		public async Task<IActionResult> GenerateRound(Guid tournamentId)
 		{
 			Tournament tournament = await _tournamentRepository.Query().Include(t => t.Players).Include(t => t.Rounds)
-				.FirstOrDefault(t => t.Id == id);
+				.FirstOrDefault(t => t.Id == tournamentId);
 
 			GenerateRoundRoundViewModel round = new GenerateRoundRoundViewModel
 			{
-				TournamentId = id,
+				TournamentId = tournamentId,
 				Id = Guid.NewGuid()
 			};
 
@@ -503,7 +503,7 @@ namespace XWingTO.Web.Controllers
 
 			GenerateRoundViewModel model = new GenerateRoundViewModel(
 				await _tournamentPlayerRepository.Query().Include(p => p.Player)
-					.Where(tp => tp.TournamentId == id).ExecuteAsync(), round);
+					.Where(tp => tp.TournamentId == tournamentId).ExecuteAsync(), round);
 			
 
 			return View(model);
