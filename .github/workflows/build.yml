@@ -96,6 +96,7 @@ jobs:
         region: uksouth
         parameters: environment=Production sqlAdminPassword=${{ secrets.Validation_SQL_Admin_Password }}
         deploymentName: ${{ github.sha }}
+    - run: az logout
 
 #Pull steps up from child workflows
   deploy-dev:
