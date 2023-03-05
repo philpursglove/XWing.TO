@@ -462,33 +462,67 @@ namespace XWingTO.Web.Controllers
         }
 
 		[Authorize]
-		public async Task<IActionResult> GenerateRound(Guid tournamentId)
+		public async Task<IActionResult> GenerateRound(Guid tournamentId, RoundGenerationMode mode = RoundGenerationMode.Automatic)
 		{
 			Tournament tournament = await _tournamentRepository.Query().Include(t => t.Players).Include(t => t.Rounds)
 				.FirstOrDefault(t => t.Id == tournamentId);
 
-			GenerateRoundRoundViewModel round = new GenerateRoundRoundViewModel
+			switch (mode)
 			{
-				TournamentId = tournamentId,
-				Id = Guid.NewGuid()
-			};
+				case RoundGenerationMode.Manual:
+					return await ManualGenerateRound(tournament);
+				case RoundGenerationMode.Automatic:
+					return await AutoGenerateRound(tournament);
+				default:
+					throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
+			}
 
-			if (tournament.Rounds.Any())
-			{
-				round.RoundNumber = tournament.Rounds.Count() + 1;
-			}
-			else
-			{
-				round.RoundNumber = 1;
-			}
+		}
+
+		private async Task<IActionResult> AutoGenerateRound(Tournament tournament)
+		{
+			TournamentRound round = new TournamentRound() {Id = Guid.NewGuid(), TournamentId = tournament.Id};
 
 			IPairingStrategy strategy;
 			if (tournament.Rounds.Any())
 			{
+				round.RoundNumber = tournament.Rounds.Count() + 1;
 				strategy = new PointsPairingStrategy();
 			}
 			else
 			{
+				round.RoundNumber = 1;
+				strategy = new RandomPairingStrategy();
+			}
+
+			Pairer pairer = new Pairer(strategy);
+
+			List<Game> pairedGames = pairer.Pair(tournament.Players.ToList());
+
+			round.Games = pairedGames;
+
+			await _tournamentRoundRepository.Add(round);
+
+			return RedirectToAction("Display", new {Id = tournament.Id});
+		}
+
+		private async Task<IActionResult> ManualGenerateRound(Tournament tournament)
+		{
+			GenerateRoundRoundViewModel round = new GenerateRoundRoundViewModel
+			{
+				TournamentId = tournament.Id,
+				Id = Guid.NewGuid()
+			};
+
+			IPairingStrategy strategy;
+			if (tournament.Rounds.Any())
+			{
+				round.RoundNumber = tournament.Rounds.Count() + 1;
+				strategy = new PointsPairingStrategy();
+			}
+			else
+			{
+				round.RoundNumber = 1;
 				strategy = new RandomPairingStrategy();
 			}
 
@@ -503,8 +537,7 @@ namespace XWingTO.Web.Controllers
 
 			GenerateRoundViewModel model = new GenerateRoundViewModel(
 				await _tournamentPlayerRepository.Query().Include(p => p.Player)
-					.Where(tp => tp.TournamentId == tournamentId).ExecuteAsync(), round);
-			
+					.Where(tp => tp.TournamentId == tournament.Id).ExecuteAsync(), round);
 
 			return View(model);
 		}
