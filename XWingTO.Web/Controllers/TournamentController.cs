@@ -43,14 +43,14 @@ namespace XWingTO.Web.Controllers
 			return RedirectToAction("MyEvents");
 		}
 
-		public IActionResult Index(Guid id)
+		public IActionResult Index(Guid tournamentId)
 		{
-			return RedirectToAction("Display", new { id });
+			return RedirectToAction("Display", new { tournamentId });
 		}
 
-		public async Task<IActionResult> Display(Guid id)
+		public async Task<IActionResult> Display(Guid tournamentId)
 		{
-			Tournament tournament = await _tournamentRepository.Query().FirstOrDefault(t => t.Id == id);
+			Tournament tournament = await _tournamentRepository.Query().FirstOrDefault(t => t.Id == tournamentId);
 			List<TournamentRound> rounds = await _tournamentRoundRepository.Query()
 				.Where(tr => tr.TournamentId == tournament.Id).Include(tr => tr.Games).ExecuteAsync();
 			tournament.Rounds = rounds;
@@ -275,17 +275,17 @@ namespace XWingTO.Web.Controllers
 		}
 
 		[Authorize]
-		public async Task<IActionResult> Admin(Guid id)
+		public async Task<IActionResult> Admin(Guid tournamentId)
 		{
 			ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
 
-			Tournament tournament = await _tournamentRepository.Get(id);
+			Tournament tournament = await _tournamentRepository.Get(tournamentId);
 
 			if (tournament.TOId == currentUser.Id)
 			{
 				TournamentAdminModel model = new TournamentAdminModel()
 				{
-					Id = id,
+					Id = tournamentId,
 					Name = tournament.Name,
 					Date = tournament.Date,
 					Country = tournament.Country,
@@ -311,7 +311,7 @@ namespace XWingTO.Web.Controllers
 
 				model.Rounds = new List<TournamentRoundDisplayModel>();
 				List<TournamentRound> tournamentRounds = await _tournamentRoundRepository.Query()
-					.Where(tr => tr.TournamentId == id).ExecuteAsync();
+					.Where(tr => tr.TournamentId == tournamentId).ExecuteAsync();
 				foreach (TournamentRound tournamentRound in tournamentRounds)
 				{
 					TournamentRoundDisplayModel roundDisplayModel = new TournamentRoundDisplayModel();
@@ -343,10 +343,10 @@ namespace XWingTO.Web.Controllers
 
 		[Authorize]
 		[HttpPost]
-		public async Task<IActionResult> Cancel(Guid id)
+		public async Task<IActionResult> Cancel(Guid tournamentId)
 		{
 			ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
-			Tournament tournament = await _tournamentRepository.Get(id);
+			Tournament tournament = await _tournamentRepository.Get(tournamentId);
 
 			if (tournament != null && currentUser.Id == tournament.TOId)
 			{
@@ -386,7 +386,7 @@ namespace XWingTO.Web.Controllers
 
 					await _tournamentRepository.Update(tournament);
 
-					return RedirectToAction("Admin", new { model.Id });
+					return RedirectToAction("Admin", new { tournamentId = model.Id });
 				}
 				else
 				{
@@ -394,7 +394,7 @@ namespace XWingTO.Web.Controllers
 				}
 			}
 
-			return RedirectToAction("Admin", new {id = model.Id});
+			return RedirectToAction("Admin", new {tournamentId = model.Id});
 
 		}
 
@@ -423,11 +423,11 @@ namespace XWingTO.Web.Controllers
 			Tournament tournament = await _tournamentRepository.Get(tournamentId);
 			if (tournament.TOId == currentUser.Id)
 			{
-				return RedirectToAction("Admin", new {id = tournamentId});
+				return RedirectToAction("Admin", new {tournamentId = tournamentId});
 			}
 			else
 			{
-				return RedirectToAction("Display", new { id = tournamentId });
+				return RedirectToAction("Display", new { tournamentId = tournamentId });
 			}
 		}
 
@@ -453,11 +453,11 @@ namespace XWingTO.Web.Controllers
 
             if (tournamentPlayerId.HasValue)
             {
-                return RedirectToAction("Admin", new {id = tournamentId});
+                return RedirectToAction("Admin", new {tournamentId = tournamentId});
             }
             else
             {
-                return RedirectToAction("Display", new { id = tournamentId });
+                return RedirectToAction("Display", new { tournamentId = tournamentId });
             }
         }
 
@@ -503,7 +503,7 @@ namespace XWingTO.Web.Controllers
 
 			await _tournamentRoundRepository.Add(round);
 
-			return RedirectToAction("Display", new {Id = tournament.Id});
+			return RedirectToAction("Display", new {tournamentId = tournament.Id});
 		}
 
 		private async Task<IActionResult> ManualGenerateRound(Tournament tournament)
@@ -571,7 +571,7 @@ namespace XWingTO.Web.Controllers
 				round.Games = games;
 				await _tournamentRoundRepository.Add(round);
 
-				return RedirectToAction("Admin", new {ID = model.Round.TournamentId});
+				return RedirectToAction("Admin", new {tournamentId = model.Round.TournamentId});
 			}
 
 			return View(model);
@@ -645,7 +645,7 @@ namespace XWingTO.Web.Controllers
 					await queueClient.SendMessageAsync(SerializeObject(scoreMessage));
 				}
 
-				return RedirectToAction("Display", new { id = model.TournamentId });
+				return RedirectToAction("Display", new { tournamentId = model.TournamentId });
 			}
 
 			return View(model);
@@ -660,7 +660,7 @@ namespace XWingTO.Web.Controllers
 
 			await _tournamentPlayerRepository.Update(player);
 
-			return RedirectToAction("Admin", new {id = tournamentId});
+			return RedirectToAction("Admin", new {tournamentId = tournamentId});
 		}
 	}
 }

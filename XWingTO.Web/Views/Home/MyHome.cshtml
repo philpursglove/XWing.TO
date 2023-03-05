@@ -10,11 +10,11 @@
 		<div class="row">
 			@if (tournament.UserIsTO)
 			{
-				<a asp-controller="Tournament" asp-action="Admin" asp-route-id="@tournament.Id">@tournament.Name</a>
+				<a asp-controller="Tournament" asp-action="Admin" asp-route-tournamentid="@tournament.Id">@tournament.Name</a>
 			}
 			else
 			{
-				<a asp-controller="Tournament" asp-action="Display" asp-route-id="@tournament.Id">@tournament.Name</a>
+				<a asp-controller="Tournament" asp-action="Display" asp-route-tournamentid="@tournament.Id">@tournament.Name</a>
 			}
 		</div>
 		<div class="row">
@@ -44,7 +44,7 @@ else
 	@foreach (TournamentListDisplayModel tournament in Model.PreviousEvents.OrderByDescending(t => t.Date))
 	{
 		<div class="row">
-			<a asp-controller="Tournament" asp-action="Display" asp-route-id="@tournament.Id">@tournament.Name</a>
+			<a asp-controller="Tournament" asp-action="Display" asp-route-tournamentid="@tournament.Id">@tournament.Name</a>
 		</div>
 		<div class="row">
 			<div>

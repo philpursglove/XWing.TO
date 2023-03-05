@@ -53,7 +53,7 @@
 		@foreach (TournamentListDisplayModel tournament in Model.Tournaments.OrderBy(t => t.Date))
 		{
 			<div class="row">
-				<a asp-controller="Tournament" asp-action="Display" asp-route-id="@tournament.Id">@tournament.Name</a>
+				<a asp-controller="Tournament" asp-action="Display" asp-route-tournamentid="@tournament.Id">@tournament.Name</a>
 			</div>
 			<div class="row">
 				<div>
