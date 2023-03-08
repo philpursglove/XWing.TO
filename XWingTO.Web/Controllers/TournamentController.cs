@@ -159,7 +159,8 @@ namespace XWingTO.Web.Controllers
 				{
 					ApplicationUser TO = await _userManager.FindByIdAsync(searchTournament.TOId.ToString());
 					modelList.Add(new TournamentListDisplayModel(searchTournament.Id, searchTournament.Name, searchTournament.Date,
-						searchTournament.Players, TO.DisplayName, searchTournament.Location(), searchTournament.TOId == userId));
+						searchTournament.Players, TO.DisplayName, searchTournament.Location(), searchTournament.TOId == userId, 
+						searchTournament.Format.Humanize()));
 				}
 			}
 			else
@@ -168,7 +169,7 @@ namespace XWingTO.Web.Controllers
 				{
 					ApplicationUser TO = await _userManager.FindByIdAsync(searchTournament.TOId.ToString());
 					modelList.Add(new TournamentListDisplayModel(searchTournament.Id, searchTournament.Name, searchTournament.Date,
-						searchTournament.Players, TO.DisplayName, searchTournament.Location(), false));
+						searchTournament.Players, TO.DisplayName, searchTournament.Location(), false, searchTournament.Format.Humanize()));
 				}
 
 			}
@@ -207,14 +208,14 @@ namespace XWingTO.Web.Controllers
 			{
 				TO = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 				upcomingEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
-					tournament.Players, TO.DisplayName , tournament.Location(), TO.Id == userId));
+					tournament.Players, TO.DisplayName , tournament.Location(), TO.Id == userId, tournament.Format.Humanize()));
 			}
 
 			foreach (Tournament tournament in myEvents.Where(t => t.Date < Date.FromDateTime(DateTime.Today)).Take(10))
 			{
 				TO = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 				previousEvents.Add(new TournamentListDisplayModel(tournament.Id, tournament.Name, tournament.Date,
-					tournament.Players, TO.DisplayName, tournament.Location(), TO.Id == userId));
+					tournament.Players, TO.DisplayName, tournament.Location(), TO.Id == userId, tournament.Format.Humanize()));
 			}
 
 			MyHomeViewModel model = new MyHomeViewModel
