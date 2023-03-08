@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Azure.Storage.Queues;
+using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -60,6 +61,8 @@ namespace XWingTO.Web.Controllers
 
 			var organiser = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 			model.TOName = organiser.DisplayName;
+
+			model.FormatName = tournament.Format.Humanize();
 
 			var tournamentPlayers = await _tournamentPlayerRepository.Query().Where(tp => tp.TournamentId == tournament.Id).Include(p => p.Player).ExecuteAsync();
 			if (tournamentPlayers.Any())

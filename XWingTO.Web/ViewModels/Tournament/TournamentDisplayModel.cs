@@ -10,6 +10,8 @@ namespace XWingTO.Web.ViewModels.Tournament
 
 		public List<TournamentRoundDisplayModel> Rounds { get; set; }
 
+		public string FormatName { get; set; }
+
 		public TournamentDisplayModel(Core.Tournament tournament)
 		{
 			Players = new List<TournamentPlayerDisplayModel>();
