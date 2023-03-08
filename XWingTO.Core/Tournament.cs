@@ -15,6 +15,8 @@
 
         public virtual IEnumerable<TournamentRound> Rounds { get; set; }
 
+        public TournamentFormat Format { get; set; }
+
         public string Location()
         {
 	        List<string> locationElements = new List<string>();
