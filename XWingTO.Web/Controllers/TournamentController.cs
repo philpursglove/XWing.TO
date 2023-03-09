@@ -272,7 +272,7 @@ namespace XWingTO.Web.Controllers
 
 				await _tournamentRepository.Add(tournament);
 
-				return RedirectToAction("Admin", "Tournament", new { tournament.Id });
+				return RedirectToAction("Admin", "Tournament", new { tournamentId = tournament.Id });
 			}
 
 			return View(model);
