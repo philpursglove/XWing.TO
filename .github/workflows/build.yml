@@ -107,6 +107,14 @@ jobs:
     - uses: actions/checkout@v3
     - name: Placeholder
       run: echo "Dev deployment"
+    - name: Download web app artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: WebApp
+    - name: Download function app artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: FunctionApp
 
   deploy-test:
     needs: deploy-dev
@@ -116,6 +124,16 @@ jobs:
     - uses: actions/checkout@v3
     - name: Placeholder
       run: echo "Test deployment"
+    - name: Download web app artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: WebApp
+    - name: Download function app artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: FunctionApp
+    - name: ZAProxyPlaceholder
+      run: echo "Call ZAProxy"
 
   deploy-prod:
     needs: deploy-test
@@ -125,6 +143,14 @@ jobs:
     - uses: actions/checkout@v3
     - name: Placeholder
       run: echo "Prod deployment"
+    - name: Download web app artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: WebApp
+    - name: Download function app artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: FunctionApp
 
 #    uses: ./.github/workflows/deployinfrastructure.yml
 #    uses: ./.github/workflows/migratedatabase.yml
