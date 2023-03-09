@@ -296,7 +296,8 @@ namespace XWingTO.Web.Controllers
 					Country = tournament.Country,
 					State = tournament.State,
 					City = tournament.City,
-					Venue = tournament.Venue
+					Venue = tournament.Venue,
+					Format = tournament.Format
 				};
 
 				model.Players = new List<TournamentPlayerDisplayModel>();
@@ -388,6 +389,7 @@ namespace XWingTO.Web.Controllers
 					tournament.State = model.State;
 					tournament.City = model.City;
 					tournament.Venue = model.Venue;
+					tournament.Format = model.Format;
 
 					await _tournamentRepository.Update(tournament);
 

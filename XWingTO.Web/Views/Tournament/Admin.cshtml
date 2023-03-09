@@ -38,6 +38,12 @@
 		</div>
 		<input asp-for="Venue" class="col-4">
 	</div>
+    <div class="row">
+        <div class="col-2">
+            <label asp-for="Format"></label>
+        </div>
+        <select class="col-4" asp-for="Format" asp-items="Html.GetEnumSelectList<TournamentFormat>()"></select>
+    </div>
 
 	<input type="submit" class="btn btn-primary" />
 </form>
