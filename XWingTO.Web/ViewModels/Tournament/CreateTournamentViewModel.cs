@@ -26,7 +26,14 @@ namespace XWingTO.Web.ViewModels.Tournament
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-	        return new List<ValidationResult>();
+            List<ValidationResult> results = new List<ValidationResult>();
+
+	        if (Date < Date.FromDateTime(DateTime.Today))
+	        {
+                results.Add(new ValidationResult("Date cannot be in the past", new []{"Date"}));
+	        }
+
+	        return results;
         }
     }
 }
