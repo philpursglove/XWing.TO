@@ -249,7 +249,16 @@ namespace XWingTO.Web.Controllers
 		{
 			if (model.Date == new Date(1, 1, 1))
 			{
-				model.Date = Date.Parse(Request.Form["Date"]);
+				DateTime modelDate;
+				bool dateIsPresent = DateTime.TryParse(Request.Form["Date"], out modelDate);
+				if (dateIsPresent)
+				{
+					model.Date = Date.FromDateTime(modelDate);
+				}
+				else
+				{
+					model.Date = new Date(1,1,1);
+				}
 			}
 
 			model.Validate(new ValidationContext(model));
