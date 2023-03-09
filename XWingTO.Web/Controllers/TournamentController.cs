@@ -267,7 +267,8 @@ namespace XWingTO.Web.Controllers
 					City = model.City,
 					Venue = model.Venue,
 					CreationDate = DateTime.Now,
-					TOId = userId
+					TOId = userId,
+					Format = model.Format
 				};
 
 				await _tournamentRepository.Add(tournament);
