@@ -24,7 +24,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
 
 resource queueServices 'Microsoft.Storage/storageAccounts/queueServices@2022-09-01' = {
   name: 'default'
-  parent: resourceSymbolicName
+  parent: storageAccount
   properties: {
   }
 }
