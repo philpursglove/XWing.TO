@@ -176,6 +176,7 @@ jobs:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#  Availability test
     - name: Azure logout
       run: az logout
 
@@ -183,23 +184,3 @@ jobs:
 #    uses: ./.github/workflows/migratedatabase.yml
 #    uses: ./.github/workflows/deployapplication.yml
 #    uses: ./.github/workflows/deployfunctionapp.yml
-    
-  #test: 
-    #needs: dev
-    #runs-on: windows-latest
-
-    #steps:
-  #    - uses: ./.github/workflows/deployinfrastructure.yml
-  #    - uses: ./.github/workflows/migratedatabase.yml
-  #    - uses: ./.github/workflows/deployapplication.yml
-  #    - uses: ./.github/workflows/deployfunctionapp.yml
-
-  #prod:
-    #needs: test
-    #runs-on: windows-latest
-
-    #steps:
-  #    - uses: ./.github/workflows/deployinfrastructure.yml
-  #    - uses: ./.github/workflows/migratedatabase.yml
-  #    - uses: ./.github/workflows/deployapplication.yml
-  #    - uses: ./.github/workflows/deployfunctionapp.yml
