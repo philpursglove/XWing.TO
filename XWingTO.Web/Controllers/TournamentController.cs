@@ -74,7 +74,7 @@ namespace XWingTO.Web.Controllers
 						MissionPoints = tournamentPlayer.MissionPoints});
 				}
 
-				if (HttpContext.User.Identity.IsAuthenticated)
+				if (HttpContext.User.Identity!.IsAuthenticated)
 				{
 					var currentUser = await _userManager.GetUserAsync(HttpContext.User);
 					if (tournamentPlayers.Any(tp => tp.PlayerId == currentUser.Id))
@@ -150,7 +150,7 @@ namespace XWingTO.Web.Controllers
 
 			List<TournamentListDisplayModel> modelList = new List<TournamentListDisplayModel>();
 
-			if (HttpContext.User.Identity.IsAuthenticated)
+			if (HttpContext.User.Identity!.IsAuthenticated)
 			{
 				ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
 				Guid userId = user.Id;

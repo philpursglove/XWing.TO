@@ -27,7 +27,7 @@ namespace XWingTO.Web.Controllers
 	        ApplicationUser TO;
 
             // TODO Break this down into separate methods
-            if (HttpContext.User.Identity.IsAuthenticated)
+            if (HttpContext.User.Identity!.IsAuthenticated)
             {
 	            ApplicationUser user = await _userManager.GetUserAsync(HttpContext.User);
                 Guid userId = user.Id;
@@ -87,7 +87,7 @@ namespace XWingTO.Web.Controllers
             {
                 //TODO Check this is working correctly cos I don't think it is right now
 	            List<Tournament> recentEvents = await _tournamentRepository.Query()
-		            .Order(t => t.OrderByDescending<Tournament, DateTime>(t => t.CreationDate)).Take(10).ExecuteAsync();
+		            .Order(t => t.OrderByDescending(t => t.CreationDate)).Take(10).ExecuteAsync();
 	            List<TournamentListDisplayModel> tournaments = new List<TournamentListDisplayModel>(10);
 
 	            foreach (Tournament recentEvent in recentEvents)
