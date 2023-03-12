@@ -439,11 +439,11 @@ namespace XWingTO.Web.Controllers
 			Tournament tournament = await _tournamentRepository.Get(tournamentId);
 			if (tournament.TOId == currentUser.Id)
 			{
-				return RedirectToAction("Admin", new {tournamentId = tournamentId});
+				return RedirectToAction("Admin", new {tournamentId});
 			}
 			else
 			{
-				return RedirectToAction("Display", new { tournamentId = tournamentId });
+				return RedirectToAction("Display", new {tournamentId });
 			}
 		}
 
@@ -469,11 +469,11 @@ namespace XWingTO.Web.Controllers
 
             if (tournamentPlayerId.HasValue)
             {
-                return RedirectToAction("Admin", new {tournamentId = tournamentId});
+                return RedirectToAction("Admin", new {tournamentId});
             }
             else
             {
-                return RedirectToAction("Display", new { tournamentId = tournamentId });
+                return RedirectToAction("Display", new {tournamentId });
             }
         }
 
@@ -676,7 +676,7 @@ namespace XWingTO.Web.Controllers
 
 			await _tournamentPlayerRepository.Update(player);
 
-			return RedirectToAction("Admin", new {tournamentId = tournamentId});
+			return RedirectToAction("Admin", new {tournamentId});
 		}
 	}
 }
