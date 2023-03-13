@@ -23,7 +23,7 @@ public class PointsPairingStrategy : IPairingStrategy
             {
                 if (i < brackets.Count - 1)
                 {
-                    TournamentPlayer pairedUp = brackets[i + 1].Players.Random();
+                    TournamentPlayer pairedUp = brackets[i + 1].Players.Random()!;
                     bracketPlayers.Add(pairedUp);
                     brackets[i + 1].Players.Remove(pairedUp);
                 }
@@ -37,13 +37,13 @@ public class PointsPairingStrategy : IPairingStrategy
 
                 if (bracketPlayers.Any(p => p.Bye))
                 {
-                    newGame.Player1 = bracketPlayers.Where(p => p.Bye).Random();
+                    newGame.Player1 = bracketPlayers.Where(p => p.Bye).Random()!;
                 }
                 else
                 {
-                    newGame.Player1 = bracketPlayers.Random();
+                    newGame.Player1 = bracketPlayers.Random()!;
                 }
-                bracketPlayers.Remove(newGame.Player1);
+                bracketPlayers.Remove(newGame.Player1!);
 
                 if (!bracketPlayers.Any())
                 {
@@ -53,13 +53,13 @@ public class PointsPairingStrategy : IPairingStrategy
                 {
                     if (bracketPlayers.Any(p => p.Bye))
                     {
-                        newGame.Player2 = bracketPlayers.Where(p => p.Bye).Random();
+                        newGame.Player2 = bracketPlayers.Where(p => p.Bye).Random()!;
                     }
                     else
                     {
-                        newGame.Player2 = bracketPlayers.Random();
+                        newGame.Player2 = bracketPlayers.Random()!;
                     }
-                    bracketPlayers.Remove(newGame.Player2);
+                    bracketPlayers.Remove(newGame.Player2!);
                 }
 
                 newGame.TournamentPlayer1Id = newGame.Player1.Id;
