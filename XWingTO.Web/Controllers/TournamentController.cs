@@ -462,9 +462,12 @@ namespace XWingTO.Web.Controllers
 				tournamentPlayer = await _tournamentPlayerRepository.Get(tournamentPlayerId.Value);
 			}
 
-			await _tournamentPlayerRepository.Delete(tournamentPlayer);
+			if (tournamentPlayer != null)
+			{
+				await _tournamentPlayerRepository.Delete(tournamentPlayer);
+			}
 
-            if (tournamentPlayerId.HasValue)
+			if (tournamentPlayerId.HasValue)
             {
                 return RedirectToAction("Admin", new {tournamentId});
             }
