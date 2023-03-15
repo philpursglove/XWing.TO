@@ -16,7 +16,7 @@ public class RandomPairingStrategy : IPairingStrategy
             newGame.TableNumber = games.Count + 1;
 
             newGame.Player1 = players.Random()!;
-            newGame.TournamentPlayer1Id = newGame.Player1!.Id;
+            newGame.TournamentPlayer1Id = newGame.Player1.Id;
 
             players.Remove(newGame.Player1);
 
