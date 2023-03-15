@@ -43,7 +43,7 @@ public class PointsPairingStrategy : IPairingStrategy
                 {
                     newGame.Player1 = bracketPlayers.Random()!;
                 }
-                bracketPlayers.Remove(newGame.Player1!);
+                bracketPlayers.Remove(newGame.Player1);
 
                 if (!bracketPlayers.Any())
                 {
@@ -59,7 +59,7 @@ public class PointsPairingStrategy : IPairingStrategy
                     {
                         newGame.Player2 = bracketPlayers.Random()!;
                     }
-                    bracketPlayers.Remove(newGame.Player2!);
+                    bracketPlayers.Remove(newGame.Player2);
                 }
 
                 newGame.TournamentPlayer1Id = newGame.Player1.Id;
