@@ -363,7 +363,7 @@ namespace XWingTO.Web.Controllers
 			ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
 			Tournament tournament = await _tournamentRepository.Get(tournamentId);
 
-			if (tournament != null && currentUser.Id == tournament.TOId)
+			if (currentUser.Id == tournament.TOId)
 			{
 				await _tournamentRepository.Delete(tournament);
 				return RedirectToAction("Index", "Home");
@@ -462,10 +462,7 @@ namespace XWingTO.Web.Controllers
 				tournamentPlayer = await _tournamentPlayerRepository.Get(tournamentPlayerId.Value);
 			}
 
-			if (tournamentPlayer != null)
-			{
-				await _tournamentPlayerRepository.Delete(tournamentPlayer);
-			}
+			await _tournamentPlayerRepository.Delete(tournamentPlayer);
 
             if (tournamentPlayerId.HasValue)
             {
