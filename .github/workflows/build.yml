@@ -96,9 +96,31 @@ jobs:
         deploymentName: ${{ github.sha }}
     - run: az logout
 
+  security-scan:
+    runs-on: ubuntu-latest
+  
+    permissions:
+      # required for all workflows
+      security-events: write
+
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: javascript, csharp
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v2
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+
 #Pull steps up from child workflows
   deploy-dev:
-    needs: [app-build, infra-build]
+    needs: [app-build, infra-build, security-scan]
     runs-on: windows-latest
 
     steps:
