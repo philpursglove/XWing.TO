@@ -163,8 +163,10 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: FunctionApp
-    - name: ZAProxyPlaceholder
-      run: echo "Call ZAProxy"
+#    - name: ZAP Scanning
+#      uses: zaproxy/action-full-scan@v0.4.0
+#      with:
+#        target: 'https://www.zaproxy.org/'
     - name: Azure logon
       uses: azure/login@v1
       with:
