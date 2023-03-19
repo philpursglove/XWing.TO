@@ -100,7 +100,9 @@ jobs:
   deploy-dev:
     needs: [app-build, infra-build]
     runs-on: windows-latest
-    environment: Dev
+    environment: 
+      name: Dev
+      url: https://app-xwingto-dev.azurewebsites.net
 
     steps:
     - uses: actions/checkout@v3
@@ -129,7 +131,9 @@ jobs:
   deploy-test:
     needs: deploy-dev
     runs-on: windows-latest
-    environment: Test
+    environment: 
+      name: Test
+      url: https://app-xwingto-test.azurewebsites.net
 
     steps:
     - uses: actions/checkout@v3
@@ -157,7 +161,9 @@ jobs:
   deploy-prod:
     needs: deploy-test
     runs-on: windows-latest
-    environment: Prod
+    environment: 
+      name: Prod
+      url: https://xwing.to
 
     steps:
     - uses: actions/checkout@v3
