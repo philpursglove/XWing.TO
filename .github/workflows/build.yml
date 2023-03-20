@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "use-environments" ]
 
 permissions:
   id-token: write
@@ -122,6 +122,9 @@ jobs:
   deploy-dev:
     needs: [app-build, infra-build, security-scan]
     runs-on: windows-latest
+    environment: 
+      name: Dev
+      url: https://app-xwingto-dev.azurewebsites.net
 
     steps:
     - uses: actions/checkout@v3
@@ -150,6 +153,9 @@ jobs:
   deploy-test:
     needs: deploy-dev
     runs-on: windows-latest
+    environment: 
+      name: Test
+      url: https://app-xwingto-test.azurewebsites.net
 
     steps:
     - uses: actions/checkout@v3
@@ -179,6 +185,9 @@ jobs:
   deploy-prod:
     needs: deploy-test
     runs-on: windows-latest
+    environment: 
+      name: Prod
+      url: https://xwing.to
 
     steps:
     - uses: actions/checkout@v3
