@@ -4,6 +4,7 @@ using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using XWingTO.Core;
 using XWingTO.Core.Messages;
 using XWingTO.Data;
@@ -253,9 +254,14 @@ namespace XWingTO.Web.Controllers
 				bool dateIsPresent = DateTime.TryParse(Request.Form["Date"], out modelDate);
 				if (dateIsPresent)
 				{
+					ModelState.SetModelValue("Date", modelDate, Request.Form["Date"]);
 					model.Date = Date.FromDateTime(modelDate);
 					ModelState.ClearValidationState("Date");
-					
+					var validationResult = model.Validate(new ValidationContext(model));
+					if (!validationResult.Any())
+					{
+						ModelState.MarkFieldValid("Date");
+					}
 				}
 				else
 				{
@@ -263,7 +269,7 @@ namespace XWingTO.Web.Controllers
 				}
 			}
 
-			model.Validate(new ValidationContext(model));
+			
 			if (ModelState.IsValid)
 			{
 				ApplicationUser currentUser = await _userManager.GetUserAsync(HttpContext.User);
