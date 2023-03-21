@@ -254,6 +254,8 @@ namespace XWingTO.Web.Controllers
 				if (dateIsPresent)
 				{
 					model.Date = Date.FromDateTime(modelDate);
+					ModelState.ClearValidationState("Date");
+					
 				}
 				else
 				{
