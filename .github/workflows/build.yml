@@ -151,6 +151,11 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: FunctionApp
+    - name: Deploy web app
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.url }}
+        package: ./XWingTO.Web.zip
 # DB connstring
 # AppInsights key
 # Storage queue connstring        
