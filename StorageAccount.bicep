@@ -30,7 +30,7 @@ resource queueServices 'Microsoft.Storage/storageAccounts/queueServices@2022-09-
 }
 
 resource scoreQueue 'Microsoft.Storage/storageAccounts/queueServices/queues@2022-09-01' = {
-  name: 'scoreQueue'
+  name: 'scorequeue'
   parent: queueServices
   properties: {
     metadata: {}
