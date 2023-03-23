@@ -162,6 +162,12 @@ jobs:
 # DB connstring
 # AppInsights key
 # Storage queue connstring        
+    # - name: Deploy db
+    #   uses: azure/sql-action
+    #   with:
+    #     connection-string: 
+    #     path: ./XWingTO.sql
+    #     action: Script
     - name: Azure logout
       run: az logout
 
