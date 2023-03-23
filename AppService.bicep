@@ -53,3 +53,12 @@ resource scmRule 'Microsoft.Web/sites/basicPublishingCredentialsPolicies@2022-03
     allow: false
   }
 }
+
+resource appServiceStack 'Microsoft.Web/sites/config@2021-01-15' = {
+  parent: appService
+  name: 'metadata'
+  kind: 'web'
+  properties: {
+    CURRENT_STACK : 'dotnetcore'
+  }
+}
