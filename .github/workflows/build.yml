@@ -178,7 +178,7 @@ jobs:
       with:
         scope: subscription
         template: ./XWingTO.bicep
-        region: UKSouth
+        region: uksouth
         parameters: environment=Test sqlAdminPassword=${{ secrets.Production_SQL_Admin_Password }}
     - name: Download web app artifact
       uses: actions/download-artifact@v3
