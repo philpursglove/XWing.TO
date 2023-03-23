@@ -43,6 +43,7 @@ resource ftpRule 'Microsoft.Web/sites/basicPublishingCredentialsPolicies@2022-03
   properties: {
     allow: false
   }
+  location: location
 }
 
 resource scmRule 'Microsoft.Web/sites/basicPublishingCredentialsPolicies@2022-03-01' = {
@@ -52,6 +53,7 @@ resource scmRule 'Microsoft.Web/sites/basicPublishingCredentialsPolicies@2022-03
   properties: {
     allow: false
   }
+  location: location
 }
 
 resource appServiceStack 'Microsoft.Web/sites/config@2021-01-15' = {
