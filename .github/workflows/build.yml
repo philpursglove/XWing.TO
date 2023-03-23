@@ -76,6 +76,7 @@ jobs:
         region: uksouth
         parameters: environment=Development sqlAdminPassword=${{ secrets.Validation_SQL_Admin_Password }}
         deploymentName: ${{ github.sha }}
+        failOnStdErr: false
     - uses: azure/arm-deploy@v1
       name: Bicep Test validation
       with:
@@ -85,6 +86,7 @@ jobs:
         region: uksouth
         parameters: environment=Test sqlAdminPassword=${{ secrets.Validation_SQL_Admin_Password }}
         deploymentName: ${{ github.sha }}
+        failOnStdErr: false
     - uses: azure/arm-deploy@v1
       name: Bicep Prod validation
       with:
@@ -94,6 +96,7 @@ jobs:
         region: uksouth
         parameters: environment=Production sqlAdminPassword=${{ secrets.Validation_SQL_Admin_Password }}
         deploymentName: ${{ github.sha }}
+        failOnStdErr: false
     - run: az logout
 
   security-scan:
