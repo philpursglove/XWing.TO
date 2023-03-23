@@ -33,10 +33,6 @@ resource appService 'Microsoft.Web/sites@2021-01-15' = {
   }
   properties: {
     serverFarmId: appServicePlan.id
-    siteConfig: {
-      linuxFxVersion: 'DOTNETCORE|6.0'
-      appCommandLine: 'dotnet XWingTO.Web.dll'
-    }
   }
 }
 
@@ -55,5 +51,14 @@ resource scmRule 'Microsoft.Web/sites/basicPublishingCredentialsPolicies@2022-03
   parent: appService
   properties: {
     allow: false
+  }
+}
+
+resource appServiceStack 'Microsoft.Web/sites/config@2021-01-15' = {
+  parent: appService
+  name: 'metadata'
+  kind: 'web'
+  properties: {
+    CURRENT_STACK : 'dotnetcore'
   }
 }
