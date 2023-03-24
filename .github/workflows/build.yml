@@ -123,7 +123,7 @@ jobs:
 
 #Pull steps up from child workflows
   deploy-dev:
-    needs: [app-build, infra-build, security-scan]
+    needs: [app-build, infra-build]
     runs-on: windows-latest
     environment: 
       name: Dev
@@ -137,8 +137,6 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     - uses: actions/checkout@v3
-    - name: Placeholder
-      run: echo "Dev deployment"
     - name: Bicep deployment
       id: bicep
       uses: azure/arm-deploy@v1
@@ -163,6 +161,10 @@ jobs:
 # DB connstring
 # AppInsights key
 # Storage queue connstring        
+    - name: Download sql script
+      uses: actions/download-artifact@v3
+      with:
+        name: SqlScript
     - name: Deploy db
       uses: azure/sql-action@v2.1
       with:
