@@ -180,8 +180,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Placeholder
-      run: echo "Test deployment"
     - name: Bicep deployment
       uses: azure/arm-deploy@v1
       with:
