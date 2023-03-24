@@ -158,7 +158,7 @@ jobs:
     - name: Deploy web app
       uses: azure/webapps-deploy@v2
       with:
-        app-name: ${{ env.url }}
+        app-name: app-xwingto-dev
         package: ./XWingTO.Web.zip
 # DB connstring
 # AppInsights key
