@@ -140,6 +140,7 @@ jobs:
     - name: Placeholder
       run: echo "Dev deployment"
     - name: Bicep deployment
+      id: bicep
       uses: azure/arm-deploy@v1
       with:
         scope: subscription
@@ -162,12 +163,12 @@ jobs:
 # DB connstring
 # AppInsights key
 # Storage queue connstring        
-    # - name: Deploy db
-    #   uses: azure/sql-action
-    #   with:
-    #     connection-string: 
-    #     path: ./XWingTO.sql
-    #     action: Script
+    - name: Deploy db
+      uses: azure/sql-action
+      with:
+        connection-string: ${{ steps.bicep.outputs.sqlconnectionString }}
+        path: ./XWingTO.sql
+        action: Script
     - name: Azure logout
       run: az logout
 
