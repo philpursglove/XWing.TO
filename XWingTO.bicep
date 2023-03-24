@@ -49,15 +49,15 @@ module database 'Database.bicep' = {
     }
 }
 
-module appservice 'AppService.bicep' = {
-    name: 'appservice'
-    scope: rgXWing
-    params: {
-        location: rgXWing.location
-        environment: environment
-        abbreviation: abbreviation
-    }
-}
+// module appservice 'AppService.bicep' = {
+//     name: 'appservice'
+//     scope: rgXWing
+//     params: {
+//         location: rgXWing.location
+//         environment: environment
+//         abbreviation: abbreviation
+//     }
+// }
 
 module appInsights 'AppInsights.bicep' = {
     name: 'appInsights'
@@ -77,16 +77,16 @@ module storage 'StorageAccount.bicep' = {
     }
 }
 
-module functionApp 'FunctionApp.bicep' = {
-    name: 'functionApp'
-    scope: rgXWing
-    params: {
-        location: location
-        abbreviation: abbreviation
-        storageAccountName: storage.outputs.storageAccountName
-        appInsightsId: appInsights.outputs.appInsightsId
-    }
-}
+// module functionApp 'FunctionApp.bicep' = {
+//     name: 'functionApp'
+//     scope: rgXWing
+//     params: {
+//         location: location
+//         abbreviation: abbreviation
+//         storageAccountName: storage.outputs.storageAccountName
+//         appInsightsId: appInsights.outputs.appInsightsId
+//     }
+// }
 
 output sqlconnectionString string = database.outputs.connectionString
 output appInsightsConnectionString string = appInsights.outputs.appInsightsId
