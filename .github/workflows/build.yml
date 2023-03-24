@@ -164,7 +164,7 @@ jobs:
 # AppInsights key
 # Storage queue connstring        
     - name: Deploy db
-      uses: azure/sql-action
+      uses: azure/sql-action@v2.1
       with:
         connection-string: ${{ steps.bicep.outputs.sqlconnectionString }}
         path: ./XWingTO.sql
