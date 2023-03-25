@@ -146,6 +146,7 @@ jobs:
         template: ./XWingTO.bicep
         region: UKSouth
         parameters: environment=Development sqlAdminPassword=${{ secrets.Production_SQL_Admin_Password }}
+        failOnStdErr: false
     - name: Download web app artifact
       uses: actions/download-artifact@v3
       with:
