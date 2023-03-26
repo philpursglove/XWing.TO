@@ -49,15 +49,15 @@ module database 'Database.bicep' = {
     }
 }
 
-// module appservice 'AppService.bicep' = {
-//     name: 'appservice'
-//     scope: rgXWing
-//     params: {
-//         location: rgXWing.location
-//         environment: environment
-//         abbreviation: abbreviation
-//     }
-// }
+module appservice 'AppService.bicep' = {
+    name: 'appservice'
+    scope: rgXWing
+    params: {
+        location: rgXWing.location
+        environment: environment
+        abbreviation: abbreviation
+    }
+}
 
 module appInsights 'AppInsights.bicep' = {
     name: 'appInsights'
