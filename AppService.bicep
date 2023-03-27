@@ -36,26 +36,6 @@ resource appService 'Microsoft.Web/sites@2021-01-15' = {
   }
 }
 
-resource ftpRule 'Microsoft.Web/sites/basicPublishingCredentialsPolicies@2022-03-01' = {
-  name: 'ftp'
-  kind: 'string'
-  parent: appService
-  properties: {
-    allow: false
-  }
-  location: location
-}
-
-resource scmRule 'Microsoft.Web/sites/basicPublishingCredentialsPolicies@2022-03-01' = {
-  name: 'scm'
-  kind: 'string'
-  parent: appService
-  properties: {
-    allow: false
-  }
-  location: location
-}
-
 resource appServiceStack 'Microsoft.Web/sites/config@2021-01-15' = {
   parent: appService
   name: 'metadata'
