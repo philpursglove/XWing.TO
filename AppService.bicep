@@ -44,3 +44,5 @@ resource appServiceStack 'Microsoft.Web/sites/config@2021-01-15' = {
     CURRENT_STACK : 'dotnetcore'
   }
 }
+
+output appServiceName string = appService.name
