@@ -77,16 +77,18 @@ module storage 'StorageAccount.bicep' = {
     }
 }
 
-// module functionApp 'FunctionApp.bicep' = {
-//     name: 'functionApp'
-//     scope: rgXWing
-//     params: {
-//         location: location
-//         abbreviation: abbreviation
-//         storageAccountName: storage.outputs.storageAccountName
-//         appInsightsId: appInsights.outputs.appInsightsId
-//     }
-// }
+module functionApp 'FunctionApp.bicep' = {
+    name: 'functionApp'
+    scope: rgXWing
+    params: {
+        location: location
+        abbreviation: abbreviation
+        storageAccountName: storage.outputs.storageAccountName
+        appInsightsId: appInsights.outputs.appInsightsId
+    }
+}
 
 output sqlconnectionString string = database.outputs.connectionString
 output appInsightsConnectionString string = appInsights.outputs.appInsightsId
+output appServiceName string = appservice.outputs.appServiceName
+output functionAppName string = functionApp.outputs.functionAppName
