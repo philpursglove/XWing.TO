@@ -35,8 +35,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 builder.Services.AddAzureClients(clientBuilder =>
 {
-	clientBuilder.AddBlobServiceClient(builder.Configuration["StorageConnectionString:blob"], preferMsi: true);
-	clientBuilder.AddQueueServiceClient(builder.Configuration["StorageConnectionString:queue"], preferMsi: true);
+	clientBuilder.AddQueueServiceClient(builder.Configuration["XWingTO.Queue"], preferMsi: true);
 });
 
 var app = builder.Build();
