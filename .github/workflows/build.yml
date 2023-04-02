@@ -161,7 +161,7 @@ jobs:
         app-name: ${{ steps.bicep.outputs.appServiceName }}
         package: ./XWingTO.Web.zip
     - name: Deploy function app
-      uses: azure/webapps-deploy@v2
+      uses: azure/function-action@v1.4.8
       with:
         app-name: ${{ steps.bicep.outputs.functionAppName }}
         package: ./XWingTO.Functions.zip
