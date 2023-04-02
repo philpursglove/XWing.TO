@@ -38,4 +38,3 @@ resource scoreQueue 'Microsoft.Storage/storageAccounts/queueServices/queues@2022
 }
 
 output storageAccountName string = storageAccount.name
-output scoreQueueUrl string = 'https://${storageAccount.name}.queue.core.windows.net/${scoreQueue.name}'
