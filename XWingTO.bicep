@@ -92,3 +92,4 @@ output sqlconnectionString string = database.outputs.connectionString
 output appInsightsConnectionString string = appInsights.outputs.appInsightsId
 output appServiceName string = appservice.outputs.appServiceName
 output functionAppName string = functionApp.outputs.functionAppName
+output resourceGroupName string = rgXWing.name

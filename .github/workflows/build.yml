@@ -166,9 +166,9 @@ jobs:
         app-name: ${{ steps.bicep.outputs.functionAppName }}
         package: ./XWingTO.Functions.zip
     - name: Set Web app DB connection string
-      run: az webapp config connection-string set -t SQLAzure -n ${{ steps.bicep.outputs.appServiceName }} -g rg-xwingto-dev --settings XWingTO='${{ steps.bicep.outputs.sqlconnectionString }}'
+      run: az webapp config connection-string set -t SQLAzure -n ${{ steps.bicep.outputs.appServiceName }} -g ${{ steps.bicep.outputs.resourceGroupName }} --settings XWingTO='${{ steps.bicep.outputs.sqlconnectionString }}'
     - name: Set Function app DB connection string
-      run: az webapp config connection-string set -t SQLAzure -n ${{ steps.bicep.outputs.functionAppName }} -g rg-xwingto-dev --settings XWingTO='${{ steps.bicep.outputs.sqlconnectionString }}'
+      run: az webapp config connection-string set -t SQLAzure -n ${{ steps.bicep.outputs.functionAppName }} -g ${{ steps.bicep.outputs.resourceGroupName }} --settings XWingTO='${{ steps.bicep.outputs.sqlconnectionString }}'
   # DB connstring
 # AppInsights key
 # Storage queue connstring        
