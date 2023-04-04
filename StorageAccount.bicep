@@ -38,3 +38,4 @@ resource scoreQueue 'Microsoft.Storage/storageAccounts/queueServices/queues@2022
 }
 
 output storageAccountName string = storageAccount.name
+output queueConnectionString string = 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};AccountKey=${storageAccount.listKeys().keys[0].value};EndpointSuffix=core.windows.net'
