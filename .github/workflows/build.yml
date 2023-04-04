@@ -169,6 +169,10 @@ jobs:
       run: az webapp config connection-string set -t SQLAzure -n ${{ steps.bicep.outputs.appServiceName }} -g ${{ steps.bicep.outputs.resourceGroupName }} --settings XWingTO='${{ steps.bicep.outputs.sqlconnectionString }}'
     - name: Set Function app DB connection string
       run: az webapp config connection-string set -t SQLAzure -n ${{ steps.bicep.outputs.functionAppName }} -g ${{ steps.bicep.outputs.resourceGroupName }} --settings XWingTO='${{ steps.bicep.outputs.sqlconnectionString }}'
+    - name: Set Web app Queue connection string
+      run: az webapp config connection-string set -t SQLAzure -n ${{ steps.bicep.outputs.appServiceName }} -g ${{ steps.bicep.outputs.resourceGroupName }} --settings XWingTO='${{ steps.bicep.outputs.queueConnectionString }}'
+    - name: Set Function app Queue connection string
+      run: az webapp config connection-string set -t SQLAzure -n ${{ steps.bicep.outputs.functionAppName }} -g ${{ steps.bicep.outputs.resourceGroupName }} --settings XWingTO='${{ steps.bicep.outputs.queueConnectionString }}'
   # DB connstring
 # AppInsights key
 # Storage queue connstring        
