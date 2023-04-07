@@ -45,4 +45,21 @@ resource appServiceStack 'Microsoft.Web/sites/config@2021-01-15' = {
   }
 }
 
+var environmentNames = {
+  Development: {environmentName: 'Development'}
+  Test: {environmentName: 'Staging'}
+  Production: {environmentName: 'Production'}
+}
+
+var deploySettings = (environment == 'Development' || environment == 'Testing')
+
+resource appSettings 'Microsoft.Web/sites/config@2022-03-01' = if(deploySettings) {
+  parent: appService
+  name: 'appsettings'
+  kind: 'string'
+  properties: {
+    'ASPNETCORE_ENVIRONMENT': environmentNames[environment].environmentName
+  }
+}
+
 output appServiceName string = appService.name
