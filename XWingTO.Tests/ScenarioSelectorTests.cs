@@ -14,7 +14,9 @@ public class ScenarioSelectorTests
 		List<int> previousScenarios = new List<int>();
 
 		int result = selector.SelectScenario(previousScenarios);
-		
-		Assert.That(result, Is.AnyOf(new int[]{1,2,3,4}));
+
+		List<int> allResults = new List<int> {1, 2, 3, 4};
+
+		Assert.That(allResults.Contains(result));
 	}
 }
