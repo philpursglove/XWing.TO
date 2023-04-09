@@ -1,4 +1,6 @@
-﻿namespace XWingTO.Core;
+﻿using System.Collections;
+
+namespace XWingTO.Core;
 
 public static class IEnumerableExtensions
 {
@@ -15,4 +17,7 @@ public static class IEnumerableExtensions
 		var list = enumerable as IList<T> ?? enumerable.ToList();
 		return list.Count == 0 ? default : list[r.Next(0, list.Count)];
 	}
+
+	public static bool None<TSource>(this IEnumerable<TSource> source) => !source.Any();
+	public static bool None<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate) => !source.Any(predicate);
 }
