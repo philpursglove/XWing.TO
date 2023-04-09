@@ -6,6 +6,8 @@ namespace XWingTO.Tests;
 [TestFixture]
 public class ScenarioSelectorTests
 {
+	private List<int> allScenarios = new List<int>{1,2,3,4};
+
 	[Test]
 	public void When_No_Scenarios_Have_Been_Played_Any_Scenario_Is_Available()
 	{
@@ -15,9 +17,7 @@ public class ScenarioSelectorTests
 
 		int result = selector.SelectScenario(previousScenarios);
 
-		List<int> allResults = new List<int> {1, 2, 3, 4};
-
-		Assert.That(allResults.Contains(result));
+		Assert.That(allScenarios.Contains(result));
 	}
 
 	[Test]
@@ -29,7 +29,7 @@ public class ScenarioSelectorTests
 
 		int result = selector.SelectScenario(previousScenarios);
 
-		Assert.That(result, Is.AnyOf(new int[] { 1, 2, 3, 4 }));
+		Assert.That(allScenarios.Contains(result));
 	}
 
 }

@@ -14,10 +14,18 @@ namespace XWingTO.Core
 
 			if (!previousScenarios.Any())
 			{
-				return availableScenarios.Random();
+			}
+			else
+			{
+				availableScenarios = availableScenarios.Except(previousScenarios).ToList();
+
+				if (availableScenarios.None())
+				{
+					availableScenarios = new List<int>{1,2,3,4};
+				}
 			}
 
-			return 1;
+			return availableScenarios.Random();
 		}
 	}
 }
