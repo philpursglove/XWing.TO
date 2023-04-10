@@ -99,43 +99,5 @@ namespace XWingTO.Web.Controllers
                 return View("Index", tournaments);
             }
         }
-
-        [HttpGet]
-        public IActionResult MultiTest()
-        {
-	        MultiTestViewModel model = new MultiTestViewModel();
-            model.Persons.Add(new Person(){FamilyName = "Solo", GivenName = "Han", Title = "Smugggler"});
-            model.Persons.Add(new Person(){FamilyName = "Fel", GivenName = "Soontir", Title = "Baron"});
-            model.Persons.Add(new Person() {FamilyName = "Fett", GivenName = "Boba", Title = "Bounty Hunter"});
-
-            return View(model);
-        }
-
-        public IActionResult MultiTest(MultiTestViewModel model)
-        {
-	        if (ModelState.IsValid)
-	        {
-
-	        }
-
-            return View(model);
-        }
-    }
-
-    public class MultiTestViewModel
-    {
-	    public MultiTestViewModel()
-	    {
-		    Persons = new List<Person>();
-	    }
-	    public List<Person> Persons { get; set; }
-    }
-
-    public class Person
-    {
-	    public string GivenName { get; set; }
-        public string FamilyName { get; set; }
-
-        public string Title { get; set; }
     }
 }
