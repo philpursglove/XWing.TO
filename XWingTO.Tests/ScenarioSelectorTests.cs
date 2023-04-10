@@ -1,5 +1,4 @@
-﻿using NUnit.Framework;
-using XWingTO.Core;
+﻿using XWingTO.Core;
 
 namespace XWingTO.Tests;
 
@@ -32,4 +31,19 @@ public class ScenarioSelectorTests
 		Assert.That(allScenarios.Contains(result));
 	}
 
+	[TestCase(new[] {1}, new[]{2,3,4})]
+	[TestCase(new[] { 1,2 }, new[] { 3, 4 })]
+	[TestCase(new[] { 1,2,3 }, new[] { 4 })]
+	[TestCase(new[] { 1, 3 }, new[] { 2, 4 })]
+	public void When_Some_Scenarios_Have_Been_Played_Only_The_Remaining_Ones_Are_Available(int[] previousRoundScenarios, int[] expectedAvailableScenarios)
+	{
+		List<int> previousScenarios = previousRoundScenarios.ToList();
+		List<int> availableScenarios = expectedAvailableScenarios.ToList();
+
+		ScenarioSelector selector = new ScenarioSelector();
+
+		int result = selector.SelectScenario(previousScenarios);
+
+		Assert.That(availableScenarios.Contains(result));
+	}
 }
