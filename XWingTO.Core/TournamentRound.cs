@@ -11,5 +11,7 @@
 		public int RoundNumber { get; set; }
 
 		public virtual IEnumerable<Game> Games { get; set; }
+
+		public int ScenarioId { get; set; }
 	}
 }
