@@ -69,6 +69,7 @@ namespace XWingTO.Web.ViewModels.Tournament
         public Guid Id { get; set; }
         public Guid TournamentId { get; set; }
         public int RoundNumber { get; set; }
+        public int ScenarioId { get; set; }
 
         public GenerateRoundRoundViewModel()
 		{
