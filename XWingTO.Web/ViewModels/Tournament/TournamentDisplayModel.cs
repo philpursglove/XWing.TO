@@ -19,8 +19,12 @@ namespace XWingTO.Web.ViewModels.Tournament
 
 			foreach (TournamentRound round in tournament.Rounds)
 			{
-				TournamentRoundDisplayModel roundModel = new TournamentRoundDisplayModel();
-				roundModel.Round = round.RoundNumber;
+				TournamentRoundDisplayModel roundModel = new TournamentRoundDisplayModel
+				{
+					Round = round.RoundNumber,
+					Scenario = (Scenario)round.ScenarioId,
+				};
+
 
 				foreach (Game roundGame in round.Games)
 				{

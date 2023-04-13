@@ -57,8 +57,10 @@ namespace XWingTO.Web.Controllers
 				.Where(tr => tr.TournamentId == tournament.Id).Include(tr => tr.Games).ExecuteAsync();
 			tournament.Rounds = rounds;
 
-			TournamentDisplayModel model = new TournamentDisplayModel(tournament);
-			model.Tournament = tournament;
+			TournamentDisplayModel model = new TournamentDisplayModel(tournament)
+			{
+				Tournament = tournament
+			};
 
 			var organiser = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 			model.TOName = organiser.DisplayName;
