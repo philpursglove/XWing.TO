@@ -8,7 +8,7 @@ public class TournamentRoundDisplayModel
 
 	public List<TournamentGameDisplayModel> Games { get; set; }
 
-	public Scenario Scenario { get; set; }
+	public string ScenarioName { get; set; }
 
 	public TournamentRoundDisplayModel()
 	{

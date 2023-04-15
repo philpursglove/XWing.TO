@@ -1,4 +1,5 @@
-﻿using XWingTO.Core;
+﻿using Humanizer;
+using XWingTO.Core;
 
 namespace XWingTO.Web.ViewModels.Tournament
 {
@@ -22,7 +23,7 @@ namespace XWingTO.Web.ViewModels.Tournament
 				TournamentRoundDisplayModel roundModel = new TournamentRoundDisplayModel
 				{
 					Round = round.RoundNumber,
-					Scenario = (Scenario)round.ScenarioId,
+					ScenarioName = ((Scenario)round.ScenarioId).Humanize(),
 				};
 
 
