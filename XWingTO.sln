@@ -27,6 +27,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7E5E44A2-7816-4D26-8BBD-37ACB34AFEC3}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.build.props = Directory.build.props
+		qodana.yaml = qodana.yaml
 	EndProjectSection
 EndProject
 Global
