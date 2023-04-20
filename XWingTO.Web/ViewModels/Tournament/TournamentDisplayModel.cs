@@ -1,4 +1,5 @@
-﻿using XWingTO.Core;
+﻿using Humanizer;
+using XWingTO.Core;
 
 namespace XWingTO.Web.ViewModels.Tournament
 {
@@ -19,8 +20,12 @@ namespace XWingTO.Web.ViewModels.Tournament
 
 			foreach (TournamentRound round in tournament.Rounds)
 			{
-				TournamentRoundDisplayModel roundModel = new TournamentRoundDisplayModel();
-				roundModel.Round = round.RoundNumber;
+				TournamentRoundDisplayModel roundModel = new TournamentRoundDisplayModel
+				{
+					Round = round.RoundNumber,
+					ScenarioName = ((Scenario)round.ScenarioId).Humanize(),
+				};
+
 
 				foreach (Game roundGame in round.Games)
 				{

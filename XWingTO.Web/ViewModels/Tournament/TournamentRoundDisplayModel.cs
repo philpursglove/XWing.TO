@@ -1,10 +1,14 @@
-﻿namespace XWingTO.Web.ViewModels.Tournament;
+﻿using XWingTO.Core;
+
+namespace XWingTO.Web.ViewModels.Tournament;
 
 public class TournamentRoundDisplayModel
 {
 	public int Round { get; set; }
 
 	public List<TournamentGameDisplayModel> Games { get; set; }
+
+	public string ScenarioName { get; set; }
 
 	public TournamentRoundDisplayModel()
 	{

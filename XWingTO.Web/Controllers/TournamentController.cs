@@ -56,8 +56,10 @@ namespace XWingTO.Web.Controllers
 				.Where(tr => tr.TournamentId == tournament.Id).Include(tr => tr.Games).ExecuteAsync();
 			tournament.Rounds = rounds;
 
-			TournamentDisplayModel model = new TournamentDisplayModel(tournament);
-			model.Tournament = tournament;
+			TournamentDisplayModel model = new TournamentDisplayModel(tournament)
+			{
+				Tournament = tournament
+			};
 
 			var organiser = await _userManager.FindByIdAsync(tournament.TOId.ToString());
 			model.TOName = organiser.DisplayName;
@@ -506,6 +508,15 @@ namespace XWingTO.Web.Controllers
 		{
 			TournamentRound round = new TournamentRound() {Id = Guid.NewGuid(), TournamentId = tournament.Id};
 
+			List<int> usedScenarios = new List<int>();
+			if (tournament.Rounds.Any())
+			{
+				usedScenarios.AddRange(tournament.Rounds.Select(r => r.ScenarioId));
+			}
+
+			ScenarioSelector scenarioSelector = new ScenarioSelector();
+			round.ScenarioId = scenarioSelector.SelectScenario(usedScenarios);
+
 			IPairingStrategy strategy;
 			if (tournament.Rounds.Any())
 			{
@@ -536,6 +547,15 @@ namespace XWingTO.Web.Controllers
 				TournamentId = tournament.Id,
 				Id = Guid.NewGuid()
 			};
+
+			List<int> usedScenarios = new List<int>();
+			if (tournament.Rounds.Any())
+			{
+				usedScenarios.AddRange(tournament.Rounds.Select(r => r.ScenarioId));
+			}
+
+			ScenarioSelector scenarioSelector = new ScenarioSelector();
+			round.ScenarioId = scenarioSelector.SelectScenario(usedScenarios);
 
 			IPairingStrategy strategy;
 			if (tournament.Rounds.Any())
@@ -577,7 +597,7 @@ namespace XWingTO.Web.Controllers
 
 			if (ModelState.IsValid)
 			{
-				TournamentRound round = new TournamentRound { Id = model.Round.Id, TournamentId = model.Round.TournamentId, RoundNumber = model.Round.RoundNumber };
+				TournamentRound round = new TournamentRound { Id = model.Round.Id, TournamentId = model.Round.TournamentId, RoundNumber = model.Round.RoundNumber, ScenarioId = model.Round.ScenarioId};
 				List<Game> games = new List<Game>();
 				foreach (GenerateRoundGameViewModel gameViewModel in model.Games)
 				{
