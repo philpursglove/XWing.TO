@@ -4,9 +4,9 @@ linter: jetbrains/qodana-dotnet:2023.1-eap
 exclude:
   - name: Packaged Code
     paths: 
-    - ./XWingTO.Web/wwwroot/lib/**/**/*.js
-      ./XWingTO.Web/wwwroot/lib/bootstrap/js/bootstrap.js
-      ./XWingTO.Web/wwwroot/lib/bootstrap/js/bootstrap.bundle.js
-      ./XWingTO.Web/wwwroot/lib/bootstrap/js/bootstrap.esm.js
-      ./XWingTO.Web/wwwroot/lib/bootstrap/js/bootstrap.js.map
-      ./XWingTO.Web/wwwroot/lib/bootstrap/js/bootstrap.min.js
+      - ./XWingTO.Web/wwwroot/lib/**/**/*.js
+      - ./XWingTO.Web/wwwroot/lib/bootstrap/js/bootstrap.js
+      - ./XWingTO.Web/wwwroot/lib/bootstrap/js/bootstrap.bundle.js
+      - ./XWingTO.Web/wwwroot/lib/bootstrap/js/bootstrap.esm.js
+      - ./XWingTO.Web/wwwroot/lib/bootstrap/js/bootstrap.js.map
+      - ./XWingTO.Web/wwwroot/lib/bootstrap/js/bootstrap.min.js
