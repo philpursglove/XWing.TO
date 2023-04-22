@@ -4,4 +4,4 @@ linter: jetbrains/qodana-dotnet:2023.1-eap
 exclude:
   - name: Packaged Code
     paths: 
-    - XWingTO.Web/wwwroot/lib/**/*.js
+    - XWingTO.Web/wwwroot/lib/**/**/*.js
