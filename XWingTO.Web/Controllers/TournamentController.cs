@@ -4,7 +4,6 @@ using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using XWingTO.Core;
 using XWingTO.Core.Messages;
 using XWingTO.Data;
@@ -87,12 +86,9 @@ namespace XWingTO.Web.Controllers
 						model.UserIsRegistered = false;
 					}
 				}
-
-				model.PlayerCount = tournamentPlayers.Count().ToString();
 			}
 			else
 			{
-				model.PlayerCount = "0";
 				model.UserIsRegistered = false;
 			}
 

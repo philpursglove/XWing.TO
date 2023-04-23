@@ -34,6 +34,8 @@ namespace XWingTO.Web.ViewModels.Tournament
 				}
 				Rounds.Add(roundModel);
 			}
+
+			PlayerCount = Players.Any() ? Players.Count.ToString() : "0";
 		}
 
 		public string TOName { get; set; }
