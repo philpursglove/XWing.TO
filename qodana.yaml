@@ -13,3 +13,4 @@ exclude:
       - XWingTO.Web/wwwroot/lib/jquery/jquery.min.js
       - XWingTO.Web/wwwroot/lib/jquery/jquery.slim.js
       - XWingTO.Web/wwwroot/lib/jquery/jquery.slim.min.js
+      - XWingTO.Web/wwwroot/lib/fontawesome/js/all.js
