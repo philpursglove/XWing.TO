@@ -95,19 +95,16 @@ public class Query<T> : IQuery<T>, IEnumerable where T : class
 		Expression<Func<TInner, TKey>> innerKeySelector, Expression<Func<T, IEnumerable<TInner>, TResult>> resultSelector) where TInner : class where TResult : class
 	{
 		var innerQuery = (inner as Query<TInner>)?._query;
-		if (innerQuery == null) throw new ArgumentException("Problem in GroupJoin: inner as EntityFrameworkQuery<TInner>");
-
-		return new Query<TResult>(_query.GroupJoin(innerQuery, outerKeySelector, innerKeySelector, resultSelector));
+		return innerQuery == null
+			? throw new ArgumentException("Problem in GroupJoin: inner as EntityFrameworkQuery<TInner>")
+			: new Query<TResult>(_query.GroupJoin(innerQuery, outerKeySelector, innerKeySelector, resultSelector));
 	}
 
 	public IQuery<TResult> Join<TInner, TKey, TResult>(IEnumerable<TInner> inner, Expression<Func<T, TKey>> outerKeySelector,
 		Expression<Func<TInner, TKey>> innerKeySelector, Expression<Func<T, TInner, TResult>> resultSelector) where TInner : class where TResult : class
 	{
 		var innerQuery = (inner as Query<TInner>)?._query;
-		if (innerQuery == null)
-			return new Query<TResult>(_query.Join(inner, outerKeySelector, innerKeySelector, resultSelector));
-
-		return new Query<TResult>(_query.Join(innerQuery, outerKeySelector, innerKeySelector, resultSelector));
+		return innerQuery == null ? new Query<TResult>(_query.Join(inner, outerKeySelector, innerKeySelector, resultSelector)) : new Query<TResult>(_query.Join(innerQuery, outerKeySelector, innerKeySelector, resultSelector));
 	}
 
 	public IQuery<TResult> SelectMany<TCollection, TResult>(Expression<Func<T, IEnumerable<TCollection>>> collectionSelector, Expression<Func<T, TCollection, TResult>> resultSelector) where TResult : class
@@ -132,8 +129,8 @@ public class Query<T> : IQuery<T>, IEnumerable where T : class
 	public IQuery<T> Union(IQuery<T> inner)
 	{
 		var innerQuery = (inner as Query<T>)?._query;
-		if (innerQuery == null) throw new ArgumentException("Problem in GroupJoin: inner as EntityFrameworkQuery<TInner>");
-
-		return new Query<T>(_query.Union(innerQuery));
+		return innerQuery == null
+			? throw new ArgumentException("Problem in GroupJoin: inner as EntityFrameworkQuery<TInner>")
+			: new Query<T>(_query.Union(innerQuery));
 	}
 }
