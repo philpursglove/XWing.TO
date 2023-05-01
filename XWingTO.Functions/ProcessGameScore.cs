@@ -21,7 +21,7 @@ namespace XWingTO.Functions
 	    }
 
         [FunctionName("ProcessGameScore")]
-        public async Task Run([QueueTrigger("gamescorequeue", Connection = "StorageConnectionString")]string scoreMessage, ILogger log)
+        public async Task Run([QueueTrigger("gamescorequeue", Connection = "XWingTO.Queue")]string scoreMessage, ILogger log)
         {
             GameScoreMessage gameScoreMessage = JsonConvert.DeserializeObject<GameScoreMessage>(scoreMessage);
 
