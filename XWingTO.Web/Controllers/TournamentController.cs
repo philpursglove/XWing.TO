@@ -88,12 +88,9 @@ namespace XWingTO.Web.Controllers
 						model.UserIsRegistered = false;
 					}
 				}
-
-				model.PlayerCount = tournamentPlayers.Count().ToString();
 			}
 			else
 			{
-				model.PlayerCount = "0";
 				model.UserIsRegistered = false;
 			}
 
