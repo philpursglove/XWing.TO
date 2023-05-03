@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Mvc;
 using XWingTO.Core;
 
 namespace XWingTO.Web.Controllers
@@ -13,7 +14,7 @@ namespace XWingTO.Web.Controllers
 
 			Scenario scenario = (Scenario) selectedScenario;
 
-			return View(scenario);
+			return View("RandomScenario",scenario.Humanize());
 		}
 	}
 }
