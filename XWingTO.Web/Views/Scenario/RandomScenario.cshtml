@@ -1,0 +1,22 @@
+﻿@using XWingTO.Core
+@model XWingTO.Core.Scenario
+
+@{
+    Layout = "_Layout";
+}
+
+@switch (Model)
+{
+    case Scenario.AssaultAtTheSatelliteArray:
+        <div>Assault</div>
+        break;
+    case Scenario.ChanceEncounter:
+        <div>Chance</div>
+        break;
+    case Scenario.SalvageMission:
+        <div>Salvage</div>
+        break;
+    case Scenario.ScrambleTheTransmissions:
+        <div>Scramble</div>
+        break;
+}
