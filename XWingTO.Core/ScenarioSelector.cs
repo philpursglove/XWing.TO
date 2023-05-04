@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace XWingTO.Core
+﻿namespace XWingTO.Core
 {
 	public class ScenarioSelector
 	{
 		public int SelectScenario(List<int> previousScenarios)
 		{
-			List<int> availableScenarios = new List<int> {1, 2, 3, 4};
+			List<int> availableScenarios = new List<int>();
+			foreach (int scenario in Enum.GetValues(typeof(Scenario)))
+			{
+				availableScenarios.Add(scenario);
+			}
 
 			if (!previousScenarios.Any())
 			{
