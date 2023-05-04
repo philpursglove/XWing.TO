@@ -4,12 +4,7 @@
 	{
 		public int SelectScenario(List<int> previousScenarios)
 		{
-			List<int> availableScenarios = new List<int>();
-			foreach (int scenario in Enum.GetValues(typeof(Scenario)))
-			{
-				availableScenarios.Add(scenario);
-			}
-
+            var availableScenarios = Enum.GetValues(typeof(Scenario)).Cast<int>();
 			if (!previousScenarios.Any())
 			{
 			}
@@ -19,7 +14,7 @@
 
 				if (availableScenarios.None())
 				{
-					availableScenarios = new List<int>{1,2,3,4};
+					availableScenarios = Enum.GetValues(typeof(Scenario)).Cast<int>();
 				}
 			}
 
