@@ -8,7 +8,7 @@ namespace XWingTO.Web.Controllers
 	{
 		public IActionResult RandomScenario()
 		{
-			List<int> scenarios = new List<int> {1, 2, 3, 4};
+			var scenarios = Enum.GetValues<Scenario>().Select(s => s).Cast<int>();
 
 			int selectedScenario = scenarios.Random();
 
