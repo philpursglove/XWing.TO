@@ -61,3 +61,8 @@ if (builder.Configuration.GetValue<bool>("MigrateDatabase"))
 }
 
 app.Run();
+
+public partial class Program
+{
+	static void Main(){}
+}
