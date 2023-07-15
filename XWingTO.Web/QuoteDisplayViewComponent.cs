@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using XWingTO.Core;
-
-namespace XWingTO.Web;
+﻿namespace XWingTO.Web;
 
 public class QuoteDisplayViewComponent : ViewComponent
 {

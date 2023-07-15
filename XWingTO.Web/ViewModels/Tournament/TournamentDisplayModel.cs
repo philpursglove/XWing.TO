@@ -1,7 +1,4 @@
-﻿using Humanizer;
-using XWingTO.Core;
-
-namespace XWingTO.Web.ViewModels.Tournament
+﻿namespace XWingTO.Web.ViewModels.Tournament
 {
 	public class TournamentDisplayModel
 	{

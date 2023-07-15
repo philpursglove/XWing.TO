@@ -1,8 +1,4 @@
-﻿using Humanizer;
-using Microsoft.AspNetCore.Mvc;
-using XWingTO.Core;
-
-namespace XWingTO.Web.Controllers
+﻿namespace XWingTO.Web.Controllers
 {
 	public class ScenarioController : Controller
 	{

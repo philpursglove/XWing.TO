@@ -1,6 +1,4 @@
-﻿using XWingTO.Core;
-
-namespace XWingTO.Web.ViewModels
+﻿namespace XWingTO.Web.ViewModels
 {
 	public class TournamentListDisplayModel
 	{

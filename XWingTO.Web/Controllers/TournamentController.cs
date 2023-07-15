@@ -1,10 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Azure.Storage.Queues;
-using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using XWingTO.Core;
 using XWingTO.Core.Messages;
 using XWingTO.Data;
 using XWingTO.Web.ViewModels.Home;

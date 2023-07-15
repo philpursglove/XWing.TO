@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using XWingTO.Core;
 using XWingTO.Data;
 using DbContext = XWingTO.Data.DbContext;
 using Microsoft.Extensions.Azure;

@@ -1,7 +1,4 @@
-﻿using Humanizer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using XWingTO.Core;
+﻿using Microsoft.AspNetCore.Identity;
 using XWingTO.Data;
 using XWingTO.Web.ViewModels;
 using XWingTO.Web.ViewModels.Home;
