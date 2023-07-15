@@ -1,8 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <AzureFunctionsVersion>v4</AzureFunctionsVersion>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(NCrunch)' == '1'">
+    <ExcludeRestorePackageImports>true</ExcludeRestorePackageImports>
+  </PropertyGroup>
+  <Target Name="CopyAzureFunctionOutput" AfterTargets="_GenerateFunctionsPostBuild" Condition="'$(NCrunch)' == '1'">
+    <Exec Command="xcopy /y &quot;$(OutDir)\bin&quot; &quot;$(OutDir)&quot;" />
+  </Target>
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
     <PackageReference Include="Azure.Storage.Files.Shares" Version="12.1.0" />
