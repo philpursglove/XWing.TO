@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using XWingTO.Core;
 using XWingTO.Web.ViewModels.Tournament;
 
 namespace XWingTO.Tests

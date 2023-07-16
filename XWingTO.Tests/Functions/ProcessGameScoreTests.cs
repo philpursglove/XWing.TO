@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using NSubstitute;
-using XWingTO.Core;
 using XWingTO.Core.Messages;
-using XWingTO.Data;
 using XWingTO.Functions;
 
 namespace XWingTO.Tests.Functions

@@ -1,5 +1,3 @@
-using XWingTO.Core;
-
 namespace XWingTO.Tests;
 
 public class RandomStrategyTests

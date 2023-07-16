@@ -6,11 +6,8 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
-using NSubstitute;
 using System.Security.Claims;
 using System.Security.Principal;
-using XWingTO.Core;
-using XWingTO.Data;
 using XWingTO.Web.Controllers;
 
 namespace XWingTO.Tests.Controller

@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections;
 using System.Linq.Expressions;
-using XWingTO.Data;
 
 namespace XWingTO.Tests
 {

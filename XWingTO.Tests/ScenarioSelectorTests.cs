@@ -1,6 +1,4 @@
-﻿using XWingTO.Core;
-
-namespace XWingTO.Tests;
+﻿namespace XWingTO.Tests;
 
 [TestFixture]
 public class ScenarioSelectorTests

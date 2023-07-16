@@ -1,5 +1,3 @@
-using XWingTO.Core;
-
 namespace XWingTO.Tests
 {
     [TestFixture]

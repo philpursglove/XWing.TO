@@ -7,10 +7,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
-using NSubstitute;
 using System.Security.Claims;
-using XWingTO.Core;
-using XWingTO.Data;
 using XWingTO.Web.Controllers;
 
 namespace XWingTO.Tests.Controller
