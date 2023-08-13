@@ -14,12 +14,6 @@ namespace XWingTO.Functions
 	{
 		public override void Configure(IFunctionsHostBuilder builder)
 		{
-			builder.Services.AddOptions<Options>()
-				.Configure<IConfiguration>((settings, configuration) =>
-				{
-					configuration.GetSection("MyOptions").Bind(settings);
-				});
-
 			var configuration = builder.Services.BuildServiceProvider().GetService<IConfiguration>();
 
 			builder.Services.AddDbContext<DbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DbConnectionString")));
