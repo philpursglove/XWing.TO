@@ -2,17 +2,8 @@
 {
 	public class ScenarioController : Controller
 	{
-        private readonly ILogger _logger;
-
-        public ScenarioController(ILogger logger)
-        {
-            _logger = logger;
-        }
-
-		public IActionResult RandomScenario()
+        public IActionResult RandomScenario()
 		{
-			_logger.LogInformation("RandomScenario called");
-
 			var scenarios = Enum.GetValues<Scenario>().Select(s => s).Cast<int>();
 
 			int selectedScenario = scenarios.Random();
