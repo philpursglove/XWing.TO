@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using XWingTO.Data;
+using Microsoft.EntityFrameworkCore;
+using DbContext = XWingTO.Data.DbContext;
 
 var host = new HostBuilder()
     .ConfigureFunctionsWebApplication()
