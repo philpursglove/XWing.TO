@@ -24,6 +24,13 @@ namespace XWingTO.Tests.Controller
 
 		}
 
+        [TearDown]
+        public void Teardown()
+        {
+			_userStore.Dispose();
+            _userStore = null;
+        }
+
 		[Test]
 		public async Task Unauthenticated_Index_Shows_Anonymous_View()
 		{

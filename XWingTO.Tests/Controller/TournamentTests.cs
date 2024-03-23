@@ -72,7 +72,14 @@ namespace XWingTO.Tests.Controller
 			_controllerContext = new ControllerContext(new ActionContext(context, new RouteData(), new ControllerActionDescriptor(), new ModelStateDictionary()));
 		}
 
-		[Test]
+        [TearDown]
+        public void Teardown()
+        {
+            _userStore.Dispose();
+            _userStore = null;
+        }
+
+        [Test]
 		public async Task Player_Should_Not_Be_Able_To_Register_For_A_Tournament_That_Has_Started()
 		{
 			TournamentController controller = new TournamentController(_tournamentRepository,
