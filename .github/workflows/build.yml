@@ -159,11 +159,11 @@ jobs:
         parameters: environment=Development sqlAdminPassword=${{ secrets.Production_SQL_Admin_Password }}
         failOnStdErr: false
     - name: Download web app artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4.1.7
       with:
         name: WebApp
     - name: Download function app artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4.1.7
       with:
         name: FunctionApp
     - name: Deploy web app
@@ -188,7 +188,7 @@ jobs:
 # AppInsights key
 # Storage queue connstring        
     - name: Download sql script
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4.1.7
       with:
         name: SqlScript
     - name: Azure logon for SQL firewall
@@ -223,11 +223,11 @@ jobs:
         region: uksouth
         parameters: environment=Test sqlAdminPassword=${{ secrets.Production_SQL_Admin_Password }}
     - name: Download web app artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4.1.7
       with:
         name: WebApp
     - name: Download function app artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4.1.7
       with:
         name: FunctionApp
 #    - name: ZAP Scanning
@@ -255,11 +255,11 @@ jobs:
     - name: Placeholder
       run: echo "Prod deployment"
     - name: Download web app artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4.1.7
       with:
         name: WebApp
     - name: Download function app artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4.1.7
       with:
         name: FunctionApp
     - name: Azure logon
