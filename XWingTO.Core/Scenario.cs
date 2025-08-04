@@ -11,5 +11,7 @@ public enum Scenario
 	[Description("Salvage Mission")]
 	SalvageMission = 3,
 	[Description("Scramble The Transmissions")]
-	ScrambleTheTransmissions = 4
+	ScrambleTheTransmissions = 4,
+	[Description("Ancient Knowledge")]
+	AncientKnowledge = 5
 }
